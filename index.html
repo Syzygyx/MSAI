@@ -29,7 +29,28 @@
         .info-box { background: #e3f2fd; border: 1px solid #2196f3; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
         .info-box h3 { color: #1976d2; margin-bottom: 10px; }
         .info-box p { color: #424242; margin-bottom: 10px; }
-        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } .header h1 { font-size: 2rem; } }
+        
+        /* Form Sections */
+        .form-section { margin-bottom: 40px; padding: 30px; background: #f8f9fa; border-radius: 15px; border-left: 5px solid #667eea; }
+        .form-section h3 { color: #333; margin-bottom: 25px; font-size: 1.4rem; display: flex; align-items: center; gap: 10px; }
+        .form-section h3 i { color: #667eea; }
+        
+        /* Fee Information */
+        .fee-info { background: #e3f2fd; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #2196f3; }
+        .fee-info p { margin: 0; color: #1976d2; }
+        .fee-info p:first-child { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
+        
+        .fee-waiver { background: #fff3e0; padding: 20px; border-radius: 10px; margin-top: 20px; border: 1px solid #ff9800; }
+        .fee-waiver h4 { color: #e65100; margin-bottom: 15px; }
+        .fee-waiver p { color: #bf360c; margin-bottom: 10px; }
+        .fee-waiver ul { color: #bf360c; padding-left: 20px; }
+        .fee-waiver li { margin-bottom: 5px; }
+        
+        @media (max-width: 768px) { 
+            .form-row { grid-template-columns: 1fr; } 
+            .header h1 { font-size: 2rem; }
+            .form-section { padding: 20px; }
+        }
     </style>
 </head>
 <body>
@@ -59,93 +80,369 @@
             </div>
             
             <form id="msaiApplicationForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="firstName">First Name *</label>
-                        <input type="text" id="firstName" name="firstName" required>
+                <!-- Personal Information Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-user"></i> Personal Information</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
                     </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="middleName">Middle Name</label>
+                            <input type="text" id="middleName" name="middleName">
+                        </div>
+                        <div class="form-group">
+                            <label for="preferredName">Preferred Name</label>
+                            <input type="text" id="preferredName" name="preferredName">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dateOfBirth">Date of Birth *</label>
+                            <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender">
+                                <option value="">Prefer not to answer</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Non-binary">Non-binary</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
-                        <label for="lastName">Last Name *</label>
-                        <input type="text" id="lastName" name="lastName" required>
+                        <label for="address">Mailing Address *</label>
+                        <textarea id="address" name="address" rows="3" required placeholder="Street address, City, State, ZIP Code, Country"></textarea>
                     </div>
                 </div>
-                
-                <div class="form-row">
+
+                <!-- Academic Information Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Academic Information</h3>
+                    
                     <div class="form-group">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" required>
+                        <label for="undergraduateDegree">Undergraduate Degree *</label>
+                        <input type="text" id="undergraduateDegree" name="undergraduateDegree" required placeholder="e.g., Bachelor of Science in Computer Science">
                     </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="undergraduateInstitution">Institution *</label>
+                            <input type="text" id="undergraduateInstitution" name="undergraduateInstitution" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="undergraduateGPA">GPA *</label>
+                            <input type="number" id="undergraduateGPA" name="undergraduateGPA" step="0.01" min="0" max="4" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="graduationYear">Graduation Year *</label>
+                            <input type="number" id="graduationYear" name="graduationYear" min="1950" max="2024" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="classRank">Class Rank (if available)</label>
+                            <input type="text" id="classRank" name="classRank" placeholder="e.g., Top 10%, 15th out of 200">
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
-                        <label for="phone">Phone Number *</label>
-                        <input type="tel" id="phone" name="phone" required>
+                        <label for="relevantCoursework">Relevant Coursework *</label>
+                        <textarea id="relevantCoursework" name="relevantCoursework" rows="3" required placeholder="List courses in mathematics, computer science, statistics, AI, machine learning, etc."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="researchExperience">Research Experience</label>
+                        <textarea id="researchExperience" name="researchExperience" rows="3" placeholder="Describe any research projects, publications, or academic work"></textarea>
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="specialization">Specialization Track *</label>
-                    <select id="specialization" name="specialization" required>
-                        <option value="">Select a specialization</option>
-                        <option value="Machine Learning & Data Science">Machine Learning & Data Science</option>
-                        <option value="Natural Language Processing">Natural Language Processing</option>
-                        <option value="Computer Vision & Robotics">Computer Vision & Robotics</option>
-                        <option value="General AI">General AI</option>
-                    </select>
-                </div>
-                
-                <div class="form-row">
+
+                <!-- Program Preferences Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-cogs"></i> Program Preferences</h3>
+                    
                     <div class="form-group">
-                        <label for="startTerm">Start Term *</label>
-                        <select id="startTerm" name="startTerm" required>
-                            <option value="">Select start term</option>
-                            <option value="Fall 2024">Fall 2024</option>
-                            <option value="Spring 2025">Spring 2025</option>
-                            <option value="Fall 2025">Fall 2025</option>
-                            <option value="Spring 2026">Spring 2026</option>
+                        <label for="specialization">Specialization Track *</label>
+                        <select id="specialization" name="specialization" required>
+                            <option value="">Select a specialization</option>
+                            <option value="Machine Learning & Data Science">Machine Learning & Data Science</option>
+                            <option value="Natural Language Processing">Natural Language Processing</option>
+                            <option value="Computer Vision & Robotics">Computer Vision & Robotics</option>
+                            <option value="AI Ethics & Policy">AI Ethics & Policy</option>
+                            <option value="AI Systems & Engineering">AI Systems & Engineering</option>
+                            <option value="General AI">General AI</option>
                         </select>
                     </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startTerm">Start Term *</label>
+                            <select id="startTerm" name="startTerm" required>
+                                <option value="">Select start term</option>
+                                <option value="Fall 2024">Fall 2024</option>
+                                <option value="Spring 2025">Spring 2025</option>
+                                <option value="Fall 2025">Fall 2025</option>
+                                <option value="Spring 2026">Spring 2026</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="programFormat">Program Format *</label>
+                            <select id="programFormat" name="programFormat" required>
+                                <option value="">Select program format</option>
+                                <option value="Full-time">Full-time</option>
+                                <option value="Part-time">Part-time</option>
+                                <option value="Online">Online</option>
+                                <option value="Hybrid">Hybrid</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
-                        <label for="programFormat">Program Format *</label>
-                        <select id="programFormat" name="programFormat" required>
-                            <option value="">Select program format</option>
-                            <option value="Full-time">Full-time</option>
-                            <option value="Part-time">Part-time</option>
-                            <option value="Online">Online</option>
-                            <option value="Hybrid">Hybrid</option>
+                        <label for="thesisOption">Thesis Option *</label>
+                        <select id="thesisOption" name="thesisOption" required>
+                            <option value="">Select thesis option</option>
+                            <option value="Thesis">Thesis Track (Research-based)</option>
+                            <option value="Non-thesis">Non-thesis Track (Coursework + Project)</option>
+                            <option value="Undecided">Undecided</option>
                         </select>
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="undergraduateDegree">Undergraduate Degree *</label>
-                    <input type="text" id="undergraduateDegree" name="undergraduateDegree" required>
-                </div>
-                
-                <div class="form-row">
+
+                <!-- Professional Experience Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-briefcase"></i> Professional Experience</h3>
+                    
                     <div class="form-group">
-                        <label for="undergraduateGPA">Undergraduate GPA *</label>
-                        <input type="number" id="undergraduateGPA" name="undergraduateGPA" step="0.01" min="0" max="4" required>
+                        <label for="workExperience">Work Experience *</label>
+                        <textarea id="workExperience" name="workExperience" rows="4" required placeholder="Describe your professional experience, internships, and relevant work history"></textarea>
                     </div>
+                    
                     <div class="form-group">
-                        <label for="graduationYear">Graduation Year *</label>
-                        <input type="number" id="graduationYear" name="graduationYear" min="1950" max="2024" required>
+                        <label for="technicalSkills">Technical Skills *</label>
+                        <textarea id="technicalSkills" name="technicalSkills" rows="3" required placeholder="Programming languages, frameworks, tools, and technologies you're proficient in"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="projects">Notable Projects</label>
+                        <textarea id="projects" name="projects" rows="3" placeholder="Describe significant projects, GitHub repositories, or portfolio work"></textarea>
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="statementOfPurpose">Statement of Purpose *</label>
-                    <textarea id="statementOfPurpose" name="statementOfPurpose" rows="4" required placeholder="Tell us about your interest in AI and career goals..."></textarea>
+
+                <!-- Essays and Statements Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-file-alt"></i> Essays and Statements</h3>
+                    
+                    <div class="form-group">
+                        <label for="statementOfPurpose">Statement of Purpose *</label>
+                        <textarea id="statementOfPurpose" name="statementOfPurpose" rows="6" required placeholder="Explain your interest in AI, academic background, career goals, and why you want to pursue this MS AI program (500-1000 words)"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="researchInterests">Research Interests *</label>
+                        <textarea id="researchInterests" name="researchInterests" rows="4" required placeholder="Describe specific areas of AI research you're interested in and potential thesis topics"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="careerGoals">Career Goals *</label>
+                        <textarea id="careerGoals" name="careerGoals" rows="4" required placeholder="What are your short-term and long-term career goals in AI? How will this program help you achieve them?"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="diversityStatement">Diversity Statement (Optional)</label>
+                        <textarea id="diversityStatement" name="diversityStatement" rows="3" placeholder="How will you contribute to the diversity and inclusion of our program?"></textarea>
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="careerGoals">Career Goals *</label>
-                    <textarea id="careerGoals" name="careerGoals" rows="3" required placeholder="What are your career goals in AI?"></textarea>
+
+                <!-- References Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-users"></i> References</h3>
+                    
+                    <div class="form-group">
+                        <label for="reference1">Reference 1 *</label>
+                        <input type="text" id="reference1" name="reference1" required placeholder="Name, Title, Institution, Email, Phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reference2">Reference 2 *</label>
+                        <input type="text" id="reference2" name="reference2" required placeholder="Name, Title, Institution, Email, Phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reference3">Reference 3 (Optional)</label>
+                        <input type="text" id="reference3" name="reference3" placeholder="Name, Title, Institution, Email, Phone">
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="agreeTerms">
-                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
-                        I agree to the terms and conditions *
-                    </label>
+
+                <!-- Additional Information Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-info-circle"></i> Additional Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="englishProficiency">English Proficiency *</label>
+                        <select id="englishProficiency" name="englishProficiency" required>
+                            <option value="">Select proficiency level</option>
+                            <option value="Native">Native Speaker</option>
+                            <option value="TOEFL">TOEFL Score (provide score below)</option>
+                            <option value="IELTS">IELTS Score (provide score below)</option>
+                            <option value="Other">Other (specify below)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="testScores">Test Scores</label>
+                        <textarea id="testScores" name="testScores" rows="2" placeholder="GRE, TOEFL, IELTS, or other standardized test scores (if applicable)"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="honorsAwards">Honors and Awards</label>
+                        <textarea id="honorsAwards" name="honorsAwards" rows="3" placeholder="Academic honors, scholarships, competitions, or other achievements"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="additionalInfo">Additional Information</label>
+                        <textarea id="additionalInfo" name="additionalInfo" rows="3" placeholder="Any other information you'd like the admissions committee to know"></textarea>
+                    </div>
+                </div>
+
+                <!-- AI and Society Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-brain"></i> AI and Society - Critical Thinking Questions</h3>
+                    
+                    <div class="form-group">
+                        <label for="aiEthicsQuestion">AI Ethics and Bias (500-750 words) *</label>
+                        <textarea id="aiEthicsQuestion" name="aiEthicsQuestion" rows="6" required placeholder="Discuss a specific example of AI bias you've observed or read about. How would you address this issue as an AI practitioner? What role should diversity and inclusion play in AI development?"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aiImpactQuestion">AI's Impact on Society (400-600 words) *</label>
+                        <textarea id="aiImpactQuestion" name="aiImpactQuestion" rows="5" required placeholder="How do you envision AI transforming society in the next 10 years? What are the most significant opportunities and challenges? How can we ensure AI benefits all members of society?"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aiRegulationQuestion">AI Governance and Regulation (300-500 words) *</label>
+                        <textarea id="aiRegulationQuestion" name="aiRegulationQuestion" rows="4" required placeholder="What role should governments and international organizations play in regulating AI? How can we balance innovation with safety and ethical considerations?"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aiFutureQuestion">Future of AI Research (400-600 words) *</label>
+                        <textarea id="aiFutureQuestion" name="aiFutureQuestion" rows="5" required placeholder="What do you think are the most promising directions for AI research? How might advances in AI change the nature of work and education? What questions about AI do you find most compelling?"></textarea>
+                    </div>
+                </div>
+
+                <!-- Application Fee Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-credit-card"></i> Application Fee</h3>
+                    
+                    <div class="fee-info">
+                        <p><strong>Application Fee: $75 USD</strong></p>
+                        <p>This non-refundable fee covers the cost of processing your application and conducting the review process.</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method *</label>
+                        <select id="paymentMethod" name="paymentMethod" required>
+                            <option value="">Select payment method</option>
+                            <option value="Credit Card">Credit Card</option>
+                            <option value="Debit Card">Debit Card</option>
+                            <option value="PayPal">PayPal</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number *</label>
+                            <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date *</label>
+                            <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cvv">CVV *</label>
+                            <input type="text" id="cvv" name="cvv" placeholder="123" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardholderName">Cardholder Name *</label>
+                            <input type="text" id="cardholderName" name="cardholderName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="billingAddress">Billing Address *</label>
+                        <textarea id="billingAddress" name="billingAddress" rows="3" required placeholder="Street address, City, State, ZIP Code, Country"></textarea>
+                    </div>
+                    
+                    <div class="fee-waiver">
+                        <h4>Fee Waiver Information</h4>
+                        <p>Fee waivers are available for applicants who demonstrate financial need. To request a fee waiver:</p>
+                        <ul>
+                            <li>Submit a letter explaining your financial circumstances</li>
+                            <li>Include supporting documentation (tax returns, financial aid statements, etc.)</li>
+                            <li>Email to: admissions@msai.syzygyx.com</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Agreement Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-check-circle"></i> Agreement and Submission</h3>
+                    
+                    <div class="form-group">
+                        <label for="agreeTerms">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                            I agree to the terms and conditions and certify that all information provided is accurate *
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="agreePrivacy">
+                            <input type="checkbox" id="agreePrivacy" name="agreePrivacy" required>
+                            I consent to the processing of my personal data for admission purposes *
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="agreePayment">
+                            <input type="checkbox" id="agreePayment" name="agreePayment" required>
+                            I understand that the $75 application fee is non-refundable and will be charged upon submission *
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="agreeCommunications">
+                            <input type="checkbox" id="agreeCommunications" name="agreeCommunications">
+                            I would like to receive communications about the MS AI program
+                        </label>
+                    </div>
                 </div>
                 
                 <button type="submit" class="submit-btn">
@@ -167,14 +464,51 @@
             errorMessage.style.display = 'none';
             
             try {
+                // Validate payment information
+                const paymentMethod = document.getElementById('paymentMethod').value;
+                const cardNumber = document.getElementById('cardNumber').value;
+                const expiryDate = document.getElementById('expiryDate').value;
+                const cvv = document.getElementById('cvv').value;
+                const cardholderName = document.getElementById('cardholderName').value;
+                
+                if (paymentMethod === 'Credit Card' || paymentMethod === 'Debit Card') {
+                    if (!cardNumber || !expiryDate || !cvv || !cardholderName) {
+                        throw new Error('Please fill in all payment information fields');
+                    }
+                    
+                    // Basic card number validation
+                    if (!/^\d{4}\s?\d{4}\s?\d{4}\s?\d{4}$/.test(cardNumber.replace(/\s/g, ''))) {
+                        throw new Error('Please enter a valid 16-digit card number');
+                    }
+                    
+                    // Basic expiry date validation
+                    if (!/^\d{2}\/\d{2}$/.test(expiryDate)) {
+                        throw new Error('Please enter expiry date in MM/YY format');
+                    }
+                    
+                    // Basic CVV validation
+                    if (!/^\d{3,4}$/.test(cvv)) {
+                        throw new Error('Please enter a valid CVV');
+                    }
+                }
+                
                 // Collect form data
                 const formData = new FormData(this);
                 const data = Object.fromEntries(formData);
                 
                 // For now, just show success message
-                // In production, this would submit to the API
+                // In production, this would submit to the API and process payment
                 console.log('Application data:', data);
                 
+                // Show success message with payment confirmation
+                successMessage.innerHTML = `
+                    <i class="fas fa-check-circle"></i> 
+                    Application submitted successfully! 
+                    <br><br>
+                    <strong>Payment Status:</strong> $75 application fee will be processed.<br>
+                    <strong>Application ID:</strong> MSAI-${Date.now()}<br>
+                    <strong>Next Steps:</strong> You will receive an email confirmation within 24 hours with further instructions.
+                `;
                 successMessage.style.display = 'block';
                 this.reset();
                 
@@ -183,8 +517,30 @@
                 
             } catch (error) {
                 console.error('Error submitting form:', error);
+                errorMessage.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${error.message}`;
                 errorMessage.style.display = 'block';
             }
+        });
+        
+        // Add input formatting for card number
+        document.getElementById('cardNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+        
+        // Add input formatting for expiry date
+        document.getElementById('expiryDate').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+        
+        // Add input formatting for CVV
+        document.getElementById('cvv').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
         });
     </script>
 </body>
