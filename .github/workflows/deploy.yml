@@ -41,7 +41,7 @@ jobs:
         
     - name: Create deployment directory
       run: |
-        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "sudo mkdir -p /var/www/msai"
+        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "sudo mkdir -p /var/www/msai && sudo chown -R ec2-user:ec2-user /var/www/msai"
         
     - name: Sync files to server
       run: |
