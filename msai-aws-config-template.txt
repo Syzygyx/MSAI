@@ -1,0 +1,25 @@
+# MS AI User AWS Configuration Template
+# Use this after creating the msai user and access keys
+
+# 1. Configure AWS CLI with msai profile
+aws configure --profile msai
+
+# When prompted, enter:
+# AWS Access Key ID: [from msai-access-keys.json]
+# AWS Secret Access Key: [from msai-access-keys.json]
+# Default region name: us-east-1
+# Default output format: json
+
+# 2. Test the configuration
+aws --profile msai sts get-caller-identity
+
+# 3. Use msai profile for all MS AI operations
+aws --profile msai ec2 describe-instances
+aws --profile msai route53 list-hosted-zones
+
+# 4. Set as default profile (optional)
+export AWS_PROFILE=msai
+
+# 5. Verify permissions
+aws --profile msai iam get-user --user-name msai
+aws --profile msai ec2 describe-instances --query 'Reservations[0].Instances[0].InstanceId' --output text

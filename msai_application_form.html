@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSAI Application Form - Master of Science in Artificial Intelligence</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-help {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .reference-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .file-upload small {
+            display: block;
+            margin-top: 5px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .file-upload {
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: border-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .file-upload:hover {
+            border-color: #667eea;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload-icon {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .submit-section {
+            text-align: center;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            margin-left: 10px;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-graduation-cap"></i> MSAI Application</h1>
+            <p>Master of Science in Artificial Intelligence - Application Form</p>
+        </div>
+
+        <form id="msaiApplicationForm" class="form-container">
+            <!-- Personal Information -->
+            <div class="form-section">
+                <h2 class="section-title">Personal Information</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name <span class="required">*</span></label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name <span class="required">*</span></label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dateOfBirth">Date of Birth <span class="required">*</span></label>
+                        <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Non-binary">Non-binary</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address <span class="required">*</span></label>
+                    <textarea id="address" name="address" placeholder="Street address, City, State, ZIP Code, Country" required></textarea>
+                </div>
+            </div>
+
+            <!-- Academic Information -->
+            <div class="form-section">
+                <h2 class="section-title">Academic Information</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="undergraduateDegree">Undergraduate Degree <span class="required">*</span></label>
+                        <input type="text" id="undergraduateDegree" name="undergraduateDegree" placeholder="e.g., Bachelor of Science in Computer Science" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="undergraduateGPA">Undergraduate GPA <span class="required">*</span></label>
+                        <input type="number" id="undergraduateGPA" name="undergraduateGPA" step="0.01" min="0" max="4" placeholder="3.50" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="undergraduateInstitution">Undergraduate Institution <span class="required">*</span></label>
+                        <input type="text" id="undergraduateInstitution" name="undergraduateInstitution" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="graduationYear">Graduation Year <span class="required">*</span></label>
+                        <input type="number" id="graduationYear" name="graduationYear" min="1950" max="2030" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="graduateDegree">Graduate Degree (if applicable)</label>
+                    <input type="text" id="graduateDegree" name="graduateDegree" placeholder="e.g., Master of Science in Data Science">
+                </div>
+
+                <div class="form-group">
+                    <label>Test Scores</label>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="greScore">GRE Score</label>
+                            <input type="number" id="greScore" name="greScore" min="260" max="340" placeholder="320">
+                        </div>
+                        <div class="form-group">
+                            <label for="toeflScore">TOEFL Score (if applicable)</label>
+                            <input type="number" id="toeflScore" name="toeflScore" min="0" max="120" placeholder="110">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program Information -->
+            <div class="form-section">
+                <h2 class="section-title">Program Information</h2>
+                
+                <div class="form-group">
+                    <label for="specialization">Preferred Specialization <span class="required">*</span></label>
+                    <select id="specialization" name="specialization" required>
+                        <option value="">Select Specialization</option>
+                        <option value="Machine Learning & Data Science">Machine Learning & Data Science</option>
+                        <option value="Natural Language Processing">Natural Language Processing</option>
+                        <option value="Computer Vision & Robotics">Computer Vision & Robotics</option>
+                        <option value="General AI">General AI</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="startTerm">Preferred Start Term <span class="required">*</span></label>
+                    <select id="startTerm" name="startTerm" required>
+                        <option value="">Select Start Term</option>
+                        <option value="Fall 2024">Fall 2024</option>
+                        <option value="Spring 2025">Spring 2025</option>
+                        <option value="Fall 2025">Fall 2025</option>
+                        <option value="Spring 2026">Spring 2026</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="programFormat">Program Format <span class="required">*</span></label>
+                    <select id="programFormat" name="programFormat" required>
+                        <option value="">Select Format</option>
+                        <option value="Full-time">Full-time</option>
+                        <option value="Part-time">Part-time</option>
+                        <option value="Online">Online</option>
+                        <option value="Hybrid">Hybrid</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Areas of Interest (select all that apply)</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="interest_ml" name="interests" value="Machine Learning">
+                            <label for="interest_ml">Machine Learning</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="interest_nlp" name="interests" value="Natural Language Processing">
+                            <label for="interest_nlp">Natural Language Processing</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="interest_cv" name="interests" value="Computer Vision">
+                            <label for="interest_cv">Computer Vision</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="interest_robotics" name="interests" value="Robotics">
+                            <label for="interest_robotics">Robotics</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="interest_ethics" name="interests" value="AI Ethics">
+                            <label for="interest_ethics">AI Ethics</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="interest_research" name="interests" value="Research">
+                            <label for="interest_research">Research</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Essay Questions -->
+            <div class="form-section">
+                <h2 class="section-title">Essay Questions</h2>
+                
+                <div class="form-group">
+                    <label for="statementOfPurpose">Statement of Purpose <span class="required">*</span></label>
+                    <textarea id="statementOfPurpose" name="statementOfPurpose" placeholder="Please explain your motivation for pursuing a Master's degree in Artificial Intelligence, your career goals, and how this program aligns with your aspirations. (500-1000 words)" required></textarea>
+                    <small class="form-help">Word count: <span id="sopWordCount">0</span>/500-1000 words</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="personalStatement">Personal Statement <span class="required">*</span></label>
+                    <textarea id="personalStatement" name="personalStatement" placeholder="Describe your personal journey, challenges overcome, and unique experiences that have shaped your interest in AI. (300-500 words)" required></textarea>
+                    <small class="form-help">Word count: <span id="psWordCount">0</span>/300-500 words</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="diversityStatement">Diversity Statement <span class="required">*</span></label>
+                    <textarea id="diversityStatement" name="diversityStatement" placeholder="Please describe how your background, experiences, or perspectives would contribute to the diversity of our program. (200-400 words)" required></textarea>
+                    <small class="form-help">Word count: <span id="dsWordCount">0</span>/200-400 words</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="researchExperience">Research Experience and Interests <span class="required">*</span></label>
+                    <textarea id="researchExperience" name="researchExperience" placeholder="Describe any research experience, projects, publications, or specific areas of AI research that interest you. (300-500 words)" required></textarea>
+                    <small class="form-help">Word count: <span id="reWordCount">0</span>/300-500 words</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="careerGoals">Career Goals and Aspirations <span class="required">*</span></label>
+                    <textarea id="careerGoals" name="careerGoals" placeholder="Describe your short-term and long-term career goals in AI, and how this program will help you achieve them. (200-400 words)" required></textarea>
+                    <small class="form-help">Word count: <span id="cgWordCount">0</span>/200-400 words</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="additionalInfo">Additional Information</label>
+                    <textarea id="additionalInfo" name="additionalInfo" placeholder="Any additional information you would like the admissions committee to know about you. (Optional, 200 words max)"></textarea>
+                    <small class="form-help">Word count: <span id="aiWordCount">0</span>/200 words max</small>
+                </div>
+            </div>
+
+            <!-- Work Experience -->
+            <div class="form-section">
+                <h2 class="section-title">Work Experience</h2>
+                
+                <div class="form-group">
+                    <label for="currentEmployer">Current Employer</label>
+                    <input type="text" id="currentEmployer" name="currentEmployer" placeholder="Company/Organization name">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="currentPosition">Current Position</label>
+                        <input type="text" id="currentPosition" name="currentPosition" placeholder="Job title">
+                    </div>
+                    <div class="form-group">
+                        <label for="workExperience">Years of Work Experience</label>
+                        <select id="workExperience" name="workExperience">
+                            <option value="">Select Experience</option>
+                            <option value="0-1 years">0-1 years</option>
+                            <option value="2-3 years">2-3 years</option>
+                            <option value="4-5 years">4-5 years</option>
+                            <option value="6-10 years">6-10 years</option>
+                            <option value="10+ years">10+ years</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="relevantExperience">Relevant Experience in AI/Technology</label>
+                    <textarea id="relevantExperience" name="relevantExperience" placeholder="Describe any relevant work experience in AI, machine learning, data science, or related fields."></textarea>
+                </div>
+            </div>
+
+            <!-- References -->
+            <div class="form-section">
+                <h2 class="section-title">References (3 Required)</h2>
+                <p style="color: #666; margin-bottom: 20px;">Please provide three references who can speak to your academic ability, research potential, and character. At least two should be academic references.</p>
+                
+                <!-- Reference 1 -->
+                <div class="reference-section">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">Reference 1 (Academic Preferred)</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reference1Name">Full Name <span class="required">*</span></label>
+                            <input type="text" id="reference1Name" name="reference1Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reference1Title">Title/Position <span class="required">*</span></label>
+                            <input type="text" id="reference1Title" name="reference1Title" placeholder="e.g., Professor, Associate Professor" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reference1Email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="reference1Email" name="reference1Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reference1Phone">Phone Number</label>
+                            <input type="tel" id="reference1Phone" name="reference1Phone">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reference1Institution">Institution/Organization <span class="required">*</span></label>
+                            <input type="text" id="reference1Institution" name="reference1Institution" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reference1Relationship">Relationship to You <span class="required">*</span></label>
+                            <select id="reference1Relationship" name="reference1Relationship" required>
+                                <option value="">Select Relationship</option>
+                                <option value="Academic Advisor">Academic Advisor</option>
+                                <option value="Professor">Professor</option>
+                                <option value="Research Supervisor">Research Supervisor</option>
+                                <option value="Thesis Advisor">Thesis Advisor</option>
+                                <option value="Course Instructor">Course Instructor</option>
+                                <option value="Work Supervisor">Work Supervisor</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reference1YearsKnown">How long have you known this person? <span class="required">*</span></label>
+                        <select id="reference1YearsKnown" name="reference1YearsKnown" required>
+                            <option value="">Select Duration</option>
+                            <option value="Less than 1 year">Less than 1 year</option>
+                            <option value="1-2 years">1-2 years</option>
+                            <option value="2-3 years">2-3 years</option>
+                            <option value="3-5 years">3-5 years</option>
+                            <option value="More than 5 years">More than 5 years</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Reference 2 -->
+                <div class="reference-section">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">Reference 2 (Academic Preferred)</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reference2Name">Full Name <span class="required">*</span></label>
+                            <input type="text" id="reference2Name" name="reference2Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reference2Title">Title/Position <span class="required">*</span></label>
+                            <input type="text" id="reference2Title" name="reference2Title" placeholder="e.g., Professor, Associate Professor" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reference2Email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="reference2Email" name="reference2Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reference2Phone">Phone Number</label>
+                            <input type="tel" id="reference2Phone" name="reference2Phone">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reference2Institution">Institution/Organization <span class="required">*</span></label>
+                            <input type="text" id="reference2Institution" name="reference2Institution" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reference2Relationship">Relationship to You <span class="required">*</span></label>
+                            <select id="reference2Relationship" name="reference2Relationship" required>
+                                <option value="">Select Relationship</option>
+                                <option value="Academic Advisor">Academic Advisor</option>
+                                <option value="Professor">Professor</option>
+                                <option value="Research Supervisor">Research Supervisor</option>
+                                <option value="Thesis Advisor">Thesis Advisor</option>
+                                <option value="Course Instructor">Course Instructor</option>
+                                <option value="Work Supervisor">Work Supervisor</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reference2YearsKnown">How long have you known this person? <span class="required">*</span></label>
+                        <select id="reference2YearsKnown" name="reference2YearsKnown" required>
+                            <option value="">Select Duration</option>
+                            <option value="Less than 1 year">Less than 1 year</option>
+                            <option value="1-2 years">1-2 years</option>
+                            <option value="2-3 years">2-3 years</option>
+                            <option value="3-5 years">3-5 years</option>
+                            <option value="More than 5 years">More than 5 years</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Reference 3 -->
+                <div class="reference-section">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">Reference 3 (Academic or Professional)</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reference3Name">Full Name <span class="required">*</span></label>
+                            <input type="text" id="reference3Name" name="reference3Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reference3Title">Title/Position <span class="required">*</span></label>
+                            <input type="text" id="reference3Title" name="reference3Title" placeholder="e.g., Professor, Manager, Director" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reference3Email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="reference3Email" name="reference3Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reference3Phone">Phone Number</label>
+                            <input type="tel" id="reference3Phone" name="reference3Phone">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reference3Institution">Institution/Organization <span class="required">*</span></label>
+                            <input type="text" id="reference3Institution" name="reference3Institution" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reference3Relationship">Relationship to You <span class="required">*</span></label>
+                            <select id="reference3Relationship" name="reference3Relationship" required>
+                                <option value="">Select Relationship</option>
+                                <option value="Academic Advisor">Academic Advisor</option>
+                                <option value="Professor">Professor</option>
+                                <option value="Research Supervisor">Research Supervisor</option>
+                                <option value="Thesis Advisor">Thesis Advisor</option>
+                                <option value="Course Instructor">Course Instructor</option>
+                                <option value="Work Supervisor">Work Supervisor</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Colleague">Colleague</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reference3YearsKnown">How long have you known this person? <span class="required">*</span></label>
+                        <select id="reference3YearsKnown" name="reference3YearsKnown" required>
+                            <option value="">Select Duration</option>
+                            <option value="Less than 1 year">Less than 1 year</option>
+                            <option value="1-2 years">1-2 years</option>
+                            <option value="2-3 years">2-3 years</option>
+                            <option value="3-5 years">3-5 years</option>
+                            <option value="More than 5 years">More than 5 years</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Document Upload -->
+            <div class="form-section">
+                <h2 class="section-title">Required Documents</h2>
+                <p style="color: #666; margin-bottom: 20px;">Please upload all required documents. All files should be in PDF format and clearly labeled.</p>
+                
+                <div class="form-group">
+                    <label>Official Transcripts <span class="required">*</span></label>
+                    <div class="file-upload" onclick="document.getElementById('transcript').click()">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <p>Upload official transcripts from all colleges/universities attended</p>
+                        <small>PDF format, max 10MB per file</small>
+                        <input type="file" id="transcript" name="transcript" accept=".pdf" multiple required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Resume/Curriculum Vitae <span class="required">*</span></label>
+                    <div class="file-upload" onclick="document.getElementById('resume').click()">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <p>Upload your current resume or CV</p>
+                        <small>PDF format, max 5MB</small>
+                        <input type="file" id="resume" name="resume" accept=".pdf" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>GRE Scores (if available)</label>
+                    <div class="file-upload" onclick="document.getElementById('greScores').click()">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <p>Upload official GRE score report</p>
+                        <small>PDF format, max 5MB</small>
+                        <input type="file" id="greScores" name="greScores" accept=".pdf">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>TOEFL/IELTS Scores (International Students)</label>
+                    <div class="file-upload" onclick="document.getElementById('englishScores').click()">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <p>Upload official English proficiency test scores</p>
+                        <small>PDF format, max 5MB</small>
+                        <input type="file" id="englishScores" name="englishScores" accept=".pdf">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Writing Sample (Optional but Recommended)</label>
+                    <div class="file-upload" onclick="document.getElementById('writingSample').click()">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <p>Upload a writing sample (research paper, thesis, or other academic work)</p>
+                        <small>PDF format, max 10MB</small>
+                        <input type="file" id="writingSample" name="writingSample" accept=".pdf">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Portfolio/Project Work (Optional)</label>
+                    <div class="file-upload" onclick="document.getElementById('portfolio').click()">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <p>Upload examples of your work, projects, or portfolio</p>
+                        <small>PDF format, max 20MB total</small>
+                        <input type="file" id="portfolio" name="portfolio" accept=".pdf" multiple>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Additional Supporting Documents</label>
+                    <div class="file-upload" onclick="document.getElementById('additionalDocs').click()">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-folder-open"></i>
+                        </div>
+                        <p>Upload any additional documents that support your application</p>
+                        <small>PDF format, max 10MB per file</small>
+                        <input type="file" id="additionalDocs" name="additionalDocs" accept=".pdf" multiple>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="form-section">
+                <h2 class="section-title">Additional Information</h2>
+                
+                <div class="form-group">
+                    <label for="howDidYouHear">How did you hear about our program?</label>
+                    <select id="howDidYouHear" name="howDidYouHear">
+                        <option value="">Select Option</option>
+                        <option value="University Website">University Website</option>
+                        <option value="Social Media">Social Media</option>
+                        <option value="Academic Advisor">Academic Advisor</option>
+                        <option value="Current Student">Current Student</option>
+                        <option value="Alumni">Alumni</option>
+                        <option value="Online Search">Online Search</option>
+                        <option value="Conference/Event">Conference/Event</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="additionalComments">Additional Comments</label>
+                    <textarea id="additionalComments" name="additionalComments" placeholder="Any additional information you'd like to share with the admissions committee."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                        <label for="agreeTerms">I agree to the terms and conditions and privacy policy <span class="required">*</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="agreeMarketing" name="agreeMarketing">
+                        <label for="agreeMarketing">I agree to receive marketing communications about the program</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-section">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> Submit Application
+                    <span class="loading" id="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </span>
+                </button>
+                
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i> Application submitted successfully! You will receive a confirmation email shortly.
+                </div>
+                
+                <div class="error-message" id="errorMessage">
+                    <i class="fas fa-exclamation-circle"></i> There was an error submitting your application. Please try again.
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Form submission handler
+        document.getElementById('msaiApplicationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const progressFill = document.getElementById('progressFill');
+            
+            // Reset messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            loading.style.display = 'inline';
+            progressFill.style.width = '30%';
+            
+            try {
+                // Collect form data
+                const formData = new FormData(this);
+                
+                // Convert interests checkboxes to array
+                const interests = [];
+                document.querySelectorAll('input[name="interests"]:checked').forEach(checkbox => {
+                    interests.push(checkbox.value);
+                });
+                formData.set('interests', interests.join(', '));
+                
+                // Simulate form processing (replace with actual Google Sheets integration)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                progressFill.style.width = '100%';
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                submitBtn.style.display = 'none';
+                
+                // Here you would integrate with Google Sheets API
+                console.log('Form data collected:', Object.fromEntries(formData));
+                
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                errorMessage.style.display = 'block';
+                submitBtn.disabled = false;
+                loading.style.display = 'none';
+                progressFill.style.width = '0%';
+            }
+        });
+
+        // File upload handlers
+        document.getElementById('transcript').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const uploadDiv = e.target.closest('.file-upload');
+                uploadDiv.querySelector('p').textContent = `Selected: ${file.name}`;
+                uploadDiv.style.borderColor = '#667eea';
+            }
+        });
+
+        document.getElementById('resume').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const uploadDiv = e.target.closest('.file-upload');
+                uploadDiv.querySelector('p').textContent = `Selected: ${file.name}`;
+                uploadDiv.style.borderColor = '#667eea';
+            }
+        });
+
+        document.getElementById('additionalDocs').addEventListener('change', function(e) {
+            const files = e.target.files;
+            if (files.length > 0) {
+                const uploadDiv = e.target.closest('.file-upload');
+                uploadDiv.querySelector('p').textContent = `Selected: ${files.length} file(s)`;
+                uploadDiv.style.borderColor = '#667eea';
+            }
+        });
+
+        // Form validation
+        function validateForm() {
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#e74c3c';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#e0e0e0';
+                }
+            });
+            
+            return isValid;
+        }
+
+        // Real-time validation
+        document.querySelectorAll('input, select, textarea').forEach(field => {
+            field.addEventListener('blur', function() {
+                if (this.hasAttribute('required') && !this.value.trim()) {
+                    this.style.borderColor = '#e74c3c';
+                } else {
+                    this.style.borderColor = '#e0e0e0';
+                }
+            });
+        });
+
+        // Word count functionality
+        function updateWordCount(textareaId, counterId, minWords, maxWords) {
+            const textarea = document.getElementById(textareaId);
+            const counter = document.getElementById(counterId);
+            
+            if (textarea && counter) {
+                textarea.addEventListener('input', function() {
+                    const wordCount = this.value.trim().split(/\s+/).filter(word => word.length > 0).length;
+                    counter.textContent = wordCount;
+                    
+                    if (wordCount < minWords) {
+                        counter.style.color = '#e74c3c';
+                    } else if (wordCount > maxWords) {
+                        counter.style.color = '#f39c12';
+                    } else {
+                        counter.style.color = '#27ae60';
+                    }
+                });
+            }
+        }
+
+        // Initialize word counters
+        document.addEventListener('DOMContentLoaded', function() {
+            updateWordCount('statementOfPurpose', 'sopWordCount', 500, 1000);
+            updateWordCount('personalStatement', 'psWordCount', 300, 500);
+            updateWordCount('diversityStatement', 'dsWordCount', 200, 400);
+            updateWordCount('researchExperience', 'reWordCount', 300, 500);
+            updateWordCount('careerGoals', 'cgWordCount', 200, 400);
+            updateWordCount('additionalInfo', 'aiWordCount', 0, 200);
+        });
+    </script>
+</body>
+</html>

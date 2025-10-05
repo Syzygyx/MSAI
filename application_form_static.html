@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,12 +24,6 @@
         .submit-btn:hover { transform: translateY(-2px); }
         .success-message { background: #d4edda; color: #155724; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: none; }
         .error-message { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: none; }
-        .back-link { text-align: center; margin-bottom: 20px; }
-        .back-link a { color: #667eea; text-decoration: none; font-weight: 600; }
-        .back-link a:hover { text-decoration: underline; }
-        .info-box { background: #e3f2fd; border: 1px solid #2196f3; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
-        .info-box h3 { color: #1976d2; margin-bottom: 10px; }
-        .info-box p { color: #424242; margin-bottom: 10px; }
         @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } .header h1 { font-size: 2rem; } }
     </style>
 </head>
@@ -36,20 +31,10 @@
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-graduation-cap"></i> MSAI Application</h1>
-            <p>Master of Science in Artificial Intelligence - Apply Now (Deployed via GitHub Actions!)</p>
+            <p>Master of Science in Artificial Intelligence - Apply Now</p>
         </div>
         
         <div class="form-container">
-            <div class="back-link">
-                <a href="http://msai.syzygyx.com">← Back to MS AI Curriculum System</a>
-            </div>
-            
-            <div class="info-box">
-                <h3><i class="fas fa-info-circle"></i> Application Status</h3>
-                <p><strong>✅ Application form is now live!</strong></p>
-                <p>This form is fully functional and ready to accept applications. All data will be processed securely.</p>
-            </div>
-            
             <div class="success-message" id="successMessage">
                 <i class="fas fa-check-circle"></i> Application submitted successfully! We'll be in touch soon.
             </div>
@@ -137,13 +122,18 @@
                 </div>
                 
                 <div class="form-group">
+                    <label for="researchExperience">Research Experience</label>
+                    <textarea id="researchExperience" name="researchExperience" rows="3" placeholder="Describe any research experience or projects..."></textarea>
+                </div>
+                
+                <div class="form-group">
                     <label for="careerGoals">Career Goals *</label>
                     <textarea id="careerGoals" name="careerGoals" rows="3" required placeholder="What are your career goals in AI?"></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <label for="agreeTerms">
-                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                    <label>
+                        <input type="checkbox" name="agreeTerms" required>
                         I agree to the terms and conditions *
                     </label>
                 </div>
@@ -189,3 +179,4 @@
     </script>
 </body>
 </html>
+    

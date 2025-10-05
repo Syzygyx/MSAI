@@ -1,3 +1,36 @@
+#!/usr/bin/env python3
+"""
+Simple Application Form Deployment
+This script creates a working application form solution without SSH access
+"""
+
+import requests
+import json
+import time
+
+def create_working_solution():
+    """Create a working application form solution"""
+    
+    print("🚀 Creating Working Application Form Solution")
+    print("=" * 60)
+    
+    # Test the current server
+    base_url = "http://msai.syzygyx.com"
+    
+    print("🔍 Testing current server...")
+    try:
+        response = requests.get(f"{base_url}/health", timeout=10)
+        if response.status_code == 200:
+            print("✅ Server is accessible")
+        else:
+            print(f"❌ Server returned status: {response.status_code}")
+            return False
+    except Exception as e:
+        print(f"❌ Cannot connect to server: {e}")
+        return False
+    
+    # Create a simple application form that can be hosted anywhere
+    application_form_html = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,9 +59,6 @@
         .back-link { text-align: center; margin-bottom: 20px; }
         .back-link a { color: #667eea; text-decoration: none; font-weight: 600; }
         .back-link a:hover { text-decoration: underline; }
-        .info-box { background: #e3f2fd; border: 1px solid #2196f3; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
-        .info-box h3 { color: #1976d2; margin-bottom: 10px; }
-        .info-box p { color: #424242; margin-bottom: 10px; }
         @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } .header h1 { font-size: 2rem; } }
     </style>
 </head>
@@ -36,18 +66,12 @@
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-graduation-cap"></i> MSAI Application</h1>
-            <p>Master of Science in Artificial Intelligence - Apply Now (Deployed via GitHub Actions!)</p>
+            <p>Master of Science in Artificial Intelligence - Apply Now</p>
         </div>
         
         <div class="form-container">
             <div class="back-link">
                 <a href="http://msai.syzygyx.com">← Back to MS AI Curriculum System</a>
-            </div>
-            
-            <div class="info-box">
-                <h3><i class="fas fa-info-circle"></i> Application Status</h3>
-                <p><strong>✅ Application form is now live!</strong></p>
-                <p>This form is fully functional and ready to accept applications. All data will be processed securely.</p>
             </div>
             
             <div class="success-message" id="successMessage">
@@ -137,13 +161,18 @@
                 </div>
                 
                 <div class="form-group">
+                    <label for="researchExperience">Research Experience</label>
+                    <textarea id="researchExperience" name="researchExperience" rows="3" placeholder="Describe any research experience or projects..."></textarea>
+                </div>
+                
+                <div class="form-group">
                     <label for="careerGoals">Career Goals *</label>
                     <textarea id="careerGoals" name="careerGoals" rows="3" required placeholder="What are your career goals in AI?"></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <label for="agreeTerms">
-                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                    <label>
+                        <input type="checkbox" name="agreeTerms" required>
                         I agree to the terms and conditions *
                     </label>
                 </div>
@@ -189,3 +218,64 @@
     </script>
 </body>
 </html>
+    """
+    
+    # Save the application form
+    with open('msai_application_form_working.html', 'w') as f:
+        f.write(application_form_html)
+    
+    print("✅ Application form created: msai_application_form_working.html")
+    
+    # Create a simple redirect page for the main site
+    redirect_html = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MSAI Application Form</title>
+    <meta http-equiv="refresh" content="0; url=https://msai-application-form.s3.amazonaws.com/application.html">
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; margin-bottom: 20px; }
+        p { color: #666; margin-bottom: 30px; }
+        .btn { background: #007bff; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; }
+        .btn:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 MSAI Application Form</h1>
+        <p>Redirecting to the application form...</p>
+        <p>If you are not redirected automatically, <a href="https://msai-application-form.s3.amazonaws.com/application.html" class="btn">click here</a></p>
+    </div>
+</body>
+</html>
+    """
+    
+    with open('application_redirect_page.html', 'w') as f:
+        f.write(redirect_html)
+    
+    print("✅ Redirect page created: application_redirect_page.html")
+    
+    # Create a simple solution summary
+    print("\n🎯 WORKING SOLUTION CREATED")
+    print("=" * 50)
+    print("✅ Application form HTML ready")
+    print("✅ Redirect page created")
+    print("✅ No SSH access required")
+    print("\n📋 IMMEDIATE SOLUTIONS:")
+    print("1. Host the form on any static hosting service")
+    print("2. Use GitHub Pages, Netlify, or Vercel")
+    print("3. Upload to any web server")
+    print("4. The form is completely self-contained")
+    
+    print("\n🌐 QUICK DEPLOYMENT OPTIONS:")
+    print("1. GitHub Pages: Upload to a GitHub repository")
+    print("2. Netlify: Drag and drop the HTML file")
+    print("3. Vercel: Deploy with one click")
+    print("4. Any web server: Upload the file")
+    
+    return True
+
+if __name__ == "__main__":
+    create_working_solution()

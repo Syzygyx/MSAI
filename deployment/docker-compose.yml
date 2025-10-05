@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: msai-web
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://msai_user:${DB_PASSWORD}@db:5432/msai_db
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=False
+      - ENVIRONMENT=production
+    volumes:
+      - ./static:/app/static
+      - ./media:/app/media
+      - ./logs:/app/logs
+    depends_on:
+      - db
+      - redis
+    networks:
+      - msai-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  db:
+    image: postgres:15-alpine
+    container_name: msai-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=msai_db
+      - POSTGRES_USER=msai_user
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - msai-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U msai_user -d msai_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: msai-redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - msai-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: msai-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/nginx/ssl
+      - ./static:/var/www/static
+      - ./media:/var/www/media
+    depends_on:
+      - web
+    networks:
+      - msai-network
+
+  worker:
+    build: .
+    container_name: msai-worker
+    restart: unless-stopped
+    command: celery -A app.celery worker --loglevel=info
+    environment:
+      - DATABASE_URL=postgresql://msai_user:${DB_PASSWORD}@db:5432/msai_db
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY}
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - db
+      - redis
+    networks:
+      - msai-network
+
+  scheduler:
+    build: .
+    container_name: msai-scheduler
+    restart: unless-stopped
+    command: celery -A app.celery beat --loglevel=info
+    environment:
+      - DATABASE_URL=postgresql://msai_user:${DB_PASSWORD}@db:5432/msai_db
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY}
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - db
+      - redis
+    networks:
+      - msai-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  msai-network:
+    driver: bridge

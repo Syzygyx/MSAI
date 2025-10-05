@@ -1,0 +1,15 @@
+[Unit]
+Description=MS AI Curriculum System with Application Form
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/opt/msai
+Environment=PATH=/opt/msai/venv/bin
+ExecStart=/opt/msai/venv/bin/python app.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

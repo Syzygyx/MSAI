@@ -1,0 +1,66 @@
+# MS AI Curriculum System - Production Dependencies
+
+# Core web framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+gunicorn==21.2.0
+
+# Database
+sqlalchemy==2.0.23
+alembic==1.12.1
+psycopg2-binary==2.9.9
+
+# Redis and caching
+redis==5.0.1
+celery==5.3.4
+
+# AI/ML libraries
+torch==2.1.1
+torchvision==0.16.1
+scikit-learn==1.3.2
+numpy==1.24.4
+pandas==2.1.3
+matplotlib==3.8.2
+
+# Human-centered learning
+nltk==3.8.1
+spacy==3.7.2
+transformers==4.35.2
+plotly==5.17.0
+streamlit==1.28.1
+
+# Web automation
+playwright==1.40.0
+
+# Social and collaborative features
+python-socketio==5.10.0
+opencv-python==4.8.1.78
+
+# Emotional intelligence and NLP
+textblob==0.17.1
+empath==0.90
+wordcloud==1.9.2
+
+# Authentication and security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# Environment and configuration
+python-dotenv==1.0.0
+pydantic==2.5.0
+pydantic-settings==2.0.3
+
+# Monitoring and logging
+structlog==23.2.0
+sentry-sdk[fastapi]==1.38.0
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+
+# Development tools
+black==23.11.0
+flake8==6.1.0
+mypy==1.7.1

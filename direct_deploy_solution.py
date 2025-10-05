@@ -1,3 +1,37 @@
+#!/usr/bin/env python3
+"""
+Direct Deployment Solution
+This script creates a working application form that can be deployed immediately
+"""
+
+import requests
+import json
+import time
+
+def create_direct_solution():
+    """Create a direct deployment solution"""
+    
+    print("🚀 Creating Direct Deployment Solution")
+    print("=" * 60)
+    
+    # Test the current server
+    base_url = "http://msai.syzygyx.com"
+    
+    print("🔍 Testing current server...")
+    try:
+        response = requests.get(f"{base_url}/health", timeout=10)
+        if response.status_code == 200:
+            print("✅ Server is accessible")
+            print(f"   Response: {response.json()}")
+        else:
+            print(f"❌ Server returned status: {response.status_code}")
+            return False
+    except Exception as e:
+        print(f"❌ Cannot connect to server: {e}")
+        return False
+    
+    # Create a simple application form that works with the current server
+    application_form_html = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +70,7 @@
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-graduation-cap"></i> MSAI Application</h1>
-            <p>Master of Science in Artificial Intelligence - Apply Now (Deployed via GitHub Actions!)</p>
+            <p>Master of Science in Artificial Intelligence - Apply Now</p>
         </div>
         
         <div class="form-container">
@@ -137,13 +171,18 @@
                 </div>
                 
                 <div class="form-group">
+                    <label for="researchExperience">Research Experience</label>
+                    <textarea id="researchExperience" name="researchExperience" rows="3" placeholder="Describe any research experience or projects..."></textarea>
+                </div>
+                
+                <div class="form-group">
                     <label for="careerGoals">Career Goals *</label>
                     <textarea id="careerGoals" name="careerGoals" rows="3" required placeholder="What are your career goals in AI?"></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <label for="agreeTerms">
-                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                    <label>
+                        <input type="checkbox" name="agreeTerms" required>
                         I agree to the terms and conditions *
                     </label>
                 </div>
@@ -189,3 +228,38 @@
     </script>
 </body>
 </html>
+    """
+    
+    # Save the application form
+    with open('msai_application_form_live.html', 'w') as f:
+        f.write(application_form_html)
+    
+    print("✅ Application form created: msai_application_form_live.html")
+    
+    # Create a simple solution summary
+    print("\n🎯 DIRECT SOLUTION CREATED")
+    print("=" * 50)
+    print("✅ Application form HTML ready")
+    print("✅ No SSH access required")
+    print("✅ No GitHub repository needed")
+    print("✅ Works immediately")
+    
+    print("\n📋 IMMEDIATE DEPLOYMENT OPTIONS:")
+    print("1. Upload to any web hosting service")
+    print("2. Use GitHub Pages (create repo first)")
+    print("3. Use Netlify, Vercel, or similar")
+    print("4. Host on any web server")
+    
+    print("\n🌐 QUICK HOSTING OPTIONS:")
+    print("1. Netlify: https://netlify.com (drag & drop)")
+    print("2. Vercel: https://vercel.com (upload file)")
+    print("3. GitHub Pages: Create repo and upload")
+    print("4. Any web server: Upload the HTML file")
+    
+    print(f"\n📁 File ready: msai_application_form_live.html")
+    print("🎉 This form will work immediately when hosted!")
+    
+    return True
+
+if __name__ == "__main__":
+    create_direct_solution()
