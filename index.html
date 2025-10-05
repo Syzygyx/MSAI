@@ -46,10 +46,56 @@
         .fee-waiver ul { color: #bf360c; padding-left: 20px; }
         .fee-waiver li { margin-bottom: 5px; }
         
+        /* Checkbox group styling */
+        .checkbox-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin-top: 10px; }
+        .checkbox-group label { display: flex; align-items: center; gap: 8px; font-weight: normal; text-transform: none; letter-spacing: normal; }
+        .checkbox-group input[type="checkbox"] { margin: 0; }
+        
+        /* Word count styling */
+        .word-count { font-size: 0.9rem; color: #666; margin-bottom: 5px; font-weight: 500; }
+        .word-count.warning { color: #f39c12; }
+        .word-count.error { color: #e74c3c; }
+        
+        /* Enhanced form styling */
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-group textarea[rows="8"] { min-height: 200px; }
+        .form-group textarea[rows="6"] { min-height: 150px; }
+        .form-group textarea[rows="5"] { min-height: 120px; }
+        .form-group textarea[rows="4"] { min-height: 100px; }
+        
+        /* Test scores grid */
+        .test-scores-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; }
+        
+        /* File upload styling */
+        .form-group input[type="file"] { 
+            padding: 8px; 
+            border: 2px dashed #bdc3c7; 
+            border-radius: 4px; 
+            background: #f8f9fa;
+            width: 100%;
+        }
+        .form-group input[type="file"]:hover { 
+            border-color: #3498db; 
+            background: #e8f4fd; 
+        }
+        .form-group small { 
+            display: block; 
+            margin-top: 5px; 
+            color: #666; 
+            font-size: 0.85rem; 
+            font-style: italic; 
+        }
+        
+        /* Reference section styling */
+        .form-group .form-group { margin-bottom: 15px; }
+        .form-group .form-group:last-child { margin-bottom: 0; }
+        
         @media (max-width: 768px) { 
             .form-row { grid-template-columns: 1fr; } 
             .header h1 { font-size: 2rem; }
             .form-section { padding: 20px; }
+            .checkbox-group { grid-template-columns: 1fr; }
+            .test-scores-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -171,11 +217,11 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="undergraduateInstitution">Institution *</label>
-                            <input type="text" id="undergraduateInstitution" name="undergraduateInstitution" required>
+                            <input type="text" id="undergraduateInstitution" name="undergraduateInstitution" required placeholder="Full name of your undergraduate institution">
                         </div>
                         <div class="form-group">
                             <label for="undergraduateGPA">GPA *</label>
-                            <input type="number" id="undergraduateGPA" name="undergraduateGPA" step="0.01" min="0" max="4" required>
+                            <input type="number" id="undergraduateGPA" name="undergraduateGPA" step="0.01" min="0" max="4" required placeholder="3.50">
                         </div>
                     </div>
                     
@@ -192,12 +238,46 @@
                     
                     <div class="form-group">
                         <label for="relevantCoursework">Relevant Coursework *</label>
-                        <textarea id="relevantCoursework" name="relevantCoursework" rows="3" required placeholder="List courses in mathematics, computer science, statistics, AI, machine learning, etc."></textarea>
+                        <textarea id="relevantCoursework" name="relevantCoursework" rows="4" required placeholder="List courses in mathematics, computer science, statistics, AI, machine learning, etc. Include course numbers and grades if available."></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label for="researchExperience">Research Experience</label>
-                        <textarea id="researchExperience" name="researchExperience" rows="3" placeholder="Describe any research projects, publications, or academic work"></textarea>
+                        <label for="researchExperience">Research Experience and Publications *</label>
+                        <textarea id="researchExperience" name="researchExperience" rows="4" required placeholder="Describe any research projects, publications, conference presentations, or academic work. Include details about your role, methodology, and outcomes."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="academicHonors">Academic Honors and Awards</label>
+                        <textarea id="academicHonors" name="academicHonors" rows="3" placeholder="List any academic honors, scholarships, dean's list, honor societies, or other academic recognitions"></textarea>
+                    </div>
+                </div>
+
+                <!-- Graduate School Preparation Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-book-reader"></i> Graduate School Preparation</h3>
+                    
+                    <div class="form-group">
+                        <label for="prerequisiteCourses">Prerequisite Coursework Completed *</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="prerequisites" value="Calculus"> Calculus (I, II, III)</label>
+                            <label><input type="checkbox" name="prerequisites" value="Linear Algebra"> Linear Algebra</label>
+                            <label><input type="checkbox" name="prerequisites" value="Statistics"> Statistics and Probability</label>
+                            <label><input type="checkbox" name="prerequisites" value="Programming"> Programming (Python, Java, C++)</label>
+                            <label><input type="checkbox" name="prerequisites" value="Data Structures"> Data Structures and Algorithms</label>
+                            <label><input type="checkbox" name="prerequisites" value="Machine Learning"> Machine Learning or AI</label>
+                            <label><input type="checkbox" name="prerequisites" value="Database"> Database Systems</label>
+                            <label><input type="checkbox" name="prerequisites" value="Computer Science"> Computer Science Fundamentals</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="programmingLanguages">Programming Languages Proficiency *</label>
+                        <textarea id="programmingLanguages" name="programmingLanguages" rows="3" required placeholder="List programming languages you're proficient in and your level of expertise (beginner, intermediate, advanced)"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="technicalSkills">Technical Skills and Tools *</label>
+                        <textarea id="technicalSkills" name="technicalSkills" rows="3" required placeholder="List frameworks, libraries, tools, and technologies you're familiar with (e.g., TensorFlow, PyTorch, AWS, Git, etc.)"></textarea>
                     </div>
                 </div>
 
@@ -277,54 +357,250 @@
                     <h3><i class="fas fa-file-alt"></i> Essays and Statements</h3>
                     
                     <div class="form-group">
-                        <label for="statementOfPurpose">Statement of Purpose *</label>
-                        <textarea id="statementOfPurpose" name="statementOfPurpose" rows="6" required placeholder="Explain your interest in AI, academic background, career goals, and why you want to pursue this MS AI program (500-1000 words)"></textarea>
+                        <label for="statementOfPurpose">Statement of Purpose * (750-1000 words)</label>
+                        <div class="word-count">
+                            <span id="sopWordCount">0</span> words
+                        </div>
+                        <textarea id="statementOfPurpose" name="statementOfPurpose" rows="8" required placeholder="Please address the following in your statement of purpose:
+
+1. Your academic background and how it has prepared you for graduate study in AI
+2. Specific research interests within AI and why they interest you
+3. Career goals and how this MS AI program will help you achieve them
+4. Why you chose AURNOVA University and this particular program
+5. Any relevant research experience, projects, or publications
+6. How you plan to contribute to the AI community
+
+Please be specific and provide concrete examples. Avoid generic statements."></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label for="personalStatement">Personal Statement *</label>
-                        <textarea id="personalStatement" name="personalStatement" rows="5" required placeholder="Tell us about yourself, your background, experiences, and what makes you unique as a candidate for this program"></textarea>
+                        <label for="personalStatement">Personal Statement * (500-750 words)</label>
+                        <div class="word-count">
+                            <span id="personalWordCount">0</span> words
+                        </div>
+                        <textarea id="personalStatement" name="personalStatement" rows="6" required placeholder="Tell us about yourself beyond your academic achievements:
+
+1. Personal experiences that have shaped your interest in AI
+2. Challenges you've overcome and how they've prepared you for graduate study
+3. Leadership experiences and how you've made a positive impact
+4. Unique perspectives or experiences you bring to the program
+5. How you handle failure and learn from setbacks
+6. Your approach to collaboration and teamwork
+
+Be authentic and specific. This is your opportunity to show who you are as a person."></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label for="researchInterests">Research Interests *</label>
-                        <textarea id="researchInterests" name="researchInterests" rows="4" required placeholder="Describe specific areas of AI research you're interested in and potential thesis topics"></textarea>
+                        <label for="researchInterests">Research Interests and Potential Thesis Topics * (300-500 words)</label>
+                        <div class="word-count">
+                            <span id="researchWordCount">0</span> words
+                        </div>
+                        <textarea id="researchInterests" name="researchInterests" rows="5" required placeholder="Describe your research interests in detail:
+
+1. Specific AI subfields that interest you (e.g., computer vision, NLP, robotics, etc.)
+2. Current research trends or problems you find compelling
+3. Potential thesis topics you might explore
+4. How your background has prepared you for research in these areas
+5. Any specific faculty members whose research aligns with your interests
+6. How your research interests connect to your career goals
+
+Be specific about current research and cite relevant papers if possible."></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label for="careerGoals">Career Goals *</label>
-                        <textarea id="careerGoals" name="careerGoals" rows="4" required placeholder="What are your short-term and long-term career goals in AI? How will this program help you achieve them?"></textarea>
+                        <label for="careerGoals">Career Goals and Professional Development * (300-500 words)</label>
+                        <div class="word-count">
+                            <span id="careerWordCount">0</span> words
+                        </div>
+                        <textarea id="careerGoals" name="careerGoals" rows="5" required placeholder="Describe your career aspirations:
+
+1. Short-term goals (1-3 years after graduation)
+2. Long-term career vision (5-10 years)
+3. Specific roles or companies you're interested in
+4. How this MS AI program will help you achieve these goals
+5. Skills you hope to develop during the program
+6. How you plan to stay current with AI developments
+7. Your vision for contributing to the AI field
+
+Be specific about industries, roles, and the impact you want to make."></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label for="diversityStatement">Diversity Statement (Optional)</label>
-                        <textarea id="diversityStatement" name="diversityStatement" rows="3" placeholder="How will you contribute to the diversity and inclusion of our program?"></textarea>
+                        <label for="diversityStatement">Diversity and Inclusion Statement (Optional, 200-400 words)</label>
+                        <div class="word-count">
+                            <span id="diversityWordCount">0</span> words
+                        </div>
+                        <textarea id="diversityStatement" name="diversityStatement" rows="4" placeholder="How will you contribute to diversity and inclusion in our program and the broader AI community?
+
+Consider addressing:
+- Your unique background and perspectives
+- Experiences with diverse communities
+- How you plan to promote inclusivity in AI
+- Your commitment to ethical AI development
+- Any initiatives you've led or participated in related to diversity
+
+This statement is optional but encouraged."></textarea>
+                    </div>
+                </div>
+
+                <!-- Document Upload Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-file-upload"></i> Required Documents</h3>
+                    
+                    <div class="form-group">
+                        <label for="transcript">Official Transcripts *</label>
+                        <input type="file" id="transcript" name="transcript" accept=".pdf,.doc,.docx" required>
+                        <small>Upload official transcripts from all post-secondary institutions attended. PDF format preferred.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="resume">Resume/CV *</label>
+                        <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+                        <small>Upload your current resume or CV highlighting relevant experience and education.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="testScores">Test Score Reports (if applicable)</label>
+                        <input type="file" id="testScores" name="testScores" accept=".pdf,.jpg,.jpeg,.png">
+                        <small>Upload official GRE, TOEFL, or IELTS score reports if you have them.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="portfolio">Portfolio/Work Samples (Optional)</label>
+                        <input type="file" id="portfolio" name="portfolio" accept=".pdf,.zip,.rar" multiple>
+                        <small>Upload examples of your work, projects, or research (PDF or compressed files).</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="additionalDocuments">Additional Documents (Optional)</label>
+                        <input type="file" id="additionalDocuments" name="additionalDocuments" accept=".pdf,.doc,.docx" multiple>
+                        <small>Upload any other relevant documents (publications, certificates, etc.).</small>
                     </div>
                 </div>
 
                 <!-- References Section -->
                 <div class="form-section">
                     <h3><i class="fas fa-users"></i> References</h3>
+                    <p style="margin-bottom: 20px; color: #666;">Please provide contact information for 2-3 individuals who can speak to your academic abilities, research potential, and character. At least one should be from an academic setting.</p>
                     
                     <div class="form-group">
                         <label for="reference1">Reference 1 *</label>
-                        <input type="text" id="reference1" name="reference1" required placeholder="Name, Title, Institution, Email, Phone">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ref1Name">Name *</label>
+                                <input type="text" id="ref1Name" name="ref1Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ref1Title">Title/Position *</label>
+                                <input type="text" id="ref1Title" name="ref1Title" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ref1Institution">Institution/Organization *</label>
+                                <input type="text" id="ref1Institution" name="ref1Institution" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ref1Email">Email *</label>
+                                <input type="email" id="ref1Email" name="ref1Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ref1Phone">Phone</label>
+                            <input type="tel" id="ref1Phone" name="ref1Phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="ref1Relationship">Relationship to You *</label>
+                            <input type="text" id="ref1Relationship" name="ref1Relationship" required placeholder="e.g., Professor, Supervisor, Mentor">
+                        </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="reference2">Reference 2 *</label>
-                        <input type="text" id="reference2" name="reference2" required placeholder="Name, Title, Institution, Email, Phone">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ref2Name">Name *</label>
+                                <input type="text" id="ref2Name" name="ref2Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ref2Title">Title/Position *</label>
+                                <input type="text" id="ref2Title" name="ref2Title" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ref2Institution">Institution/Organization *</label>
+                                <input type="text" id="ref2Institution" name="ref2Institution" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ref2Email">Email *</label>
+                                <input type="email" id="ref2Email" name="ref2Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ref2Phone">Phone</label>
+                            <input type="tel" id="ref2Phone" name="ref2Phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="ref2Relationship">Relationship to You *</label>
+                            <input type="text" id="ref2Relationship" name="ref2Relationship" required placeholder="e.g., Professor, Supervisor, Mentor">
+                        </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="reference3">Reference 3 (Optional)</label>
-                        <input type="text" id="reference3" name="reference3" placeholder="Name, Title, Institution, Email, Phone">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ref3Name">Name</label>
+                                <input type="text" id="ref3Name" name="ref3Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="ref3Title">Title/Position</label>
+                                <input type="text" id="ref3Title" name="ref3Title">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ref3Institution">Institution/Organization</label>
+                                <input type="text" id="ref3Institution" name="ref3Institution">
+                            </div>
+                            <div class="form-group">
+                                <label for="ref3Email">Email</label>
+                                <input type="email" id="ref3Email" name="ref3Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ref3Phone">Phone</label>
+                            <input type="tel" id="ref3Phone" name="ref3Phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="ref3Relationship">Relationship to You</label>
+                            <input type="text" id="ref3Relationship" name="ref3Relationship" placeholder="e.g., Professor, Supervisor, Mentor">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Additional Information Section -->
+                <!-- Standardized Test Scores Section -->
                 <div class="form-section">
-                    <h3><i class="fas fa-info-circle"></i> Additional Information</h3>
+                    <h3><i class="fas fa-chart-line"></i> Standardized Test Scores</h3>
+                    
+                    <div class="form-group">
+                        <label for="greScores">GRE Scores (if taken)</label>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="greVerbal">Verbal Reasoning</label>
+                                <input type="number" id="greVerbal" name="greVerbal" min="130" max="170" placeholder="130-170">
+                            </div>
+                            <div class="form-group">
+                                <label for="greQuantitative">Quantitative Reasoning</label>
+                                <input type="number" id="greQuantitative" name="greQuantitative" min="130" max="170" placeholder="130-170">
+                            </div>
+                            <div class="form-group">
+                                <label for="greWriting">Analytical Writing</label>
+                                <input type="number" id="greWriting" name="greWriting" min="0" max="6" step="0.5" placeholder="0.0-6.0">
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="form-group">
                         <label for="englishProficiency">English Proficiency *</label>
@@ -333,23 +609,86 @@
                             <option value="Native">Native Speaker</option>
                             <option value="TOEFL">TOEFL Score (provide score below)</option>
                             <option value="IELTS">IELTS Score (provide score below)</option>
+                            <option value="Duolingo">Duolingo English Test</option>
                             <option value="Other">Other (specify below)</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="testScores">Test Scores</label>
-                        <textarea id="testScores" name="testScores" rows="2" placeholder="GRE, TOEFL, IELTS, or other standardized test scores (if applicable)"></textarea>
+                        <label for="toeflScores">TOEFL Scores (if applicable)</label>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="toeflTotal">Total Score</label>
+                                <input type="number" id="toeflTotal" name="toeflTotal" min="0" max="120" placeholder="0-120">
+                            </div>
+                            <div class="form-group">
+                                <label for="toeflReading">Reading</label>
+                                <input type="number" id="toeflReading" name="toeflReading" min="0" max="30" placeholder="0-30">
+                            </div>
+                            <div class="form-group">
+                                <label for="toeflListening">Listening</label>
+                                <input type="number" id="toeflListening" name="toeflListening" min="0" max="30" placeholder="0-30">
+                            </div>
+                            <div class="form-group">
+                                <label for="toeflSpeaking">Speaking</label>
+                                <input type="number" id="toeflSpeaking" name="toeflSpeaking" min="0" max="30" placeholder="0-30">
+                            </div>
+                            <div class="form-group">
+                                <label for="toeflWriting">Writing</label>
+                                <input type="number" id="toeflWriting" name="toeflWriting" min="0" max="30" placeholder="0-30">
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="honorsAwards">Honors and Awards</label>
-                        <textarea id="honorsAwards" name="honorsAwards" rows="3" placeholder="Academic honors, scholarships, competitions, or other achievements"></textarea>
+                        <label for="ieltsScores">IELTS Scores (if applicable)</label>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ieltsOverall">Overall Band Score</label>
+                                <input type="number" id="ieltsOverall" name="ieltsOverall" min="0" max="9" step="0.5" placeholder="0.0-9.0">
+                            </div>
+                            <div class="form-group">
+                                <label for="ieltsReading">Reading</label>
+                                <input type="number" id="ieltsReading" name="ieltsReading" min="0" max="9" step="0.5" placeholder="0.0-9.0">
+                            </div>
+                            <div class="form-group">
+                                <label for="ieltsListening">Listening</label>
+                                <input type="number" id="ieltsListening" name="ieltsListening" min="0" max="9" step="0.5" placeholder="0.0-9.0">
+                            </div>
+                            <div class="form-group">
+                                <label for="ieltsSpeaking">Speaking</label>
+                                <input type="number" id="ieltsSpeaking" name="ieltsSpeaking" min="0" max="9" step="0.5" placeholder="0.0-9.0">
+                            </div>
+                            <div class="form-group">
+                                <label for="ieltsWriting">Writing</label>
+                                <input type="number" id="ieltsWriting" name="ieltsWriting" min="0" max="9" step="0.5" placeholder="0.0-9.0">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="testDate">Test Date (most recent)</label>
+                        <input type="date" id="testDate" name="testDate">
+                    </div>
+                </div>
+
+                <!-- Additional Information Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-info-circle"></i> Additional Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="honorsAwards">Honors, Awards, and Recognition</label>
+                        <textarea id="honorsAwards" name="honorsAwards" rows="4" placeholder="List academic honors, scholarships, competitions, professional awards, or other achievements"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="extracurricularActivities">Extracurricular Activities and Leadership</label>
+                        <textarea id="extracurricularActivities" name="extracurricularActivities" rows="3" placeholder="Describe your involvement in clubs, organizations, volunteer work, or leadership roles"></textarea>
                     </div>
                     
                     <div class="form-group">
                         <label for="additionalInfo">Additional Information</label>
-                        <textarea id="additionalInfo" name="additionalInfo" rows="3" placeholder="Any other information you'd like the admissions committee to know"></textarea>
+                        <textarea id="additionalInfo" name="additionalInfo" rows="4" placeholder="Any other information you'd like the admissions committee to know about your background, experiences, or circumstances"></textarea>
                     </div>
                 </div>
 
@@ -565,6 +904,74 @@
         // Add input formatting for CVV
         document.getElementById('cvv').addEventListener('input', function(e) {
             e.target.value = e.target.value.replace(/\D/g, '');
+        });
+        
+        // Word counting functionality
+        function countWords(text) {
+            return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+        }
+        
+        function updateWordCount(textareaId, counterId, minWords, maxWords) {
+            const textarea = document.getElementById(textareaId);
+            const counter = document.getElementById(counterId);
+            const wordCount = countWords(textarea.value);
+            
+            counter.textContent = wordCount;
+            
+            // Update styling based on word count
+            counter.className = 'word-count';
+            if (wordCount < minWords) {
+                counter.classList.add('error');
+            } else if (wordCount > maxWords) {
+                counter.classList.add('warning');
+            }
+        }
+        
+        // Set up word counting for all essay fields
+        const essayFields = [
+            { textarea: 'statementOfPurpose', counter: 'sopWordCount', min: 750, max: 1000 },
+            { textarea: 'personalStatement', counter: 'personalWordCount', min: 500, max: 750 },
+            { textarea: 'researchInterests', counter: 'researchWordCount', min: 300, max: 500 },
+            { textarea: 'careerGoals', counter: 'careerWordCount', min: 300, max: 500 },
+            { textarea: 'diversityStatement', counter: 'diversityWordCount', min: 200, max: 400 }
+        ];
+        
+        essayFields.forEach(field => {
+            const textarea = document.getElementById(field.textarea);
+            if (textarea) {
+                textarea.addEventListener('input', function() {
+                    updateWordCount(field.textarea, field.counter, field.min, field.max);
+                });
+                
+                // Initialize word count
+                updateWordCount(field.textarea, field.counter, field.min, field.max);
+            }
+        });
+        
+        // Enhanced form validation
+        document.getElementById('msaiApplicationForm').addEventListener('submit', function(e) {
+            let hasErrors = false;
+            
+            // Check word count requirements
+            essayFields.forEach(field => {
+                const textarea = document.getElementById(field.textarea);
+                const wordCount = countWords(textarea.value);
+                
+                if (field.textarea !== 'diversityStatement' && wordCount < field.min) {
+                    textarea.style.borderColor = '#e74c3c';
+                    hasErrors = true;
+                } else if (wordCount > field.max) {
+                    textarea.style.borderColor = '#f39c12';
+                    hasErrors = true;
+                } else {
+                    textarea.style.borderColor = '#bdc3c7';
+                }
+            });
+            
+            if (hasErrors) {
+                e.preventDefault();
+                alert('Please ensure all essay requirements are met. Check word counts and required fields.');
+            }
         });
     </script>
 </body>

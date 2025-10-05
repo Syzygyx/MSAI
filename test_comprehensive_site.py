@@ -154,9 +154,84 @@ class ComprehensiveSiteTester:
                 {"selector": "button[type='submit']", "name": "Submit button"}
             ]
             
+            # Wait for page to fully load
+            await page.wait_for_load_state("networkidle")
+            await page.wait_for_timeout(5000)
+            
+            # Scroll to bottom to ensure all content is loaded
+            await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            await page.wait_for_timeout(2000)
+            
+            # Scroll back to top
+            await page.evaluate("window.scrollTo(0, 0)")
+            await page.wait_for_timeout(1000)
+            
+            # Take a screenshot for debugging
+            await page.screenshot(path="debug_apply_page.png")
+            
+            # Debug: Check page content
+            content = await page.content()
+            input_count = content.count('input')
+            form_count = content.count('form')
+            
+            # Log a sample of the content to see what's actually there
+            sample_content = content[content.find('<body>'):content.find('<body>') + 2000] if '<body>' in content else content[:2000]
+            
+            # Check for JavaScript errors
+            console_messages = []
+            page.on("console", lambda msg: console_messages.append(f"{msg.type}: {msg.text}") if msg.type == "error" else None)
+            
+            self.results.append({
+                "test": "Form Debug Info",
+                "status": "INFO",
+                "message": f"Found {input_count} input elements and {form_count} form elements on page"
+            })
+            
+            self.results.append({
+                "test": "Page Content Sample",
+                "status": "INFO",
+                "message": f"Page content sample: {sample_content[:200]}..."
+            })
+            
+            if console_messages:
+                self.results.append({
+                    "test": "JavaScript Errors",
+                    "status": "WARN",
+                    "message": f"Found {len(console_messages)} JavaScript errors: {console_messages[:3]}"
+                })
+            
+            # Check if form is visible
+            form_element = await page.query_selector("form")
+            if form_element:
+                is_form_visible = await form_element.is_visible()
+                self.results.append({
+                    "test": "Form Visibility",
+                    "status": "INFO",
+                    "message": f"Form element found and visible: {is_form_visible}"
+                })
+            else:
+                self.results.append({
+                    "test": "Form Visibility",
+                    "status": "FAIL",
+                    "message": "No form element found on page"
+                })
+            
             for element in form_elements:
                 try:
-                    el = await page.query_selector(element["selector"])
+                    # Try multiple selectors
+                    selectors_to_try = [
+                        element["selector"],
+                        f"input[name='{element['name'].split()[0].lower()}']",
+                        f"#{element['name'].split()[0].lower()}",
+                        f"input[id='{element['name'].split()[0].lower()}']"
+                    ]
+                    
+                    el = None
+                    for selector in selectors_to_try:
+                        el = await page.query_selector(selector)
+                        if el:
+                            break
+                    
                     if el:
                         is_visible = await el.is_visible()
                         is_enabled = await el.is_enabled()
@@ -177,7 +252,7 @@ class ComprehensiveSiteTester:
                         self.results.append({
                             "test": f"Form Element - {element['name']}",
                             "status": "FAIL",
-                            "message": "Element not found"
+                            "message": f"Element not found with any selector: {selectors_to_try}"
                         })
                 except Exception as e:
                     self.results.append({
@@ -638,9 +713,10 @@ class ComprehensiveSiteTester:
         print("=" * 60)
         
         # Count results by status
-        status_counts = {"PASS": 0, "WARN": 0, "FAIL": 0}
+        status_counts = {"PASS": 0, "WARN": 0, "FAIL": 0, "INFO": 0}
         for result in self.results:
-            status_counts[result["status"]] += 1
+            if result["status"] in status_counts:
+                status_counts[result["status"]] += 1
         
         total_tests = len(self.results)
         pass_rate = (status_counts["PASS"] / total_tests * 100) if total_tests > 0 else 0
