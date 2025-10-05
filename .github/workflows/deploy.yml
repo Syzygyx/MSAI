@@ -37,7 +37,7 @@ jobs:
         
         # Copy main application files
         cp app_enhanced.py deployment_package/app.py
-        cp msai_application_form.html deployment_package/
+        cp msai_application_form_live.html deployment_package/msai_application_form.html
         cp google_sheets_integration.py deployment_package/ || true
         
         # Copy any additional files needed
