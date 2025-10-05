@@ -8,56 +8,57 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; line-height: 1.7; color: #333; background: #f8f9fa; }
-        .container { max-width: 1000px; margin: 0 auto; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 40px; text-align: center; }
-        .header h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; }
-        .header .subtitle { font-size: 1.2rem; opacity: 0.9; margin-bottom: 30px; }
-        .header .meta { font-size: 1rem; opacity: 0.8; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #2c3e50; background: #f8f9fa; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e9ecef; }
+        .header { background: #2c3e50; color: white; padding: 50px 40px; text-align: center; border-bottom: 4px solid #34495e; }
+        .header h1 { font-size: 2.3rem; font-weight: 600; margin-bottom: 15px; letter-spacing: -0.5px; }
+        .header .subtitle { font-size: 1.1rem; opacity: 0.9; margin-bottom: 20px; font-weight: 400; }
+        .header .meta { font-size: 0.95rem; opacity: 0.8; }
         .nav { background: #f8f9fa; padding: 20px 40px; border-bottom: 1px solid #e9ecef; }
         .nav-links { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
-        .nav-links a { color: #667eea; text-decoration: none; font-weight: 600; padding: 10px 20px; border-radius: 25px; transition: all 0.3s ease; }
-        .nav-links a:hover, .nav-links a.active { background: #667eea; color: white; }
-        .content { padding: 60px 40px; }
-        .toc { background: #f8f9fa; padding: 30px; border-radius: 10px; margin-bottom: 40px; border-left: 5px solid #667eea; }
-        .toc h3 { color: #333; margin-bottom: 20px; font-size: 1.3rem; }
+        .nav-links a { color: #3498db; text-decoration: none; font-weight: 500; padding: 8px 16px; border-radius: 4px; transition: all 0.3s ease; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-links a:hover, .nav-links a.active { background: #3498db; color: white; }
+        .content { padding: 50px 40px; }
+        .toc { background: #f8f9fa; padding: 30px; border-radius: 4px; margin-bottom: 40px; border-left: 4px solid #2c3e50; border: 1px solid #e9ecef; }
+        .toc h3 { color: #2c3e50; margin-bottom: 20px; font-size: 1.2rem; font-weight: 600; }
         .toc ul { list-style: none; padding: 0; }
         .toc li { margin-bottom: 8px; }
-        .toc a { color: #667eea; text-decoration: none; font-weight: 500; }
+        .toc a { color: #3498db; text-decoration: none; font-weight: 500; }
         .toc a:hover { text-decoration: underline; }
         .section { margin-bottom: 50px; }
-        .section h2 { color: #333; font-size: 2rem; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 3px solid #667eea; }
-        .section h3 { color: #555; font-size: 1.5rem; margin: 30px 0 15px 0; }
-        .section h4 { color: #666; font-size: 1.2rem; margin: 20px 0 10px 0; }
-        .section p { margin-bottom: 15px; text-align: justify; }
+        .section h2 { color: #2c3e50; font-size: 1.8rem; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 2px solid #2c3e50; font-weight: 600; }
+        .section h3 { color: #34495e; font-size: 1.4rem; margin: 30px 0 15px 0; font-weight: 600; }
+        .section h4 { color: #34495e; font-size: 1.1rem; margin: 20px 0 10px 0; font-weight: 600; }
+        .section p { margin-bottom: 15px; text-align: left; }
         .section ul, .section ol { margin: 15px 0 15px 30px; }
         .section li { margin-bottom: 8px; }
-        .highlight-box { background: #e3f2fd; border: 1px solid #2196f3; border-radius: 10px; padding: 25px; margin: 25px 0; }
-        .highlight-box h4 { color: #1976d2; margin-bottom: 15px; }
+        .highlight-box { background: #e8f4fd; border: 1px solid #3498db; border-radius: 4px; padding: 25px; margin: 25px 0; }
+        .highlight-box h4 { color: #2c3e50; margin-bottom: 15px; font-weight: 600; }
         .highlight-box p { margin-bottom: 10px; }
         .highlight-box ul { margin-left: 20px; }
         .highlight-box li { margin-bottom: 5px; }
-        .quote { background: #f5f5f5; border-left: 5px solid #667eea; padding: 20px; margin: 25px 0; font-style: italic; }
+        .quote { background: #f8f9fa; border-left: 4px solid #2c3e50; padding: 20px; margin: 25px 0; font-style: italic; border: 1px solid #e9ecef; }
         .quote p { margin-bottom: 10px; }
-        .quote .author { text-align: right; font-weight: 600; color: #666; }
+        .quote .author { text-align: right; font-weight: 600; color: #34495e; font-style: normal; }
         .table-container { overflow-x: auto; margin: 25px 0; }
         table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background: #f8f9fa; font-weight: 600; color: #333; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e9ecef; }
+        th { background: #f8f9fa; font-weight: 600; color: #2c3e50; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        td { color: #2c3e50; }
         .timeline { position: relative; margin: 30px 0; }
         .timeline-item { margin-bottom: 30px; padding-left: 40px; position: relative; }
-        .timeline-item::before { content: ''; position: absolute; left: 15px; top: 0; width: 12px; height: 12px; background: #667eea; border-radius: 50%; }
+        .timeline-item::before { content: ''; position: absolute; left: 15px; top: 0; width: 12px; height: 12px; background: #2c3e50; border-radius: 50%; }
         .timeline-item::after { content: ''; position: absolute; left: 20px; top: 12px; width: 2px; height: calc(100% + 18px); background: #e9ecef; }
         .timeline-item:last-child::after { display: none; }
-        .timeline-content { background: #f8f9fa; padding: 20px; border-radius: 8px; }
-        .timeline-content h4 { color: #333; margin-bottom: 10px; }
+        .timeline-content { background: #f8f9fa; padding: 20px; border-radius: 4px; border: 1px solid #e9ecef; }
+        .timeline-content h4 { color: #2c3e50; margin-bottom: 10px; font-weight: 600; }
         .timeline-content p { margin-bottom: 8px; }
         .back-link { text-align: center; margin-bottom: 30px; }
-        .back-link a { color: #667eea; text-decoration: none; font-weight: 600; }
+        .back-link a { color: #3498db; text-decoration: none; font-weight: 500; }
         .back-link a:hover { text-decoration: underline; }
-        .footer { background: #333; color: white; padding: 40px; text-align: center; }
+        .footer { background: #2c3e50; color: white; padding: 40px; text-align: center; }
         .footer p { margin-bottom: 10px; }
-        .footer a { color: #667eea; text-decoration: none; }
+        .footer a { color: #3498db; text-decoration: none; }
         .footer a:hover { text-decoration: underline; }
         @media (max-width: 768px) {
             .header h1 { font-size: 2rem; }
@@ -72,7 +73,7 @@
         <div class="header">
             <h1><i class="fas fa-graduation-cap"></i> AURNOVA University MSAI Program</h1>
             <div class="subtitle">White Paper and Technical Roadmap</div>
-            <div class="meta">Revolutionary AI-Powered Education for the 21st Century</div>
+            <div class="meta">Revolutionary AI-Powered Education for All Disciplines</div>
         </div>
         
         <div class="nav">
@@ -96,19 +97,20 @@
                     <li><a href="#vision-philosophy">1. Vision and Philosophy</a></li>
                     <li><a href="#academic-framework">2. Academic Framework and Learning Outcomes</a></li>
                     <li><a href="#curriculum-architecture">3. Curriculum Architecture</a></li>
-                    <li><a href="#ai-learning-model">4. AI-Driven Learning Model</a></li>
-                    <li><a href="#co-evolutionary-learning">5. Co-Evolutionary Learning Model</a></li>
-                    <li><a href="#governance">6. Accreditation, Governance, and Faculty Oversight</a></li>
-                    <li><a href="#technical-infrastructure">7. Technical Infrastructure and Platform Architecture</a></li>
-                    <li><a href="#data-ethics">8. Data Ethics, Student Privacy, and AI Audit Framework</a></li>
-                    <li><a href="#implementation-roadmap">9. Implementation Roadmap</a></li>
-                    <li><a href="#strategic-vision">10. Long-Term Strategic Vision</a></li>
+                    <li><a href="#ai-tutoring-system">4. AI Tutoring System for Non-CS Majors</a></li>
+                    <li><a href="#ai-learning-model">5. AI-Driven Learning Model</a></li>
+                    <li><a href="#co-evolutionary-learning">6. Co-Evolutionary Learning Model</a></li>
+                    <li><a href="#governance">7. Accreditation, Governance, and Faculty Oversight</a></li>
+                    <li><a href="#technical-infrastructure">8. Technical Infrastructure and Platform Architecture</a></li>
+                    <li><a href="#data-ethics">9. Data Ethics, Student Privacy, and AI Audit Framework</a></li>
+                    <li><a href="#implementation-roadmap">10. Implementation Roadmap</a></li>
+                    <li><a href="#strategic-vision">11. Long-Term Strategic Vision</a></li>
                 </ul>
             </div>
 
             <div id="executive-summary" class="section">
                 <h2>Executive Summary</h2>
-                <p>AURNOVA University is launching a fully online Master of Science in Artificial Intelligence (MSAI) designed for working professionals. This innovative program leverages artificial intelligence at every level – from curriculum development to course delivery and student support – to create a next-generation "AI-native" university experience. The program blends academic rigor with cutting-edge technology, featuring a thesis-based capstone to ensure graduates not only master core AI concepts but also contribute new knowledge through research. All coursework and outcomes are aligned with accreditation standards (SACSCOC and ABET) to maintain the highest quality and integrity.</p>
+                <p>AURNOVA University is launching a fully online Master of Science in Artificial Intelligence (MSAI) designed for working professionals from ANY academic background. This innovative program leverages artificial intelligence at every level – from curriculum development to course delivery and student support – to create a next-generation "AI-native" university experience that democratizes AI education. Our revolutionary AI tutoring system ensures that students with bachelor's degrees in business, healthcare, arts, humanities, social sciences, or any other field can successfully master AI concepts and applications. The program blends academic rigor with cutting-edge technology, featuring a thesis-based capstone to ensure graduates not only master core AI concepts but also contribute new knowledge through research. All coursework and outcomes are aligned with accreditation standards (SACSCOC and ABET) to maintain the highest quality and integrity.</p>
                 
                 <p>In this white paper, we articulate the vision, philosophy, and structure of the MSAI program, alongside a technical roadmap for implementation. Key highlights include:</p>
                 
@@ -253,8 +255,64 @@
                 </ul>
             </div>
 
+            <div id="ai-tutoring-system" class="section">
+                <h2>4. AI Tutoring System for Non-CS Majors</h2>
+                
+                <p>AURNOVA's MSAI program is specifically designed to be accessible to students from ANY academic background. Our revolutionary AI tutoring system ensures that professionals with bachelor's degrees in business, healthcare, arts, humanities, social sciences, or any other field can successfully master AI concepts and applications.</p>
+                
+                <h3>Adaptive Prerequisite Bridging</h3>
+                <p>Our AI tutoring system automatically assesses each student's background and creates personalized learning paths to bridge knowledge gaps:</p>
+                
+                <ul>
+                    <li><strong>Mathematics Foundation:</strong> Interactive modules covering statistics, linear algebra, and calculus concepts essential for AI, explained through real-world examples relevant to the student's field</li>
+                    <li><strong>Programming Fundamentals:</strong> Gentle introduction to Python and programming concepts, with visual programming interfaces for non-technical students</li>
+                    <li><strong>Data Literacy:</strong> Understanding data types, data quality, and basic data analysis techniques through domain-specific examples</li>
+                    <li><strong>Computational Thinking:</strong> Problem-solving approaches and algorithmic thinking explained through familiar scenarios from the student's professional background</li>
+                </ul>
+                
+                <h3>Domain-Specific AI Applications</h3>
+                <p>Rather than teaching AI in isolation, our curriculum connects AI concepts to each student's professional domain:</p>
+                
+                <div class="highlight-box">
+                    <h4>Examples by Academic Background</h4>
+                    <ul>
+                        <li><strong>Business Majors:</strong> AI for marketing analytics, predictive modeling for sales, automated decision support systems</li>
+                        <li><strong>Healthcare Professionals:</strong> Medical image analysis, drug discovery AI, personalized treatment recommendations</li>
+                        <li><strong>Arts & Humanities:</strong> AI for creative writing, digital art generation, cultural heritage preservation</li>
+                        <li><strong>Social Sciences:</strong> AI for social media analysis, behavioral prediction, policy impact modeling</li>
+                        <li><strong>Education:</strong> Personalized learning systems, intelligent tutoring, educational assessment AI</li>
+                        <li><strong>Law & Policy:</strong> Legal document analysis, regulatory compliance AI, automated contract review</li>
+                    </ul>
+                </div>
+                
+                <h3>Intelligent Learning Progression</h3>
+                <p>Our AI tutoring system continuously monitors student progress and adapts the learning experience:</p>
+                
+                <ul>
+                    <li><strong>Competency-Based Progression:</strong> Students advance based on demonstrated understanding rather than time spent</li>
+                    <li><strong>Multi-Modal Learning:</strong> Content delivered through videos, interactive simulations, case studies, and hands-on projects</li>
+                    <li><strong>Just-in-Time Support:</strong> AI tutors provide instant help when students encounter difficulties</li>
+                    <li><strong>Peer Learning Networks:</strong> Connect students with similar backgrounds for collaborative learning</li>
+                </ul>
+                
+                <h3>Assessment and Validation</h3>
+                <p>Our assessment system is designed to be fair and accessible to all backgrounds:</p>
+                
+                <ul>
+                    <li><strong>Portfolio-Based Evaluation:</strong> Students demonstrate learning through projects relevant to their field</li>
+                    <li><strong>Competency Rubrics:</strong> Clear, objective criteria that don't favor any particular academic background</li>
+                    <li><strong>Alternative Assessment Methods:</strong> Multiple ways to demonstrate understanding (written, visual, interactive)</li>
+                    <li><strong>Continuous Feedback:</strong> Regular check-ins and adjustments to learning plans</li>
+                </ul>
+                
+                <div class="quote">
+                    <p>"The beauty of AI is that it can adapt to any learning style and background. Our tutoring system doesn't just teach AI – it teaches AI through the lens of each student's unique perspective and professional experience."</p>
+                    <div class="author">- Dr. Sarah Chen, Director of AI Pedagogy</div>
+                </div>
+            </div>
+
             <div id="ai-learning-model" class="section">
-                <h2>4. AI-Driven Learning Model (AI-Developed, AI-Taught, AI-Staffed, AI-Graded)</h2>
+                <h2>5. AI-Driven Learning Model (AI-Developed, AI-Taught, AI-Staffed, AI-Graded)</h2>
                 
                 <p>AURNOVA's MSAI breaks new ground by embracing an AI-driven learning model. This model is encapsulated in the phrase "AI-developed, AI-taught, AI-staffed, AI-graded." Each component represents a transformative approach to traditional education:</p>
                 

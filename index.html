@@ -8,40 +8,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); overflow: hidden; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }
-        .header h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
-        .header p { font-size: 1.1rem; opacity: 0.9; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #2c3e50; background: #f8f9fa; min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); overflow: hidden; border: 1px solid #e9ecef; }
+        .header { background: #2c3e50; color: white; padding: 40px; text-align: center; border-bottom: 4px solid #34495e; }
+        .header h1 { font-size: 2.2rem; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .header p { font-size: 1rem; opacity: 0.9; font-weight: 400; }
         .form-container { padding: 40px; }
         .form-group { margin-bottom: 25px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 16px; transition: border-color 0.3s ease; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #667eea; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #2c3e50; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; border: 1px solid #bdc3c7; border-radius: 4px; font-size: 16px; transition: border-color 0.3s ease; background: #fff; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #3498db; box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1); }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .submit-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 40px; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer; transition: transform 0.3s ease; width: 100%; }
-        .submit-btn:hover { transform: translateY(-2px); }
-        .success-message { background: #d4edda; color: #155724; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: none; }
-        .error-message { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: none; }
+        .submit-btn { background: #2c3e50; color: white; padding: 15px 40px; border: none; border-radius: 4px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background-color 0.3s ease; width: 100%; text-transform: uppercase; letter-spacing: 0.5px; }
+        .submit-btn:hover { background: #34495e; }
+        .success-message { background: #d4edda; color: #155724; padding: 15px; border-radius: 4px; margin-bottom: 20px; display: none; border: 1px solid #c3e6cb; }
+        .error-message { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px; margin-bottom: 20px; display: none; border: 1px solid #f5c6cb; }
         .back-link { text-align: center; margin-bottom: 20px; }
-        .back-link a { color: #667eea; text-decoration: none; font-weight: 600; }
+        .back-link a { color: #3498db; text-decoration: none; font-weight: 500; }
         .back-link a:hover { text-decoration: underline; }
-        .info-box { background: #e3f2fd; border: 1px solid #2196f3; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
-        .info-box h3 { color: #1976d2; margin-bottom: 10px; }
-        .info-box p { color: #424242; margin-bottom: 10px; }
+        .info-box { background: #e8f4fd; border: 1px solid #3498db; border-radius: 4px; padding: 20px; margin-bottom: 20px; }
+        .info-box h3 { color: #2c3e50; margin-bottom: 10px; font-size: 1.1rem; }
+        .info-box p { color: #2c3e50; margin-bottom: 10px; }
         
         /* Form Sections */
-        .form-section { margin-bottom: 40px; padding: 30px; background: #f8f9fa; border-radius: 15px; border-left: 5px solid #667eea; }
-        .form-section h3 { color: #333; margin-bottom: 25px; font-size: 1.4rem; display: flex; align-items: center; gap: 10px; }
-        .form-section h3 i { color: #667eea; }
+        .form-section { margin-bottom: 40px; padding: 30px; background: #f8f9fa; border-radius: 4px; border-left: 4px solid #2c3e50; border: 1px solid #e9ecef; }
+        .form-section h3 { color: #2c3e50; margin-bottom: 25px; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; font-weight: 600; }
+        .form-section h3 i { color: #3498db; }
         
         /* Fee Information */
-        .fee-info { background: #e3f2fd; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #2196f3; }
-        .fee-info p { margin: 0; color: #1976d2; }
-        .fee-info p:first-child { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
+        .fee-info { background: #e8f4fd; padding: 20px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #3498db; }
+        .fee-info p { margin: 0; color: #2c3e50; }
+        .fee-info p:first-child { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; }
         
-        .fee-waiver { background: #fff3e0; padding: 20px; border-radius: 10px; margin-top: 20px; border: 1px solid #ff9800; }
-        .fee-waiver h4 { color: #e65100; margin-bottom: 15px; }
+        .fee-waiver { background: #fff8e1; padding: 20px; border-radius: 4px; margin-top: 20px; border: 1px solid #ffb74d; }
+        .fee-waiver h4 { color: #e65100; margin-bottom: 15px; font-size: 1rem; }
         .fee-waiver p { color: #bf360c; margin-bottom: 10px; }
         .fee-waiver ul { color: #bf360c; padding-left: 20px; }
         .fee-waiver li { margin-bottom: 5px; }
