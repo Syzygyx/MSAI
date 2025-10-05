@@ -3,231 +3,115 @@ name: Deploy to MS AI Server
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - production
+        - staging
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment || 'production' }}
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.7.0
       with:
-        python-version: '3.9'
+        ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
         
-    - name: Install dependencies
+    - name: Add server to known hosts
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
         
-    - name: Run tests
+    - name: Create backup
       run: |
-        # Add any tests here
-        echo "Running tests..."
-        # python -m pytest tests/ || true
+        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+          sudo mkdir -p /var/backups/msai &&
+          sudo cp -r /var/www/msai /var/backups/msai/backup-$(date +%Y%m%d-%H%M%S) 2>/dev/null || true
+        "
         
-    - name: Create deployment package
+    - name: Create deployment directory
       run: |
-        echo "📦 Creating deployment package..."
-        mkdir -p deployment_package
+        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "sudo mkdir -p /var/www/msai"
         
-        # Copy main application files
-        cp app_enhanced.py deployment_package/app.py
-        cp msai_application_form_live.html deployment_package/msai_application_form.html
-        cp google_sheets_integration.py deployment_package/ || true
-        
-        # Copy any additional files needed
-        cp -r templates deployment_package/ || true
-        cp -r static deployment_package/ || true
-        
-        # Create requirements.txt
-        cat > deployment_package/requirements.txt << 'EOF'
-        fastapi==0.104.1
-        uvicorn[standard]==0.24.0
-        python-dotenv==1.0.0
-        pydantic==2.5.0
-        jinja2==3.1.2
-        gspread==5.12.0
-        google-auth==2.23.4
-        google-auth-oauthlib==1.1.0
-        google-auth-httplib2==0.1.1
-        google-api-python-client==2.108.0
-        python-multipart==0.0.6
-        email-validator==2.1.0
-        EOF
-        
-        # Create systemd service file
-        cat > deployment_package/msai.service << 'EOF'
-        [Unit]
-        Description=MS AI Curriculum System with Application Form
-        After=network.target
-        
-        [Service]
-        Type=simple
-        User=ubuntu
-        WorkingDirectory=/opt/msai
-        Environment=PATH=/opt/msai/venv/bin
-        ExecStart=/opt/msai/venv/bin/python app.py
-        Restart=always
-        RestartSec=10
-        
-        [Install]
-        WantedBy=multi-user.target
-        EOF
-        
-        # Create nginx configuration
-        cat > deployment_package/nginx_msai.conf << 'EOF'
-        server {
-            listen 80;
-            server_name msai.syzygyx.com www.msai.syzygyx.com;
-            
-            location / {
-                proxy_pass http://127.0.0.1:8000;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
-            
-            location /static/ {
-                alias /opt/msai/static/;
-            }
-            
-            location /uploads/ {
-                alias /opt/msai/uploads/;
-            }
-        }
-        EOF
-        
-        # Create deployment script
-        cat > deployment_package/deploy.sh << 'EOF'
-        #!/bin/bash
-        set -e
-        
-        echo "🚀 Starting deployment..."
-        
-        # Stop the service
-        sudo systemctl stop msai || true
-        
-        # Backup current version
-        if [ -f "/opt/msai/app.py" ]; then
-            cp /opt/msai/app.py /opt/msai/app.py.backup.$(date +%Y%m%d_%H%M%S)
-        fi
-        
-        # Update application files
-        cp app.py /opt/msai/
-        cp msai_application_form.html /opt/msai/ || true
-        cp google_sheets_integration.py /opt/msai/ || true
-        
-        # Create necessary directories
-        mkdir -p /opt/msai/uploads
-        mkdir -p /opt/msai/static
-        mkdir -p /opt/msai/templates
-        
-        # Install/update Python dependencies
-        source /opt/msai/venv/bin/activate
-        pip install -r requirements.txt
-        
-        # Update systemd service
-        sudo cp msai.service /etc/systemd/system/
-        sudo systemctl daemon-reload
-        
-        # Update nginx configuration
-        sudo cp nginx_msai.conf /etc/nginx/sites-available/msai.syzygyx.com
-        sudo ln -sf /etc/nginx/sites-available/msai.syzygyx.com /etc/nginx/sites-enabled/
-        sudo nginx -t
-        
-        # Start services
-        sudo systemctl start msai
-        sudo systemctl enable msai
-        sudo systemctl reload nginx
-        
-        # Wait for service to start
-        sleep 10
-        
-        # Test the deployment
-        if curl -f http://localhost:8000/health; then
-            echo "✅ Deployment successful!"
-        else
-            echo "❌ Deployment failed - service not responding"
-            exit 1
-        fi
-        EOF
-        
-        chmod +x deployment_package/deploy.sh
-        
-        # Create deployment archive
-        tar -czf msai_deployment.tar.gz -C deployment_package .
-        
-        echo "✅ Deployment package created: msai_deployment.tar.gz"
-        
-    - name: Deploy to server
-      if: github.ref == 'refs/heads/main'
-      env:
-        SERVER_IP: ${{ secrets.SERVER_IP }}
-        SERVER_USER: ${{ secrets.SERVER_USER }}
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Sync files to server
       run: |
-        echo "🚀 Deploying to server..."
+        rsync -avz --delete \
+          --exclude='.git' \
+          --exclude='.github' \
+          --exclude='node_modules' \
+          --exclude='*.pyc' \
+          --exclude='__pycache__' \
+          --exclude='.env' \
+          --exclude='test_*.py' \
+          --exclude='playwright_env' \
+          --exclude='test_results.json' \
+          --exclude='deploy.sh' \
+          ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/msai/
+          
+    - name: Set proper permissions
+      run: |
+        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+          sudo chmod -R 755 /var/www/msai &&
+          sudo chown -R www-data:www-data /var/www/msai
+        "
         
-        # Set up SSH
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
+    - name: Restart web server
+      run: |
+        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "sudo systemctl reload nginx"
         
-        # Upload deployment package
-        scp msai_deployment.tar.gz $SERVER_USER@$SERVER_IP:/tmp/
-        
-        # Deploy on server
-        ssh $SERVER_USER@$SERVER_IP << 'EOF'
-        set -e
-        
-        echo "📥 Extracting deployment package..."
-        cd /opt/msai
-        tar -xzf /tmp/msai_deployment.tar.gz
-        
-        echo "🔧 Running deployment script..."
-        ./deploy.sh
-        
-        echo "🧹 Cleaning up..."
-        rm -f /tmp/msai_deployment.tar.gz
-        
-        echo "✅ Deployment complete!"
-        EOF
+    - name: Wait for server restart
+      run: sleep 10
         
     - name: Verify deployment
-      if: github.ref == 'refs/heads/main'
       run: |
         echo "🔍 Verifying deployment..."
+        for i in {1..5}; do
+          if curl -f -s http://msai.syzygyx.com > /dev/null; then
+            echo "✅ Site is responding successfully!"
+            break
+          else
+            echo "⏳ Attempt $i/5: Waiting for site to respond..."
+            sleep 10
+          fi
+        done
         
-        # Wait a moment for the service to fully start
-        sleep 30
+        # Final verification
+        if curl -f -s http://msai.syzygyx.com > /dev/null; then
+          echo "🎉 Deployment successful!"
+          echo "🌐 Site is live at: http://msai.syzygyx.com"
+          echo "📋 Application form: http://msai.syzygyx.com/apply"
+        else
+          echo "❌ Deployment verification failed!"
+          echo "🔍 Checking server status..."
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "sudo systemctl status nginx"
+          exit 1
+        fi
         
-        # Test main endpoints
-        echo "Testing main site..."
-        curl -f http://msai.syzygyx.com/health || echo "Health check failed"
-        
-        echo "Testing application form..."
-        curl -f http://msai.syzygyx.com/application || echo "Application form not accessible"
-        
-        echo "Testing API endpoints..."
-        curl -f http://msai.syzygyx.com/api || echo "API root failed"
-        
-        echo "✅ Deployment verification complete!"
+    - name: Run health check
+      run: |
+        echo "🏥 Running health check..."
+        response=$(curl -s -o /dev/null -w "%{http_code}" http://msai.syzygyx.com)
+        if [ "$response" = "200" ]; then
+          echo "✅ Health check passed (HTTP $response)"
+        else
+          echo "⚠️ Health check warning (HTTP $response)"
+        fi
         
     - name: Notify deployment status
       if: always()
       run: |
-        if [ ${{ job.status }} == 'success' ]; then
-          echo "🎉 Deployment successful!"
-          echo "🌐 Site: http://msai.syzygyx.com"
-          echo "📝 Application: http://msai.syzygyx.com/application"
-          echo "📚 API Docs: http://msai.syzygyx.com/docs"
+        if [ "${{ job.status }}" = "success" ]; then
+          echo "✅ Deployment completed successfully!"
         else
           echo "❌ Deployment failed!"
         fi
