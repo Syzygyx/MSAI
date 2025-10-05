@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Specialization Tracks - MS AI Curriculum System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #2c3e50; background: #f8f9fa; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); overflow: hidden; border: 1px solid #e9ecef; }
+        .header { background: #2c3e50; color: white; padding: 40px; text-align: center; border-bottom: 4px solid #34495e; }
+        .header h1 { font-size: 2.2rem; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .header p { font-size: 1rem; opacity: 0.9; font-weight: 400; }
+        .nav { background: #f8f9fa; padding: 20px; border-bottom: 1px solid #e9ecef; }
+        .nav-links { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .nav-links a { color: #3498db; text-decoration: none; font-weight: 500; padding: 8px 16px; border-radius: 4px; transition: all 0.3s ease; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-links a:hover, .nav-links a.active { background: #3498db; color: white; }
+        .content { padding: 40px; }
+        .back-link { text-align: center; margin-bottom: 30px; }
+        .back-link a { color: #3498db; text-decoration: none; font-weight: 600; }
+        .back-link a:hover { text-decoration: underline; }
+        .specialization-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .specialization-card { background: white; border: 1px solid #e9ecef; border-radius: 8px; padding: 30px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: box-shadow 0.3s ease; }
+        .specialization-card:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+        .specialization-icon { width: 80px; height: 80px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: white; font-size: 2rem; }
+        .specialization-card h3 { font-size: 1.4rem; font-weight: 600; margin-bottom: 15px; color: #2c3e50; }
+        .specialization-card p { color: #666; margin-bottom: 20px; line-height: 1.6; }
+        .specialization-details { background: #f8f9fa; padding: 20px; border-radius: 4px; margin-top: 15px; border: 1px solid #e9ecef; }
+        .specialization-details h4 { color: #2c3e50; margin-bottom: 15px; font-size: 1rem; font-weight: 600; }
+        .specialization-details ul { list-style: none; padding: 0; }
+        .specialization-details li { padding: 8px 0; color: #34495e; border-bottom: 1px solid #e9ecef; }
+        .specialization-details li:last-child { border-bottom: none; }
+        .specialization-details li:before { content: "→ "; color: #3498db; font-weight: bold; }
+        .career-paths { background: #e8f4fd; border: 1px solid #3498db; border-radius: 4px; padding: 20px; margin-top: 15px; }
+        .career-paths h4 { color: #2c3e50; margin-bottom: 15px; font-weight: 600; }
+        .career-paths p { margin-bottom: 10px; color: #34495e; }
+        .highlight-box { background: #e8f4fd; border: 1px solid #3498db; border-radius: 4px; padding: 25px; margin: 25px 0; }
+        .highlight-box h4 { color: #2c3e50; margin-bottom: 15px; font-weight: 600; }
+        .highlight-box p { margin-bottom: 10px; }
+        .cta-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 8px; text-align: center; margin-top: 40px; }
+        .cta-section h3 { font-size: 1.5rem; margin-bottom: 15px; }
+        .cta-section p { margin-bottom: 25px; opacity: 0.9; }
+        .cta-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 12px 25px; border: none; border-radius: 25px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-block; }
+        .btn-primary { background: white; color: #667eea; }
+        .btn-primary:hover { background: #f8f9fa; transform: translateY(-2px); }
+        .btn-secondary { background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid rgba(255, 255, 255, 0.3); }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+        @media (max-width: 768px) { 
+            .specialization-grid { grid-template-columns: 1fr; }
+            .nav-links { flex-direction: column; align-items: center; }
+            .header h1 { font-size: 2rem; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-graduation-cap"></i> Specialization Tracks</h1>
+            <p>Choose Your AI Focus Area and Build Expertise</p>
+        </div>
+        
+        <div class="nav">
+            <div class="nav-links">
+                <a href="http://msai.syzygyx.com">Home</a>
+                <a href="http://msai.syzygyx.com/apply">Apply Now</a>
+                <a href="http://msai.syzygyx.com/courses">Courses</a>
+                <a href="http://msai.syzygyx.com/white-paper">White Paper</a>
+                <a href="http://msai.syzygyx.com/features">Features</a>
+                <a href="http://msai.syzygyx.com/professors">AI Professors</a>
+                <a href="http://msai.syzygyx.com/specializations" class="active">Specializations</a>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="back-link">
+                <a href="http://msai.syzygyx.com">← Back to MS AI Curriculum System</a>
+            </div>
+            
+            <div class="highlight-box">
+                <h4><i class="fas fa-info-circle"></i> About Specialization Tracks</h4>
+                <p>Our Master of Science in Artificial Intelligence program offers three specialized tracks, each designed to provide deep expertise in specific areas of AI. Students choose one track to focus their studies and develop specialized skills that align with their career goals and interests.</p>
+            </div>
+            
+            <div class="specialization-grid">
+                <div class="specialization-card">
+                    <div class="specialization-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Machine Learning & Data Science</h3>
+                    <p>Deep dive into algorithms, neural networks, and data analysis techniques with hands-on projects and real-world applications. This track prepares you for roles in data science, machine learning engineering, and AI research.</p>
+                    <div class="specialization-details">
+                        <h4>Core Topics</h4>
+                        <ul>
+                            <li>Supervised and unsupervised learning algorithms</li>
+                            <li>Deep learning architectures and frameworks</li>
+                            <li>Big data processing and analytics</li>
+                            <li>Statistical modeling and inference</li>
+                            <li>Model optimization and deployment</li>
+                            <li>Feature engineering and selection</li>
+                        </ul>
+                    </div>
+                    <div class="career-paths">
+                        <h4>Career Opportunities</h4>
+                        <p><strong>Data Scientist:</strong> Analyze complex datasets to extract insights and drive business decisions.</p>
+                        <p><strong>ML Engineer:</strong> Design, build, and deploy machine learning systems at scale.</p>
+                        <p><strong>AI Research Scientist:</strong> Conduct cutting-edge research in machine learning and AI.</p>
+                    </div>
+                </div>
+                
+                <div class="specialization-card">
+                    <div class="specialization-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3>Natural Language Processing</h3>
+                    <p>Master the art of teaching machines to understand and generate human language through advanced NLP techniques. This track focuses on language models, text analysis, and conversational AI systems.</p>
+                    <div class="specialization-details">
+                        <h4>Core Topics</h4>
+                        <ul>
+                            <li>Text preprocessing and tokenization</li>
+                            <li>Language models and embeddings</li>
+                            <li>Transformer architectures (BERT, GPT)</li>
+                            <li>Sentiment analysis and text classification</li>
+                            <li>Machine translation and multilingual NLP</li>
+                            <li>Conversational AI and chatbots</li>
+                        </ul>
+                    </div>
+                    <div class="career-paths">
+                        <h4>Career Opportunities</h4>
+                        <p><strong>NLP Engineer:</strong> Build systems that understand and process human language.</p>
+                        <p><strong>Conversational AI Developer:</strong> Create chatbots and virtual assistants.</p>
+                        <p><strong>Language Technology Researcher:</strong> Advance the state-of-the-art in NLP.</p>
+                    </div>
+                </div>
+                
+                <div class="specialization-card">
+                    <div class="specialization-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Computer Vision & Robotics</h3>
+                    <p>Explore how AI sees and interacts with the world through computer vision and autonomous systems. This track covers image processing, object detection, and robotic applications.</p>
+                    <div class="specialization-details">
+                        <h4>Core Topics</h4>
+                        <ul>
+                            <li>Image processing and feature detection</li>
+                            <li>Object detection and recognition</li>
+                            <li>Deep learning for computer vision</li>
+                            <li>3D vision and reconstruction</li>
+                            <li>Robotic perception and control</li>
+                            <li>Autonomous systems and navigation</li>
+                        </ul>
+                    </div>
+                    <div class="career-paths">
+                        <h4>Career Opportunities</h4>
+                        <p><strong>Computer Vision Engineer:</strong> Develop AI systems that can see and understand images.</p>
+                        <p><strong>Robotics Engineer:</strong> Build intelligent robots and autonomous systems.</p>
+                        <p><strong>Autonomous Vehicle Engineer:</strong> Work on self-driving cars and drones.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <h4><i class="fas fa-lightbulb"></i> Choosing Your Specialization</h4>
+                <p>When selecting your specialization track, consider your background, interests, and career goals. Our AI advisors can help you make an informed decision based on your previous experience and future aspirations. You can also explore multiple areas through elective courses before committing to a specific track.</p>
+            </div>
+            
+            <div class="cta-section">
+                <h3>Ready to Choose Your AI Specialization?</h3>
+                <p>Start your journey toward becoming an AI expert in your chosen field.</p>
+                <div class="cta-buttons">
+                    <a href="http://msai.syzygyx.com/apply" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Apply Now
+                    </a>
+                    <a href="http://msai.syzygyx.com/courses" class="btn btn-secondary">
+                        <i class="fas fa-book"></i> View Course Details
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

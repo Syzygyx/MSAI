@@ -50,6 +50,48 @@ async def root(request: Request):
     """Main landing page"""
     return templates.TemplateResponse("index.html", {"request": request})
 
+@app.get("/apply", response_class=HTMLResponse)
+async def apply_page(request: Request):
+    """Application form page"""
+    with open("index.html", "r") as f:
+        content = f.read()
+    return HTMLResponse(content=content)
+
+@app.get("/courses", response_class=HTMLResponse)
+async def courses_page(request: Request):
+    """Course catalog page"""
+    with open("courses.html", "r") as f:
+        content = f.read()
+    return HTMLResponse(content=content)
+
+@app.get("/white-paper", response_class=HTMLResponse)
+async def white_paper_page(request: Request):
+    """White paper page"""
+    with open("white-paper.html", "r") as f:
+        content = f.read()
+    return HTMLResponse(content=content)
+
+@app.get("/features", response_class=HTMLResponse)
+async def features_page(request: Request):
+    """Features page"""
+    with open("features.html", "r") as f:
+        content = f.read()
+    return HTMLResponse(content=content)
+
+@app.get("/professors", response_class=HTMLResponse)
+async def professors_page(request: Request):
+    """AI Professors page"""
+    with open("professors.html", "r") as f:
+        content = f.read()
+    return HTMLResponse(content=content)
+
+@app.get("/specializations", response_class=HTMLResponse)
+async def specializations_page(request: Request):
+    """Specializations page"""
+    with open("specializations.html", "r") as f:
+        content = f.read()
+    return HTMLResponse(content=content)
+
 @app.get("/api")
 async def api_root():
     """API root endpoint"""

@@ -171,6 +171,11 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
+        .feature-card a:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+
         .feature-icon {
             width: 60px;
             height: 60px;
@@ -472,48 +477,48 @@
         <div class="container">
             <h2 class="section-title">Powered by Advanced AI Technology</h2>
             <div class="features-grid">
-                <div class="feature-card fade-in-up">
+                <a href="/features" class="feature-card fade-in-up" style="text-decoration: none; color: inherit;">
                     <div class="feature-icon">
                         <i class="fas fa-brain"></i>
                     </div>
                     <h3>AI-Generated Curriculum</h3>
                     <p>Our advanced AI algorithms create personalized learning paths that adapt to each student's learning style, pace, and goals. No two curricula are ever the same.</p>
-                </div>
-                <div class="feature-card fade-in-up">
+                </a>
+                <a href="/professors" class="feature-card fade-in-up" style="text-decoration: none; color: inherit;">
                     <div class="feature-icon">
                         <i class="fas fa-user-graduate"></i>
                     </div>
                     <h3>Virtual AI Professors</h3>
                     <p>Meet our AI professors with unique personalities, teaching philosophies, and expertise. Each professor is designed to provide personalized mentorship and guidance.</p>
-                </div>
-                <div class="feature-card fade-in-up">
+                </a>
+                <a href="/features" class="feature-card fade-in-up" style="text-decoration: none; color: inherit;">
                     <div class="feature-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h3>Adaptive Learning</h3>
                     <p>Content automatically adjusts based on student performance, learning patterns, and engagement levels. The system learns and improves with every interaction.</p>
-                </div>
-                <div class="feature-card fade-in-up">
+                </a>
+                <a href="/features" class="feature-card fade-in-up" style="text-decoration: none; color: inherit;">
                     <div class="feature-icon">
                         <i class="fas fa-robot"></i>
                     </div>
                     <h3>Intelligent Assessment</h3>
                     <p>AI-powered evaluation that goes beyond traditional testing, analyzing comprehension, creativity, and practical application of knowledge.</p>
-                </div>
-                <div class="feature-card fade-in-up">
+                </a>
+                <a href="/features" class="feature-card fade-in-up" style="text-decoration: none; color: inherit;">
                     <div class="feature-icon">
                         <i class="fas fa-users"></i>
                     </div>
                     <h3>Collaborative Learning</h3>
                     <p>AI facilitates peer-to-peer learning, group projects, and collaborative problem-solving with intelligent matching and guidance.</p>
-                </div>
-                <div class="feature-card fade-in-up">
+                </a>
+                <a href="/features" class="feature-card fade-in-up" style="text-decoration: none; color: inherit;">
                     <div class="feature-icon">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
                     <h3>Industry-Ready Skills</h3>
                     <p>Curriculum designed with industry experts and AI analysis of job market trends to ensure graduates are ready for real-world challenges.</p>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -557,27 +562,27 @@
                 </div>
             </div>
             <div class="features-grid">
-                <div class="feature-card">
+                <a href="/specializations" class="feature-card" style="text-decoration: none; color: inherit;">
                     <div class="feature-icon">
                         <i class="fas fa-cogs"></i>
                     </div>
                     <h3>Machine Learning & Data Science</h3>
                     <p>Deep dive into algorithms, neural networks, and data analysis techniques with hands-on projects and real-world applications.</p>
-                </div>
-                <div class="feature-card">
+                </a>
+                <a href="/specializations" class="feature-card" style="text-decoration: none; color: inherit;">
                     <div class="feature-icon">
                         <i class="fas fa-language"></i>
                     </div>
                     <h3>Natural Language Processing</h3>
                     <p>Master the art of teaching machines to understand and generate human language through advanced NLP techniques.</p>
-                </div>
-                <div class="feature-card">
+                </a>
+                <a href="/specializations" class="feature-card" style="text-decoration: none; color: inherit;">
                     <div class="feature-icon">
                         <i class="fas fa-eye"></i>
                     </div>
                     <h3>Computer Vision & Robotics</h3>
                     <p>Explore how AI sees and interacts with the world through computer vision and autonomous systems.</p>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -649,8 +654,11 @@
                 const container = document.getElementById('professors-container');
                 
                 data.professors.forEach(professor => {
-                    const professorCard = document.createElement('div');
+                    const professorCard = document.createElement('a');
+                    professorCard.href = '/professors';
                     professorCard.className = 'professor-card fade-in-up';
+                    professorCard.style.textDecoration = 'none';
+                    professorCard.style.color = 'inherit';
                     professorCard.innerHTML = `
                         <div class="professor-header">
                             <div class="professor-avatar">

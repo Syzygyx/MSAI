@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Features - MS AI Curriculum System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #2c3e50; background: #f8f9fa; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); overflow: hidden; border: 1px solid #e9ecef; }
+        .header { background: #2c3e50; color: white; padding: 40px; text-align: center; border-bottom: 4px solid #34495e; }
+        .header h1 { font-size: 2.2rem; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .header p { font-size: 1rem; opacity: 0.9; font-weight: 400; }
+        .nav { background: #f8f9fa; padding: 20px; border-bottom: 1px solid #e9ecef; }
+        .nav-links { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .nav-links a { color: #3498db; text-decoration: none; font-weight: 500; padding: 8px 16px; border-radius: 4px; transition: all 0.3s ease; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-links a:hover, .nav-links a.active { background: #3498db; color: white; }
+        .content { padding: 40px; }
+        .back-link { text-align: center; margin-bottom: 30px; }
+        .back-link a { color: #3498db; text-decoration: none; font-weight: 600; }
+        .back-link a:hover { text-decoration: underline; }
+        .feature-section { margin-bottom: 50px; }
+        .feature-section h2 { color: #2c3e50; font-size: 1.8rem; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 2px solid #2c3e50; font-weight: 600; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .feature-card { background: white; border: 1px solid #e9ecef; border-radius: 8px; padding: 30px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: box-shadow 0.3s ease; }
+        .feature-card:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+        .feature-icon { width: 60px; height: 60px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: white; font-size: 1.5rem; }
+        .feature-card h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 15px; color: #2c3e50; }
+        .feature-card p { color: #666; margin-bottom: 20px; line-height: 1.6; }
+        .feature-details { background: #f8f9fa; padding: 20px; border-radius: 4px; margin-top: 15px; border: 1px solid #e9ecef; }
+        .feature-details h4 { color: #2c3e50; margin-bottom: 15px; font-size: 1rem; font-weight: 600; }
+        .feature-details ul { list-style: none; padding: 0; }
+        .feature-details li { padding: 8px 0; color: #34495e; border-bottom: 1px solid #e9ecef; }
+        .feature-details li:last-child { border-bottom: none; }
+        .feature-details li:before { content: "✓ "; color: #27ae60; font-weight: bold; }
+        .highlight-box { background: #e8f4fd; border: 1px solid #3498db; border-radius: 4px; padding: 25px; margin: 25px 0; }
+        .highlight-box h4 { color: #2c3e50; margin-bottom: 15px; font-weight: 600; }
+        .highlight-box p { margin-bottom: 10px; }
+        .cta-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 8px; text-align: center; margin-top: 40px; }
+        .cta-section h3 { font-size: 1.5rem; margin-bottom: 15px; }
+        .cta-section p { margin-bottom: 25px; opacity: 0.9; }
+        .cta-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 12px 25px; border: none; border-radius: 25px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-block; }
+        .btn-primary { background: white; color: #667eea; }
+        .btn-primary:hover { background: #f8f9fa; transform: translateY(-2px); }
+        .btn-secondary { background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid rgba(255, 255, 255, 0.3); }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+        @media (max-width: 768px) { 
+            .feature-grid { grid-template-columns: 1fr; }
+            .nav-links { flex-direction: column; align-items: center; }
+            .header h1 { font-size: 2rem; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-brain"></i> AI-Powered Features</h1>
+            <p>Revolutionary AI Technology Transforming Education</p>
+        </div>
+        
+        <div class="nav">
+            <div class="nav-links">
+                <a href="http://msai.syzygyx.com">Home</a>
+                <a href="http://msai.syzygyx.com/apply">Apply Now</a>
+                <a href="http://msai.syzygyx.com/courses">Courses</a>
+                <a href="http://msai.syzygyx.com/white-paper">White Paper</a>
+                <a href="http://msai.syzygyx.com/features" class="active">Features</a>
+                <a href="http://msai.syzygyx.com/professors">AI Professors</a>
+                <a href="http://msai.syzygyx.com/specializations">Specializations</a>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="back-link">
+                <a href="http://msai.syzygyx.com">← Back to MS AI Curriculum System</a>
+            </div>
+            
+            <div class="feature-section">
+                <h2>Core AI Technologies</h2>
+                <p style="margin-bottom: 30px; color: #666; font-size: 1.1rem;">Our platform leverages cutting-edge artificial intelligence to create a personalized, adaptive, and engaging learning experience that evolves with each student.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>AI-Generated Curriculum</h3>
+                        <p>Our advanced AI algorithms create personalized learning paths that adapt to each student's learning style, pace, and goals. No two curricula are ever the same.</p>
+                        <div class="feature-details">
+                            <h4>Key Capabilities</h4>
+                            <ul>
+                                <li>Dynamic content generation based on student progress</li>
+                                <li>Adaptive difficulty adjustment in real-time</li>
+                                <li>Personalized learning objectives and milestones</li>
+                                <li>Integration of latest AI research and industry trends</li>
+                                <li>Multi-modal content delivery (text, video, interactive)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3>Virtual AI Professors</h3>
+                        <p>Meet our AI professors with unique personalities, teaching philosophies, and expertise. Each professor is designed to provide personalized mentorship and guidance.</p>
+                        <div class="feature-details">
+                            <h4>Professor Features</h4>
+                            <ul>
+                                <li>Unique teaching styles and communication patterns</li>
+                                <li>24/7 availability for questions and support</li>
+                                <li>Adaptive teaching methods based on student needs</li>
+                                <li>Specialized expertise in different AI domains</li>
+                                <li>Personalized feedback and encouragement</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Adaptive Learning</h3>
+                        <p>Content automatically adjusts based on student performance, learning patterns, and engagement levels. The system learns and improves with every interaction.</p>
+                        <div class="feature-details">
+                            <h4>Adaptive Features</h4>
+                            <ul>
+                                <li>Real-time performance monitoring and analysis</li>
+                                <li>Automatic content difficulty adjustment</li>
+                                <li>Learning style detection and optimization</li>
+                                <li>Predictive analytics for student success</li>
+                                <li>Personalized study recommendations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>Intelligent Assessment</h3>
+                        <p>AI-powered evaluation that goes beyond traditional testing, analyzing comprehension, creativity, and practical application of knowledge.</p>
+                        <div class="feature-details">
+                            <h4>Assessment Capabilities</h4>
+                            <ul>
+                                <li>Multi-dimensional skill evaluation</li>
+                                <li>Automated coding and project assessment</li>
+                                <li>Creative problem-solving analysis</li>
+                                <li>Peer review and collaboration assessment</li>
+                                <li>Continuous formative feedback</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Collaborative Learning</h3>
+                        <p>AI facilitates peer-to-peer learning, group projects, and collaborative problem-solving with intelligent matching and guidance.</p>
+                        <div class="feature-details">
+                            <h4>Collaboration Tools</h4>
+                            <ul>
+                                <li>Intelligent peer matching algorithms</li>
+                                <li>AI-mediated group formation</li>
+                                <li>Real-time collaboration assistance</li>
+                                <li>Conflict resolution and team dynamics</li>
+                                <li>Cross-cultural learning opportunities</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Industry-Ready Skills</h3>
+                        <p>Curriculum designed with industry experts and AI analysis of job market trends to ensure graduates are ready for real-world challenges.</p>
+                        <div class="feature-details">
+                            <h4>Industry Integration</h4>
+                            <ul>
+                                <li>Real-world project simulations</li>
+                                <li>Industry expert guest lectures</li>
+                                <li>Current market trend analysis</li>
+                                <li>Professional skill development</li>
+                                <li>Career pathway guidance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <h4><i class="fas fa-lightbulb"></i> The Future of Education</h4>
+                <p>Our AI-powered platform represents a paradigm shift in higher education. By combining artificial intelligence with human expertise, we create an educational experience that is both deeply personal and globally scalable. Students don't just learn about AI – they learn with AI, preparing them for a future where human-AI collaboration is the norm.</p>
+            </div>
+            
+            <div class="cta-section">
+                <h3>Ready to Experience AI-Powered Education?</h3>
+                <p>Join our revolutionary Master of Science in Artificial Intelligence program and be part of the future of learning.</p>
+                <div class="cta-buttons">
+                    <a href="http://msai.syzygyx.com/apply" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Apply Now
+                    </a>
+                    <a href="http://msai.syzygyx.com/courses" class="btn btn-secondary">
+                        <i class="fas fa-book"></i> Explore Courses
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

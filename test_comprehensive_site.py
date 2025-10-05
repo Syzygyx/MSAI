@@ -80,7 +80,7 @@ class ComprehensiveSiteTester:
             
             # Test main navigation links
             nav_links = [
-                {"selector": "a[href*='msai.syzygyx.com']", "name": "Home link"},
+                {"selector": "a[href='http://msai.syzygyx.com'], a[href='/']", "name": "Home link"},
                 {"selector": "a[href*='/apply']", "name": "Apply link"},
                 {"selector": "a[href*='/courses']", "name": "Courses link"},
                 {"selector": "a[href*='/white-paper']", "name": "White Paper link"}
@@ -148,6 +148,8 @@ class ComprehensiveSiteTester:
                 {"selector": "input[name='lastName']", "name": "Last Name field"},
                 {"selector": "input[name='email']", "name": "Email field"},
                 {"selector": "select[name='degreeLevel']", "name": "Degree Level dropdown"},
+                {"selector": "select[name='specialization']", "name": "Specialization dropdown"},
+                {"selector": "textarea[name='statementOfPurpose']", "name": "Statement of Purpose"},
                 {"selector": "textarea[name='personalStatement']", "name": "Personal Statement"},
                 {"selector": "button[type='submit']", "name": "Submit button"}
             ]
