@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS AI Course Catalog - Master of Science in Artificial Intelligence</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }
+        .header h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .nav { background: #f8f9fa; padding: 20px; border-bottom: 1px solid #e9ecef; }
+        .nav-links { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .nav-links a { color: #667eea; text-decoration: none; font-weight: 600; padding: 10px 20px; border-radius: 25px; transition: all 0.3s ease; }
+        .nav-links a:hover, .nav-links a.active { background: #667eea; color: white; }
+        .content { padding: 40px; }
+        .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .course-card { background: white; border: 1px solid #e9ecef; border-radius: 15px; padding: 25px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .course-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
+        .course-header { margin-bottom: 20px; }
+        .course-code { color: #667eea; font-weight: 600; font-size: 0.9rem; margin-bottom: 5px; }
+        .course-title { font-size: 1.3rem; font-weight: 700; color: #333; margin-bottom: 10px; }
+        .course-credits { color: #666; font-size: 0.9rem; margin-bottom: 15px; }
+        .course-description { color: #555; margin-bottom: 20px; line-height: 1.6; }
+        .course-details { background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+        .course-details h4 { color: #333; margin-bottom: 10px; font-size: 1rem; }
+        .course-details ul { list-style: none; padding: 0; }
+        .course-details li { padding: 5px 0; color: #666; }
+        .course-details li:before { content: "• "; color: #667eea; font-weight: bold; }
+        .prerequisites { background: #fff3e0; border: 1px solid #ff9800; padding: 10px; border-radius: 8px; margin-top: 15px; }
+        .prerequisites h5 { color: #e65100; margin-bottom: 5px; }
+        .prerequisites p { color: #bf360c; font-size: 0.9rem; }
+        .specialization { display: inline-block; background: #667eea; color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.8rem; margin-right: 10px; margin-bottom: 10px; }
+        .core { background: #4caf50; }
+        .elective { background: #ff9800; }
+        .thesis { background: #9c27b0; }
+        .syllabus-toggle { background: #667eea; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; margin-top: 10px; }
+        .syllabus-toggle:hover { background: #5a6fd8; }
+        .syllabus-content { display: none; margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #667eea; }
+        .syllabus-content h4 { color: #333; margin-bottom: 15px; }
+        .syllabus-content h5 { color: #667eea; margin: 15px 0 10px 0; }
+        .syllabus-content ul { margin-left: 20px; margin-bottom: 15px; }
+        .syllabus-content li { margin-bottom: 5px; }
+        .grading { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .grading h5 { color: #1976d2; margin-bottom: 10px; }
+        .grading-table { width: 100%; border-collapse: collapse; }
+        .grading-table th, .grading-table td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+        .grading-table th { background: #f5f5f5; font-weight: 600; }
+        .back-link { text-align: center; margin-bottom: 30px; }
+        .back-link a { color: #667eea; text-decoration: none; font-weight: 600; }
+        .back-link a:hover { text-decoration: underline; }
+        @media (max-width: 768px) { 
+            .course-grid { grid-template-columns: 1fr; }
+            .nav-links { flex-direction: column; align-items: center; }
+            .header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-graduation-cap"></i> MS AI Course Catalog</h1>
+            <p>Master of Science in Artificial Intelligence - Comprehensive Course Offerings</p>
+        </div>
+        
+        <div class="nav">
+            <div class="nav-links">
+                <a href="http://msai.syzygyx.com">Home</a>
+                <a href="http://msai.syzygyx.com/apply">Apply Now</a>
+                <a href="#core" class="active">Core Courses</a>
+                <a href="#specializations">Specializations</a>
+                <a href="#electives">Electives</a>
+                <a href="#thesis">Thesis Track</a>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="back-link">
+                <a href="http://msai.syzygyx.com">← Back to MS AI Curriculum System</a>
+            </div>
+            
+            <h2 id="core">Core Courses (Required)</h2>
+            <p style="margin-bottom: 30px; color: #666;">These foundational courses provide the essential knowledge base for all MS AI students.</p>
+            
+            <div class="course-grid">
+                <!-- Core Course 1 -->
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-code">MSAI 501</div>
+                        <div class="course-title">Foundations of Artificial Intelligence</div>
+                        <div class="course-credits">3 Credits</div>
+                        <div class="specialization core">Core</div>
+                    </div>
+                    <div class="course-description">
+                        Comprehensive introduction to the fundamental concepts, techniques, and applications of artificial intelligence. Covers search algorithms, knowledge representation, reasoning, and problem-solving methods.
+                    </div>
+                    <div class="course-details">
+                        <h4>Learning Objectives</h4>
+                        <ul>
+                            <li>Understand the history and evolution of AI</li>
+                            <li>Master search algorithms and heuristics</li>
+                            <li>Learn knowledge representation methods</li>
+                            <li>Apply logical reasoning techniques</li>
+                        </ul>
+                    </div>
+                    <div class="prerequisites">
+                        <h5>Prerequisites</h5>
+                        <p>Undergraduate degree in Computer Science, Mathematics, or related field</p>
+                    </div>
+                    <button class="syllabus-toggle" onclick="toggleSyllabus('msai501')">View Detailed Syllabus</button>
+                    <div id="msai501" class="syllabus-content">
+                        <h4>Detailed Syllabus - MSAI 501</h4>
+                        <h5>Week 1-2: Introduction to AI</h5>
+                        <ul>
+                            <li>History and evolution of artificial intelligence</li>
+                            <li>AI problem-solving approaches</li>
+                            <li>Intelligent agents and environments</li>
+                        </ul>
+                        <h5>Week 3-4: Search Algorithms</h5>
+                        <ul>
+                            <li>Uninformed search (BFS, DFS, UCS)</li>
+                            <li>Informed search (A*, greedy search)</li>
+                            <li>Local search and optimization</li>
+                        </ul>
+                        <h5>Week 5-6: Knowledge Representation</h5>
+                        <ul>
+                            <li>Propositional logic</li>
+                            <li>First-order logic</li>
+                            <li>Knowledge graphs and ontologies</li>
+                        </ul>
+                        <h5>Week 7-8: Reasoning and Planning</h5>
+                        <ul>
+                            <li>Logical inference</li>
+                            <li>Automated planning</li>
+                            <li>Constraint satisfaction problems</li>
+                        </ul>
+                        <h5>Week 9-10: Machine Learning Foundations</h5>
+                        <ul>
+                            <li>Supervised learning overview</li>
+                            <li>Unsupervised learning concepts</li>
+                            <li>Reinforcement learning basics</li>
+                        </ul>
+                        <h5>Week 11-12: AI Applications</h5>
+                        <ul>
+                            <li>Natural language processing</li>
+                            <li>Computer vision applications</li>
+                            <li>Expert systems</li>
+                        </ul>
+                        <h5>Week 13-14: AI Ethics and Future</h5>
+                        <ul>
+                            <li>Ethical considerations in AI</li>
+                            <li>Bias and fairness</li>
+                            <li>Future directions in AI research</li>
+                        </ul>
+                        <h5>Week 15: Final Project Presentations</h5>
+                        <div class="grading">
+                            <h5>Grading Breakdown</h5>
+                            <table class="grading-table">
+                                <tr><th>Component</th><th>Weight</th></tr>
+                                <tr><td>Midterm Exam</td><td>25%</td></tr>
+                                <tr><td>Final Exam</td><td>30%</td></tr>
+                                <tr><td>Programming Assignments</td><td>25%</td></tr>
+                                <tr><td>Final Project</td><td>20%</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Course 2 -->
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-code">MSAI 502</div>
+                        <div class="course-title">Machine Learning Fundamentals</div>
+                        <div class="course-credits">3 Credits</div>
+                        <div class="specialization core">Core</div>
+                    </div>
+                    <div class="course-description">
+                        Deep dive into machine learning algorithms, statistical foundations, and practical implementation. Covers supervised, unsupervised, and reinforcement learning with hands-on projects.
+                    </div>
+                    <div class="course-details">
+                        <h4>Learning Objectives</h4>
+                        <ul>
+                            <li>Master supervised learning algorithms</li>
+                            <li>Understand unsupervised learning techniques</li>
+                            <li>Implement ML models from scratch</li>
+                            <li>Apply ML to real-world problems</li>
+                        </ul>
+                    </div>
+                    <div class="prerequisites">
+                        <h5>Prerequisites</h5>
+                        <p>MSAI 501, Linear Algebra, Probability & Statistics</p>
+                    </div>
+                    <button class="syllabus-toggle" onclick="toggleSyllabus('msai502')">View Detailed Syllabus</button>
+                    <div id="msai502" class="syllabus-content">
+                        <h4>Detailed Syllabus - MSAI 502</h4>
+                        <h5>Week 1-2: Mathematical Foundations</h5>
+                        <ul>
+                            <li>Linear algebra review</li>
+                            <li>Probability and statistics</li>
+                            <li>Optimization theory</li>
+                        </ul>
+                        <h5>Week 3-4: Supervised Learning</h5>
+                        <ul>
+                            <li>Linear regression and classification</li>
+                            <li>Logistic regression</li>
+                            <li>Decision trees and random forests</li>
+                        </ul>
+                        <h5>Week 5-6: Advanced Supervised Learning</h5>
+                        <ul>
+                            <li>Support Vector Machines</li>
+                            <li>Neural networks and backpropagation</li>
+                            <li>Ensemble methods</li>
+                        </ul>
+                        <h5>Week 7-8: Unsupervised Learning</h5>
+                        <ul>
+                            <li>Clustering algorithms (K-means, hierarchical)</li>
+                            <li>Dimensionality reduction (PCA, t-SNE)</li>
+                            <li>Density estimation</li>
+                        </ul>
+                        <h5>Week 9-10: Deep Learning</h5>
+                        <ul>
+                            <li>Convolutional Neural Networks</li>
+                            <li>Recurrent Neural Networks</li>
+                            <li>Transfer learning</li>
+                        </ul>
+                        <h5>Week 11-12: Reinforcement Learning</h5>
+                        <ul>
+                            <li>Markov Decision Processes</li>
+                            <li>Q-learning and policy gradients</li>
+                            <li>Deep reinforcement learning</li>
+                        </ul>
+                        <h5>Week 13-14: Model Evaluation and Deployment</h5>
+                        <ul>
+                            <li>Cross-validation and metrics</li>
+                            <li>Bias-variance tradeoff</li>
+                            <li>Model deployment strategies</li>
+                        </ul>
+                        <h5>Week 15: Final Project</h5>
+                        <div class="grading">
+                            <h5>Grading Breakdown</h5>
+                            <table class="grading-table">
+                                <tr><th>Component</th><th>Weight</th></tr>
+                                <tr><td>Midterm Exam</td><td>25%</td></tr>
+                                <tr><td>Final Exam</td><td>30%</td></tr>
+                                <tr><td>Programming Labs</td><td>30%</td></tr>
+                                <tr><td>Final Project</td><td>15%</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Course 3 -->
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-code">MSAI 503</div>
+                        <div class="course-title">Deep Learning and Neural Networks</div>
+                        <div class="course-credits">3 Credits</div>
+                        <div class="specialization core">Core</div>
+                    </div>
+                    <div class="course-description">
+                        Advanced study of deep learning architectures, training techniques, and applications. Covers CNNs, RNNs, Transformers, and cutting-edge architectures with practical implementation.
+                    </div>
+                    <div class="course-details">
+                        <h4>Learning Objectives</h4>
+                        <ul>
+                            <li>Design and implement deep neural networks</li>
+                            <li>Understand advanced architectures</li>
+                            <li>Master training and optimization techniques</li>
+                            <li>Apply deep learning to complex problems</li>
+                        </ul>
+                    </div>
+                    <div class="prerequisites">
+                        <h5>Prerequisites</h5>
+                        <p>MSAI 502, Calculus, Linear Algebra</p>
+                    </div>
+                    <button class="syllabus-toggle" onclick="toggleSyllabus('msai503')">View Detailed Syllabus</button>
+                    <div id="msai503" class="syllabus-content">
+                        <h4>Detailed Syllabus - MSAI 503</h4>
+                        <h5>Week 1-2: Neural Network Fundamentals</h5>
+                        <ul>
+                            <li>Perceptron and multilayer perceptrons</li>
+                            <li>Backpropagation algorithm</li>
+                            <li>Activation functions and loss functions</li>
+                        </ul>
+                        <h5>Week 3-4: Convolutional Neural Networks</h5>
+                        <ul>
+                            <li>CNN architecture and operations</li>
+                            <li>Pooling and normalization</li>
+                            <li>Transfer learning and fine-tuning</li>
+                        </ul>
+                        <h5>Week 5-6: Recurrent Neural Networks</h5>
+                        <ul>
+                            <li>RNN, LSTM, and GRU architectures</li>
+                            <li>Sequence modeling</li>
+                            <li>Attention mechanisms</li>
+                        </ul>
+                        <h5>Week 7-8: Transformers and Attention</h5>
+                        <ul>
+                            <li>Self-attention mechanism</li>
+                            <li>Transformer architecture</li>
+                            <li>BERT and GPT models</li>
+                        </ul>
+                        <h5>Week 9-10: Advanced Architectures</h5>
+                        <ul>
+                            <li>ResNet, DenseNet, and ResNeXt</li>
+                            <li>Generative Adversarial Networks</li>
+                            <li>Variational Autoencoders</li>
+                        </ul>
+                        <h5>Week 11-12: Training and Optimization</h5>
+                        <ul>
+                            <li>Optimization algorithms (Adam, RMSprop)</li>
+                            <li>Regularization techniques</li>
+                            <li>Hyperparameter tuning</li>
+                        </ul>
+                        <h5>Week 13-14: Applications and Deployment</h5>
+                        <ul>
+                            <li>Computer vision applications</li>
+                            <li>Natural language processing</li>
+                            <li>Model compression and deployment</li>
+                        </ul>
+                        <h5>Week 15: Research Project</h5>
+                        <div class="grading">
+                            <h5>Grading Breakdown</h5>
+                            <table class="grading-table">
+                                <tr><th>Component</th><th>Weight</th></tr>
+                                <tr><td>Midterm Exam</td><td>20%</td></tr>
+                                <tr><td>Final Exam</td><td>25%</td></tr>
+                                <tr><td>Lab Assignments</td><td>35%</td></tr>
+                                <tr><td>Research Project</td><td>20%</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Course 4 -->
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-code">MSAI 504</div>
+                        <div class="course-title">AI Ethics and Responsible Development</div>
+                        <div class="course-credits">3 Credits</div>
+                        <div class="specialization core">Core</div>
+                    </div>
+                    <div class="course-description">
+                        Critical examination of ethical implications, bias, fairness, and societal impact of AI systems. Covers responsible AI development, governance, and policy considerations.
+                    </div>
+                    <div class="course-details">
+                        <h4>Learning Objectives</h4>
+                        <ul>
+                            <li>Understand AI ethics and bias</li>
+                            <li>Learn fairness and accountability</li>
+                            <li>Examine societal impact of AI</li>
+                            <li>Develop responsible AI practices</li>
+                        </ul>
+                    </div>
+                    <div class="prerequisites">
+                        <h5>Prerequisites</h5>
+                        <p>MSAI 501, Philosophy or Ethics course recommended</p>
+                    </div>
+                    <button class="syllabus-toggle" onclick="toggleSyllabus('msai504')">View Detailed Syllabus</button>
+                    <div id="msai504" class="syllabus-content">
+                        <h4>Detailed Syllabus - MSAI 504</h4>
+                        <h5>Week 1-2: Introduction to AI Ethics</h5>
+                        <ul>
+                            <li>Historical context of AI ethics</li>
+                            <li>Key ethical frameworks</li>
+                            <li>Case studies in AI ethics</li>
+                        </ul>
+                        <h5>Week 3-4: Bias and Fairness</h5>
+                        <ul>
+                            <li>Types of bias in AI systems</li>
+                            <li>Fairness metrics and definitions</li>
+                            <li>Bias detection and mitigation</li>
+                        </ul>
+                        <h5>Week 5-6: Privacy and Security</h5>
+                        <ul>
+                            <li>Data privacy in AI systems</li>
+                            <li>Differential privacy</li>
+                            <li>AI security vulnerabilities</li>
+                        </ul>
+                        <h5>Week 7-8: Transparency and Explainability</h5>
+                        <ul>
+                            <li>Explainable AI techniques</li>
+                            <li>Model interpretability</li>
+                            <li>Algorithmic accountability</li>
+                        </ul>
+                        <h5>Week 9-10: Societal Impact</h5>
+                        <ul>
+                            <li>AI and employment</li>
+                            <li>AI in healthcare and criminal justice</li>
+                            <li>Global AI governance</li>
+                        </ul>
+                        <h5>Week 11-12: Responsible AI Development</h5>
+                        <ul>
+                            <li>AI development lifecycle</li>
+                            <li>Ethical design principles</li>
+                            <li>Stakeholder engagement</li>
+                        </ul>
+                        <h5>Week 13-14: Policy and Regulation</h5>
+                        <ul>
+                            <li>Current AI regulations</li>
+                            <li>International AI policies</li>
+                            <li>Industry standards and guidelines</li>
+                        </ul>
+                        <h5>Week 15: Capstone Project</h5>
+                        <div class="grading">
+                            <h5>Grading Breakdown</h5>
+                            <table class="grading-table">
+                                <tr><th>Component</th><th>Weight</th></tr>
+                                <tr><td>Case Study Analysis</td><td>25%</td></tr>
+                                <tr><td>Ethics Assessment</td><td>25%</td></tr>
+                                <tr><td>Policy Paper</td><td>25%</td></tr>
+                                <tr><td>Capstone Project</td><td>25%</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="specializations">Specialization Tracks</h2>
+            <p style="margin-bottom: 30px; color: #666;">Choose one specialization track to focus your studies on a specific area of AI.</p>
+
+            <h3>Machine Learning & Data Science Track</h3>
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-code">MSAI 511</div>
+                        <div class="course-title">Advanced Machine Learning</div>
+                        <div class="course-credits">3 Credits</div>
+                        <div class="specialization elective">ML Track</div>
+                    </div>
+                    <div class="course-description">
+                        Advanced topics in machine learning including ensemble methods, kernel methods, probabilistic graphical models, and advanced optimization techniques.
+                    </div>
+                    <button class="syllabus-toggle" onclick="toggleSyllabus('msai511')">View Detailed Syllabus</button>
+                    <div id="msai511" class="syllabus-content">
+                        <h4>Detailed Syllabus - MSAI 511</h4>
+                        <h5>Week 1-2: Ensemble Methods</h5>
+                        <ul>
+                            <li>Bagging and boosting</li>
+                            <li>Random forests and gradient boosting</li>
+                            <li>Stacking and voting</li>
+                        </ul>
+                        <h5>Week 3-4: Kernel Methods</h5>
+                        <ul>
+                            <li>Kernel trick and feature spaces</li>
+                            <li>Support Vector Machines</li>
+                            <li>Kernel PCA and kernel regression</li>
+                        </ul>
+                        <h5>Week 5-6: Probabilistic Graphical Models</h5>
+                        <ul>
+                            <li>Bayesian networks</li>
+                            <li>Markov random fields</li>
+                            <li>Inference algorithms</li>
+                        </ul>
+                        <h5>Week 7-8: Advanced Optimization</h5>
+                        <ul>
+                            <li>Convex optimization</li>
+                            <li>Non-convex optimization</li>
+                            <li>Meta-learning and few-shot learning</li>
+                        </ul>
+                        <h5>Week 9-10: Time Series and Sequential Data</h5>
+                        <ul>
+                            <li>ARIMA models</li>
+                            <li>State space models</li>
+                            <li>Dynamic programming</li>
+                        </ul>
+                        <h5>Week 11-12: Advanced Deep Learning</h5>
+                        <ul>
+                            <li>Autoencoders and VAEs</li>
+                            <li>Generative models</li>
+                            <li>Adversarial training</li>
+                        </ul>
+                        <h5>Week 13-14: Model Selection and Validation</h5>
+                        <ul>
+                            <li>Cross-validation strategies</li>
+                            <li>Hyperparameter optimization</li>
+                            <li>Model comparison and selection</li>
+                        </ul>
+                        <h5>Week 15: Final Project</h5>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-code">MSAI 512</div>
+                        <div class="course-title">Big Data Analytics</div>
+                        <div class="course-credits">3 Credits</div>
+                        <div class="specialization elective">ML Track</div>
+                    </div>
+                    <div class="course-description">
+                        Techniques for processing, analyzing, and extracting insights from large-scale datasets using distributed computing frameworks and advanced analytics tools.
+                    </div>
+                    <button class="syllabus-toggle" onclick="toggleSyllabus('msai512')">View Detailed Syllabus</button>
+                    <div id="msai512" class="syllabus-content">
+                        <h4>Detailed Syllabus - MSAI 512</h4>
+                        <h5>Week 1-2: Big Data Fundamentals</h5>
+                        <ul>
+                            <li>Characteristics of big data</li>
+                            <li>Distributed computing concepts</li>
+                            <li>MapReduce paradigm</li>
+                        </ul>
+                        <h5>Week 3-4: Hadoop Ecosystem</h5>
+                        <ul>
+                            <li>HDFS and YARN</li>
+                            <li>Hive and Pig</li>
+                            <li>HBase and Cassandra</li>
+                        </ul>
+                        <h5>Week 5-6: Apache Spark</h5>
+                        <ul>
+                            <li>Spark Core and RDDs</li>
+                            <li>Spark SQL and DataFrames</li>
+                            <li>Spark Streaming</li>
+                        </ul>
+                        <h5>Week 7-8: Data Processing Pipelines</h5>
+                        <ul>
+                            <li>ETL processes</li>
+                            <li>Data quality and cleaning</li>
+                            <li>Real-time data processing</li>
+                        </ul>
+                        <h5>Week 9-10: Machine Learning at Scale</h5>
+                        <ul>
+                            <li>Distributed ML algorithms</li>
+                            <li>MLlib and Spark ML</li>
+                            <li>Model serving and deployment</li>
+                        </ul>
+                        <h5>Week 11-12: Cloud Platforms</h5>
+                        <ul>
+                            <li>AWS, GCP, and Azure</li>
+                            <li>Cloud data warehouses</li>
+                            <li>Serverless analytics</li>
+                        </ul>
+                        <h5>Week 13-14: Visualization and Reporting</h5>
+                        <ul>
+                            <li>Interactive dashboards</li>
+                            <li>Data visualization best practices</li>
+                            <li>Business intelligence tools</li>
+                        </ul>
+                        <h5>Week 15: Capstone Project</h5>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Natural Language Processing Track</h3>
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-code">MSAI 521</div>
+                        <div class="course-title">Natural Language Processing</div>
+                        <div class="course-credits">3 Credits</div>
+                        <div class="specialization elective">NLP Track</div>
+                    </div>
+                    <div class="course-description">
+                        Comprehensive study of NLP techniques including text preprocessing, language models, sentiment analysis, and advanced transformer architectures.
+                    </div>
+                    <button class="syllabus-toggle" onclick="toggleSyllabus('msai521')">View Detailed Syllabus</button>
+                    <div id="msai521" class="syllabus-content">
+                        <h4>Detailed Syllabus - MSAI 521</h4>
+                        <h5>Week 1-2: Text Preprocessing</h5>
+                        <ul>
+                            <li>Tokenization and normalization</li>
+                            <li>Part-of-speech tagging</li>
+                            <li>Named entity recognition</li>
+                        </ul>
+                        <h5>Week 3-4: Language Models</h5>
+                        <ul>
+                            <li>N-gram models</li>
+                            <li>Neural language models</li>
+                            <li>Word embeddings (Word2Vec, GloVe)</li>
+                        </ul>
+                        <h5>Week 5-6: Sequence Models</h5>
+                        <ul>
+                            <li>RNNs and LSTMs for NLP</li>
+                            <li>Sequence-to-sequence models</li>
+                            <li>Attention mechanisms</li>
+                        </ul>
+                        <h5>Week 7-8: Transformers</h5>
+                        <ul>
+                            <li>Transformer architecture</li>
+                            <li>BERT and GPT models</li>
+                            <li>Fine-tuning pre-trained models</li>
+                        </ul>
+                        <h5>Week 9-10: NLP Applications</h5>
+                        <ul>
+                            <li>Sentiment analysis</li>
+                            <li>Text classification</li>
+                            <li>Question answering systems</li>
+                        </ul>
+                        <h5>Week 11-12: Advanced Topics</h5>
+                        <ul>
+                            <li>Multilingual NLP</li>
+                            <li>Low-resource languages</li>
+                            <li>Ethical considerations in NLP</li>
+                        </ul>
+                        <h5>Week 13-14: Production Systems</h5>
+                        <ul>
+                            <li>Model deployment</li>
+                            <li>Performance optimization</li>
+                            <li>Monitoring and maintenance</li>
+                        </ul>
+                        <h5>Week 15: Final Project</h5>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Computer Vision & Robotics Track</h3>
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-code">MSAI 531</div>
+                        <div class="course-title">Computer Vision</div>
+                        <div class="course-credits">3 Credits</div>
+                        <div class="specialization elective">CV Track</div>
+                    </div>
+                    <div class="course-description">
+                        Advanced computer vision techniques including image processing, object detection, segmentation, and deep learning applications in visual understanding.
+                    </div>
+                    <button class="syllabus-toggle" onclick="toggleSyllabus('msai531')">View Detailed Syllabus</button>
+                    <div id="msai531" class="syllabus-content">
+                        <h4>Detailed Syllabus - MSAI 531</h4>
+                        <h5>Week 1-2: Image Fundamentals</h5>
+                        <ul>
+                            <li>Digital image representation</li>
+                            <li>Color spaces and transformations</li>
+                            <li>Image filtering and enhancement</li>
+                        </ul>
+                        <h5>Week 3-4: Feature Detection</h5>
+                        <ul>
+                            <li>Edge detection (Canny, Sobel)</li>
+                            <li>Corner detection (Harris, FAST)</li>
+                            <li>Scale-invariant features (SIFT, SURF)</li>
+                        </ul>
+                        <h5>Week 5-6: Object Detection</h5>
+                        <ul>
+                            <li>Traditional methods (HOG, Viola-Jones)</li>
+                            <li>R-CNN family</li>
+                            <li>YOLO and SSD</li>
+                        </ul>
+                        <h5>Week 7-8: Image Segmentation</h5>
+                        <ul>
+                            <li>Thresholding and clustering</li>
+                            <li>Watershed algorithm</li>
+                            <li>Deep learning segmentation</li>
+                        </ul>
+                        <h5>Week 9-10: Deep Learning for Vision</h5>
+                        <ul>
+                            <li>CNN architectures</li>
+                            <li>Transfer learning</li>
+                            <li>Data augmentation</li>
+                        </ul>
+                        <h5>Week 11-12: Advanced Applications</h5>
+                        <ul>
+                            <li>Facial recognition</li>
+                            <li>Medical image analysis</li>
+                            <li>Autonomous vehicles</li>
+                        </ul>
+                        <h5>Week 13-14: 3D Vision</h5>
+                        <ul>
+                            <li>Stereo vision</li>
+                            <li>Structure from motion</li>
+                            <li>3D reconstruction</li>
+                        </ul>
+                        <h5>Week 15: Final Project</h5>
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="thesis">Thesis Track</h2>
+            <p style="margin-bottom: 30px; color: #666;">For students pursuing the research-based thesis option.</p>
+            
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-code">MSAI 601</div>
+                        <div class="course-title">Research Methods in AI</div>
+                        <div class="course-credits">3 Credits</div>
+                        <div class="specialization thesis">Thesis</div>
+                    </div>
+                    <div class="course-description">
+                        Comprehensive introduction to research methodologies, literature review, experimental design, and academic writing in artificial intelligence.
+                    </div>
+                    <button class="syllabus-toggle" onclick="toggleSyllabus('msai601')">View Detailed Syllabus</button>
+                    <div id="msai601" class="syllabus-content">
+                        <h4>Detailed Syllabus - MSAI 601</h4>
+                        <h5>Week 1-2: Research Fundamentals</h5>
+                        <ul>
+                            <li>Scientific method in AI research</li>
+                            <li>Research question formulation</li>
+                            <li>Literature review techniques</li>
+                        </ul>
+                        <h5>Week 3-4: Experimental Design</h5>
+                        <ul>
+                            <li>Hypothesis testing</li>
+                            <li>Experimental controls</li>
+                            <li>Statistical analysis methods</li>
+                        </ul>
+                        <h5>Week 5-6: Data Collection and Analysis</h5>
+                        <ul>
+                            <li>Data collection strategies</li>
+                            <li>Statistical analysis tools</li>
+                            <li>Result interpretation</li>
+                        </ul>
+                        <h5>Week 7-8: Academic Writing</h5>
+                        <ul>
+                            <li>Research paper structure</li>
+                            <li>Citation and referencing</li>
+                            <li>Peer review process</li>
+                        </ul>
+                        <h5>Week 9-10: Presentation Skills</h5>
+                        <ul>
+                            <li>Conference presentations</li>
+                            <li>Poster design</li>
+                            <li>Research communication</li>
+                        </ul>
+                        <h5>Week 11-12: Ethics in Research</h5>
+                        <ul>
+                            <li>Research ethics guidelines</li>
+                            <li>Data privacy and security</li>
+                            <li>Responsible AI research</li>
+                        </ul>
+                        <h5>Week 13-14: Thesis Planning</h5>
+                        <ul>
+                            <li>Thesis proposal development</li>
+                            <li>Timeline and milestones</li>
+                            <li>Advisor selection</li>
+                        </ul>
+                        <h5>Week 15: Final Presentations</h5>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-code">MSAI 602</div>
+                        <div class="course-title">Master's Thesis</div>
+                        <div class="course-credits">6 Credits</div>
+                        <div class="specialization thesis">Thesis</div>
+                    </div>
+                    <div class="course-description">
+                        Independent research project culminating in a written thesis and oral defense. Students work closely with faculty advisors on original AI research.
+                    </div>
+                    <button class="syllabus-toggle" onclick="toggleSyllabus('msai602')">View Detailed Syllabus</button>
+                    <div id="msai602" class="syllabus-content">
+                        <h4>Detailed Syllabus - MSAI 602</h4>
+                        <h5>Semester 1: Research Planning</h5>
+                        <ul>
+                            <li>Literature review completion</li>
+                            <li>Research methodology design</li>
+                            <li>Preliminary experiments</li>
+                        </ul>
+                        <h5>Semester 2: Implementation and Analysis</h5>
+                        <ul>
+                            <li>Data collection and processing</li>
+                            <li>Algorithm implementation</li>
+                            <li>Experimental validation</li>
+                        </ul>
+                        <h5>Semester 3: Writing and Defense</h5>
+                        <ul>
+                            <li>Thesis writing</li>
+                            <li>Peer review and revision</li>
+                            <li>Oral defense preparation</li>
+                        </ul>
+                        <h5>Deliverables</h5>
+                        <ul>
+                            <li>Written thesis (50-80 pages)</li>
+                            <li>Oral defense presentation</li>
+                            <li>Code repository and documentation</li>
+                            <li>Research poster (optional)</li>
+                        </ul>
+                        <h5>Evaluation Criteria</h5>
+                        <ul>
+                            <li>Originality and contribution</li>
+                            <li>Technical rigor and methodology</li>
+                            <li>Writing quality and clarity</li>
+                            <li>Defense performance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSyllabus(courseId) {
+            const content = document.getElementById(courseId);
+            const button = content.previousElementSibling;
+            
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                button.textContent = 'Hide Detailed Syllabus';
+            } else {
+                content.style.display = 'none';
+                button.textContent = 'View Detailed Syllabus';
+            }
+        }
+    </script>
+</body>
+</html>
