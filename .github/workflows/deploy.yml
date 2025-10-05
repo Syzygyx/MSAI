@@ -62,7 +62,7 @@ jobs:
       run: |
         ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
           sudo chmod -R 755 /var/www/msai &&
-          sudo chown -R www-data:www-data /var/www/msai
+          sudo chown -R apache:apache /var/www/msai
         "
         
     - name: Restart web server
