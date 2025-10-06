@@ -57,6 +57,13 @@ async def apply_page(request: Request):
         content = f.read()
     return HTMLResponse(content=content)
 
+@app.get("/apply-google", response_class=HTMLResponse)
+async def apply_google_page(request: Request):
+    """Google Form redirect page"""
+    with open("apply-google.html", "r") as f:
+        content = f.read()
+    return HTMLResponse(content=content)
+
 @app.get("/courses", response_class=HTMLResponse)
 async def courses_page(request: Request):
     """Course catalog page"""

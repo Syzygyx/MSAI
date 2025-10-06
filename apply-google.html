@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS AI Application - AURNOVA University</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 600px;
+            text-align: center;
+            margin: 20px;
+        }
+        .header {
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        .icon {
+            font-size: 4rem;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        .message {
+            background: #e8f4fd;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .message h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .message p {
+            color: #34495e;
+            line-height: 1.6;
+        }
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        .btn-secondary {
+            background: #95a5a6;
+        }
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        .features {
+            text-align: left;
+            margin: 30px 0;
+        }
+        .features h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+        .features li {
+            padding: 8px 0;
+            color: #34495e;
+        }
+        .features li i {
+            color: #27ae60;
+            margin-right: 10px;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 20px; margin: 10px; }
+            .header h1 { font-size: 2rem; }
+            .btn { display: block; margin: 10px 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h1>MS AI Application</h1>
+            <p>Master of Science in Artificial Intelligence - AURNOVA University</p>
+        </div>
+
+        <div class="message">
+            <h3><i class="fas fa-info-circle"></i> Application Form Update</h3>
+            <p>We've upgraded our application system to provide a better experience. The application form is now hosted on Google Forms, which offers:</p>
+        </div>
+
+        <div class="features">
+            <h4><i class="fas fa-check-circle"></i> Enhanced Features:</h4>
+            <ul>
+                <li><i class="fas fa-save"></i> Auto-save progress as you fill out the form</li>
+                <li><i class="fas fa-mobile-alt"></i> Mobile-optimized interface</li>
+                <li><i class="fas fa-envelope"></i> Email confirmation and receipt</li>
+                <li><i class="fas fa-shield-alt"></i> Secure data handling</li>
+                <li><i class="fas fa-edit"></i> Easy editing before submission</li>
+                <li><i class="fas fa-chart-bar"></i> Real-time progress tracking</li>
+            </ul>
+        </div>
+
+        <div style="margin: 30px 0;">
+            <a href="https://forms.google.com" class="btn" target="_blank">
+                <i class="fas fa-external-link-alt"></i> Start Application
+            </a>
+            <a href="http://msai.syzygyx.com" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Program Info
+            </a>
+        </div>
+
+        <div class="footer">
+            <p><strong>Note:</strong> The Google Form will be set up shortly. If you need immediate assistance, please contact our admissions office.</p>
+            <p>For technical support, email: admissions@aurnova.edu</p>
+        </div>
+    </div>
+
+    <script>
+        // Auto-redirect after 10 seconds (optional)
+        // setTimeout(function() {
+        //     window.location.href = 'https://forms.google.com';
+        // }, 10000);
+    </script>
+</body>
+</html>
