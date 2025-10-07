@@ -184,11 +184,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 0;
+            padding: 25px 40px;
             position: relative;
             z-index: 2;
-            max-width: 1200px;
-            margin: 0 auto;
             width: 100%;
         }
 
@@ -235,20 +233,22 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 4px;
+            gap: 8px;
             align-items: center;
             flex-wrap: wrap;
             margin: 0;
             padding: 0;
             justify-content: flex-end;
+            flex: 1;
+            margin-left: 40px;
         }
 
         .nav-links a {
             color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.9rem;
-            padding: 10px 14px;
+            font-size: 0.85rem;
+            padding: 8px 12px;
             border: 1px solid transparent;
             border-radius: 6px;
             transition: all 0.3s ease;
@@ -257,6 +257,7 @@
             text-shadow: none;
             display: inline-block;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .nav-links a::before {
@@ -599,17 +600,19 @@
             .nav {
                 flex-direction: column;
                 gap: 20px;
-                padding: 20px 0;
+                padding: 20px 30px;
             }
             
             .nav-links {
                 justify-content: center;
                 gap: 6px;
+                margin-left: 0;
+                flex: none;
             }
             
             .nav-links a {
-                font-size: 0.85rem;
-                padding: 8px 12px;
+                font-size: 0.8rem;
+                padding: 6px 10px;
             }
         }
 
@@ -625,19 +628,22 @@
             .nav {
                 flex-direction: column;
                 gap: 20px;
+                padding: 20px 20px;
             }
 
             .nav-links {
                 flex-wrap: wrap;
                 gap: 4px;
                 justify-content: center;
+                margin-left: 0;
+                flex: none;
             }
 
             .nav-links a {
-                font-size: 0.8rem;
-                padding: 6px 10px;
+                font-size: 0.75rem;
+                padding: 5px 8px;
             }
-
+            
             .logo {
                 font-size: 1.8rem;
                 text-align: center;
