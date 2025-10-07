@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Assistant - MS AI Program | AURNOVA University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-cyan: #00d4ff;
+            --secondary-cyan: #00a8cc;
+            --accent-cyan: #00ffcc;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: rgba(0, 212, 255, 0.03);
+            --border-cyan: rgba(0, 212, 255, 0.2);
+            --shadow-glow: 0 4px 20px rgba(0, 212, 255, 0.1);
+            --text-glow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(5, 5, 5, 0.98) 0%, rgba(12, 12, 12, 0.98) 100%);
+            border-bottom: 2px solid var(--primary-cyan);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 212, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);
+            animation: header-line-1 3s linear infinite;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            animation: header-line-2 4s linear infinite;
+            animation-delay: 1s;
+        }
+
+        @keyframes header-line-1 {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        @keyframes header-line-2 {
+            0% { transform: translateX(100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(-100%); opacity: 0; }
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 60px;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: none;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-cyan);
+            text-shadow: var(--text-glow);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 204, 0.1) 100%);
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+            justify-content: flex-end;
+            flex: 1;
+            margin-left: 60px;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 10px 16px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            background: rgba(0, 212, 255, 0.03);
+            text-shadow: none;
+            display: inline-block;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .nav-links a:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--border-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-cyan);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 204, 0.1) 100%);
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-cyan);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--accent-cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--dark-bg);
+            font-weight: bold;
+        }
+
+        .chat-info h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--primary-cyan);
+            margin-bottom: 5px;
+        }
+
+        .chat-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .chat-status {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            background: var(--dark-bg);
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--primary-cyan));
+            color: var(--dark-bg);
+        }
+
+        .message.assistant .message-avatar {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--secondary-cyan));
+            color: var(--dark-bg);
+        }
+
+        .message-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border-cyan);
+            border-radius: 12px;
+            padding: 15px 20px;
+            max-width: 70%;
+            position: relative;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, rgba(0, 255, 204, 0.1), rgba(0, 212, 255, 0.1));
+            border-color: var(--accent-cyan);
+        }
+
+        .message-text {
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .message-time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-cyan);
+        }
+
+        .chat-input-form {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: var(--dark-bg);
+            border: 1px solid var(--border-cyan);
+            border-radius: 25px;
+            padding: 12px 20px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .send-button {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--accent-cyan));
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-bg);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+        }
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quick-actions {
+            padding: 20px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-cyan);
+        }
+
+        .quick-actions h3 {
+            color: var(--primary-cyan);
+            font-size: 1rem;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .quick-button {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--border-cyan);
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-button:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: var(--primary-cyan);
+            transform: translateY(-2px);
+        }
+
+        .info-box {
+            background: rgba(0, 255, 204, 0.05);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .info-box h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--darker-bg);
+            border-top: 1px solid var(--border-cyan);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .footer a {
+            color: var(--primary-cyan);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px 20px;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 6px;
+                margin-left: 0;
+                flex: none;
+            }
+
+            .nav-links a {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+
+            .chat-container {
+                margin: 20px;
+            }
+
+            .chat-messages {
+                height: 400px;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="dynamic-line-1"></div>
+        <div class="dynamic-line-2"></div>
+        <nav class="nav">
+            <a href="index.html" class="logo">MS AI</a>
+            <ul class="nav-links">
+                <li><a href="index.html#program">Program</a></li>
+                <li><a href="index.html#admissions">Admissions</a></li>
+                <li><a href="course-catalog.html">Courses</a></li>
+                <li><a href="faculty.html">Faculty</a></li>
+                <li><a href="index.html#research">Research</a></li>
+                <li><a href="index.html#careers">Careers</a></li>
+                <li><a href="white-paper.html">White Paper</a></li>
+                <li><a href="msai_application_form.html">Apply Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Chat Interface -->
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-avatar">AI</div>
+                <div class="chat-info">
+                    <h2>AurAI Assistant</h2>
+                    <p>Your personal AI guide for the MS AI Program</p>
+                </div>
+                <div class="chat-status">
+                    <div class="status-dot"></div>
+                    <span>Online</span>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant">
+                    <div class="message-avatar">AI</div>
+                    <div class="message-content">
+                        <div class="message-text">
+                            Hello! I'm AurAI, your personal AI assistant for the MS AI Program at AURNOVA University. I'm designed to help you understand our revolutionary AI education program.
+                            <br><br>
+                            I can help you with:
+                            <br><br>
+                            • Program information and requirements<br>
+                            • Course details and curriculum<br>
+                            • Application process and deadlines<br>
+                            • Faculty and research opportunities<br>
+                            • Career outcomes and job prospects<br>
+                            • Technical questions about AI concepts<br>
+                            • White paper content and details<br><br>
+                            Ask me anything about the MS AI Program!
+                        </div>
+                        <div class="message-time">Just now</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>💡 About This Chat Assistant</h4>
+                    <p>This is a demonstration chat interface. In the full implementation, I would be powered by RAG (Retrieval-Augmented Generation) technology that indexes all our site content, including the comprehensive white paper, and uses OpenRouter for intelligent responses. For now, I can provide general information about our program.</p>
+                </div>
+
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="message-avatar">AI</div>
+                    <div class="message-content">
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h3>Quick Questions</h3>
+                <div class="quick-buttons">
+                    <button class="quick-button" onclick="askQuestion('What is the MS AI program about?')">Program Overview</button>
+                    <button class="quick-button" onclick="askQuestion('What are the admission requirements?')">Admission Requirements</button>
+                    <button class="quick-button" onclick="askQuestion('How much does the program cost?')">Program Cost</button>
+                    <button class="quick-button" onclick="askQuestion('Do I need a computer science background?')">CS Background Required?</button>
+                    <button class="quick-button" onclick="askQuestion('What is the co-evolutionary learning model?')">Co-Evolutionary Learning</button>
+                    <button class="quick-button" onclick="askQuestion('Tell me about the AI tutoring system')">AI Tutoring System</button>
+                    <button class="quick-button" onclick="askQuestion('What are the career outcomes?')">Career Outcomes</button>
+                    <button class="quick-button" onclick="askQuestion('Tell me about the white paper')">White Paper Details</button>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <form class="chat-input-form" id="chatForm">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything about the MS AI Program..." autocomplete="off">
+                    <button type="submit" class="send-button" id="sendButton">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 AURNOVA University. All rights reserved.</p>
+            <p><a href="index.html">Return to Home</a> | <a href="msai_application_form.html">Apply Now</a> | <a href="white-paper.html">White Paper</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced AI Response Database with more comprehensive answers
+        const aiResponses = {
+            'program about': {
+                text: 'The MS AI Program at AURNOVA University is a revolutionary online Master of Science in Artificial Intelligence designed for working professionals from ANY academic background. Our program features:\n\n• **AI-Native Education**: AI-developed, AI-taught, AI-staffed, and AI-graded\n• **Co-Evolutionary Learning**: Each student gets a personal AI companion (AurAI) that grows with them\n• **No CS Background Required**: Our AI tutoring system adapts to your field\n• **Comprehensive Curriculum**: 30 credits including core courses, electives, and thesis\n• **Industry-Ready**: Designed for immediate career impact\n\nThis is the future of AI education - personalized, accessible, and cutting-edge.',
+                time: '2 minutes ago'
+            },
+            'admission requirements': {
+                text: 'The MS AI Program admission requirements are designed to be accessible:\n\n**Required:**\n• Bachelor\'s degree from an accredited institution (any field)\n• Minimum 3.0 GPA\n• Statement of purpose\n• Two letters of recommendation\n• Resume/CV\n\n**Not Required:**\n• GRE scores\n• Computer science background\n• Programming experience\n• Technical prerequisites\n\n**Unique Features:**\n• Our AI tutoring system ensures success regardless of background\n• We teach programming and math concepts from scratch\n• Domain-specific examples from your field\n• Personalized learning paths\n\nWe believe AI education should be accessible to everyone!',
+                time: '2 minutes ago'
+            },
+            'program cost': {
+                text: 'The MS AI Program is competitively priced for working professionals:\n\n**Tuition:**\n• $800 per credit hour\n• Total program: 30 credits\n• **Total cost: $24,000**\n\n**Financial Support Available:**\n• Financial aid packages\n• Payment plans (monthly/quarterly)\n• Employer tuition reimbursement assistance\n• Military/veteran benefits\n• Merit-based scholarships\n• Need-based grants\n\n**Value Proposition:**\n• Average salary increase: $25,000-40,000\n• 95% job placement within 6 months\n• ROI typically achieved within 2 years\n• Lifetime access to AurAI companion\n\nContact our financial aid office for personalized assistance.',
+                time: '2 minutes ago'
+            },
+            'cs background required': {
+                text: '**No CS background required!** Our program is specifically designed for students from ANY academic background.\n\n**Why This Works:**\n• **AI Tutoring System**: Adapts to your background and learning style\n• **Prerequisite Bridging**: We teach programming, math, and CS concepts from scratch\n• **Visual Programming**: User-friendly interfaces for non-technical students\n• **Domain-Specific Examples**: AI concepts explained through your field\n\n**Examples by Background:**\n• **Business**: AI for marketing analytics, predictive modeling\n• **Healthcare**: Medical AI, drug discovery, diagnostic tools\n• **Arts**: Creative AI, digital art generation\n• **Social Sciences**: AI for policy analysis, behavioral prediction\n• **Education**: Personalized learning systems, intelligent tutoring\n\n**Our Promise**: We teach you everything you need to succeed in AI, regardless of your starting point!',
+                time: '2 minutes ago'
+            },
+            'co-evolutionary learning': {
+                text: 'The Co-Evolutionary Learning Model is our revolutionary approach to AI education:\n\n**Personal AI Companion (AurAI):**\n• Each student gets their own AI assistant\n• Learns and grows alongside the student\n• Adapts to individual learning style and pace\n• Provides 24/7 personalized support\n\n**How It Works:**\n• **Semester 1**: AurAI learns your preferences and knowledge gaps\n• **Semester 2-4**: AurAI becomes your personalized tutor and research assistant\n• **Thesis Phase**: AurAI helps with literature reviews and methodology\n• **Graduation**: You keep your AurAI as a lifelong learning companion\n\n**Benefits:**\n• Truly personalized education at scale\n• Continuous adaptation to your needs\n• Research assistance and collaboration\n• Career support beyond graduation\n\nThis is the future of personalized AI education!',
+                time: '2 minutes ago'
+            },
+            'ai tutoring system': {
+                text: 'Our AI Tutoring System makes AI education accessible to everyone:\n\n**Adaptive Learning:**\n• Assesses your background and knowledge gaps\n• Creates personalized learning paths\n• Adjusts difficulty based on your progress\n• Provides just-in-time support\n\n**Multi-Modal Teaching:**\n• Visual programming interfaces\n• Interactive simulations and demos\n• Video explanations with AI-generated examples\n• Hands-on projects with guided assistance\n\n**24/7 Support:**\n• AI teaching assistants available anytime\n• Instant feedback on assignments\n• Code review and debugging help\n• Concept clarification and examples\n\n**Domain Integration:**\n• AI concepts explained through your field\n• Real-world applications relevant to your career\n• Industry-specific case studies\n• Professional context and examples\n\n**Success Guarantee:**\nWe\'re so confident in our system that we guarantee you\'ll master AI concepts regardless of your starting background!',
+                time: '2 minutes ago'
+            },
+            'career outcomes': {
+                text: 'MS AI graduates pursue high-demand, high-paying careers:\n\n**Top Roles & Salaries:**\n• **AI Engineer**: $120k-180k\n• **Machine Learning Engineer**: $130k-200k\n• **Data Scientist**: $100k-160k\n• **AI Research Scientist**: $140k-250k\n• **AI Product Manager**: $110k-170k\n• **AI Consultant**: $120k-200k\n\n**Industries Hiring Our Graduates:**\n• **Technology**: Google, Microsoft, Amazon, Tesla\n• **Healthcare**: AI diagnostics, drug discovery, medical imaging\n• **Finance**: Algorithmic trading, fraud detection, risk analysis\n• **Automotive**: Autonomous vehicles, smart transportation\n• **Consulting**: AI strategy, digital transformation\n\n**Success Metrics:**\n• **95% job placement** within 6 months\n• **Average salary increase**: $25k-40k\n• **80% work in AI-related roles**\n• **90% report career advancement**\n\n**Alumni Network:**\nAccess to our growing network of AI professionals across industries.',
+                time: '2 minutes ago'
+            },
+            'white paper': {
+                text: 'Our comprehensive white paper details our revolutionary approach to AI education:\n\n**Key Sections:**\n• **Executive Summary**: Program overview and unique features\n• **Vision & Philosophy**: AI-native education paradigm\n• **Academic Framework**: SACSCOC and ABET alignment\n• **Curriculum Architecture**: Core courses, electives, thesis\n• **AI Tutoring System**: Making AI accessible to all backgrounds\n• **Co-Evolutionary Learning**: Personal AI companions\n• **Technical Infrastructure**: Platform architecture and security\n• **Implementation Roadmap**: 3-phase rollout plan\n\n**Revolutionary Features:**\n• First AI-native university program\n• Co-evolutionary learning model\n• 24/7 AI teaching assistants\n• Personalized AI companions\n• No CS background required\n\n**Download**: Available on our main site\n**Length**: 45 pages of detailed technical content\n\nThis white paper represents our vision for the future of AI education!',
+                time: '2 minutes ago'
+            }
+        };
+
+        // Chat functionality
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatForm = document.getElementById('chatForm');
+        const sendButton = document.getElementById('sendButton');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        function addMessage(text, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'assistant'}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = isUser ? 'U' : 'AI';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            
+            const messageText = document.createElement('div');
+            messageText.className = 'message-text';
+            messageText.innerHTML = text.replace(/\n/g, '<br>');
+            
+            const messageTime = document.createElement('div');
+            messageTime.className = 'message-time';
+            messageTime.textContent = 'Just now';
+            
+            content.appendChild(messageText);
+            content.appendChild(messageTime);
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(content);
+            
+            chatMessages.insertBefore(messageDiv, typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            typingIndicator.style.display = 'flex';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        function getAIResponse(question) {
+            const lowerQuestion = question.toLowerCase();
+            
+            for (const [key, response] of Object.entries(aiResponses)) {
+                if (lowerQuestion.includes(key)) {
+                    return response;
+                }
+            }
+            
+            // Default response for unmatched questions
+            return {
+                text: 'I understand you\'re asking about "' + question + '". While I have extensive knowledge about the MS AI Program, I may need more specific information to give you the best answer.\n\nCould you please:\n• Be more specific about what you\'d like to know?\n• Try one of the quick question buttons below?\n• Contact our admissions office directly?\n\nI\'m here to help with program details, curriculum, admissions, faculty, and career outcomes!',
+                time: 'Just now'
+            };
+        }
+
+        function askQuestion(question) {
+            // Add user message
+            addMessage(question, true);
+            
+            // Show typing indicator
+            showTyping();
+            
+            // Disable input
+            sendButton.disabled = true;
+            chatInput.disabled = true;
+            
+            // Simulate AI thinking time
+            setTimeout(() => {
+                hideTyping();
+                
+                // Get AI response
+                const response = getAIResponse(question);
+                addMessage(response.text, false);
+                
+                // Re-enable input
+                sendButton.disabled = false;
+                chatInput.disabled = false;
+                chatInput.focus();
+            }, 1500);
+        }
+
+        // Event listeners
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const question = chatInput.value.trim();
+            if (question) {
+                askQuestion(question);
+                chatInput.value = '';
+            }
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                chatForm.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Focus input on load
+        chatInput.focus();
+    </script>
+</body>
+</html>

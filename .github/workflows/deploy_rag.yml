@@ -1,0 +1,42 @@
+name: Deploy RAG Chat Agent
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'chat-agent-rag.html', 'rag_*.py', 'requirements_rag.txt' ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        pip install -r requirements_rag.txt
+        
+    - name: Set up RAG system
+      run: |
+        python rag_system.py
+        
+    - name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v4
+      with:
+        artifact_name: rag-chat-agent
+        path: .
+        
+    - name: Update site with RAG chat
+      run: |
+        # Copy RAG chat agent to main site
+        cp chat-agent-rag.html chat-agent.html
+        
+        # Update main site to include chat link
+        sed -i 's|<li><a href="msai_application_form.html">Apply Now</a></li>|<li><a href="chat-agent.html">Chat AI</a></li><li><a href="msai_application_form.html">Apply Now</a></li>|g' index.html

@@ -1,68 +1,47 @@
 #!/usr/bin/env python3
 """
-Create Google Form using OAuth authentication
+Working Google Form Creator - Step by step approach
 """
 
 import json
 import os
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
+import time
+from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-# OAuth scopes
+# Service account credentials
+SERVICE_ACCOUNT_FILE = 'msai-service-key.json'
 SCOPES = [
     'https://www.googleapis.com/auth/forms.body',
     'https://www.googleapis.com/auth/drive.file'
 ]
 
-def authenticate_oauth():
-    """Authenticate using OAuth 2.0"""
+def authenticate_service_account():
+    """Authenticate using service account"""
     try:
-        creds = None
-        token_file = 'token.json'
-        
-        # Load existing token
-        if os.path.exists(token_file):
-            creds = Credentials.from_authorized_user_file(token_file, SCOPES)
-        
-        # Refresh or get new credentials
-        if not creds or not creds.valid:
-            if creds and creds.expired and creds.refresh_token:
-                creds.refresh(Request())
-            else:
-                if not os.path.exists('credentials.json'):
-                    print("❌ OAuth credentials file not found: credentials.json")
-                    print("Please download OAuth credentials from Google Cloud Console")
-                    return None
-                
-                flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-                creds = flow.run_local_server(port=0)
-            
-            # Save credentials
-            with open(token_file, 'w') as token:
-                token.write(creds.to_json())
-        
-        return creds
-        
+        credentials = service_account.Credentials.from_service_account_file(
+            SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+        return credentials
     except Exception as e:
-        print(f"❌ OAuth authentication failed: {e}")
+        print(f"❌ Error authenticating service account: {e}")
         return None
 
-def create_form_with_oauth():
-    """Create Google Form using OAuth"""
+def create_google_form_step_by_step():
+    """Create Google Form step by step to avoid API issues"""
     try:
         # Authenticate
-        creds = authenticate_oauth()
-        if not creds:
+        credentials = authenticate_service_account()
+        if not credentials:
             return None
         
         # Build the Forms API service
-        service = build('forms', 'v1', credentials=creds)
+        service = build('forms', 'v1', credentials=credentials)
         
-        print("🚀 Creating Google Form with OAuth...")
+        print("🚀 Creating Google Form step by step...")
         
-        # Create the form
+        # Step 1: Create the form with just the title
+        print("📝 Step 1: Creating form with title...")
         form_info = {
             "info": {
                 "title": "MS AI Program Application - AURNOVA University"
@@ -75,8 +54,11 @@ def create_form_with_oauth():
         print(f"✅ Form created with ID: {form_id}")
         print(f"🔗 Form URL: {form['responderUri']}")
         
-        # Update description
-        print("📝 Updating form description...")
+        # Wait a moment for the form to be fully created
+        time.sleep(2)
+        
+        # Step 2: Update the description
+        print("📝 Step 2: Updating form description...")
         description_update = {
             "requests": [{
                 "updateFormInfo": {
@@ -94,8 +76,8 @@ def create_form_with_oauth():
         except Exception as e:
             print(f"⚠️  Could not update description: {e}")
         
-        # Add basic questions
-        print("📝 Adding basic questions...")
+        # Step 3: Add questions one by one to avoid batch issues
+        print("📝 Step 3: Adding questions one by one...")
         
         questions = [
             {
@@ -105,9 +87,9 @@ def create_form_with_oauth():
                 "required": True
             },
             {
-                "title": "Email Address",
+                "title": "Email Address", 
                 "description": "We will use this email to communicate with you about your application.",
-                "type": "text", 
+                "type": "text",
                 "required": True
             },
             {
@@ -162,77 +144,82 @@ def create_form_with_oauth():
             }
         ]
         
-        # Add questions in batches
-        batch_size = 5
-        for i in range(0, len(questions), batch_size):
-            batch_questions = questions[i:i + batch_size]
-            batch_requests = []
-            
-            for j, question in enumerate(batch_questions):
+        for i, question in enumerate(questions):
+            try:
+                print(f"  Adding question {i+1}: {question['title']}")
+                
                 if question['type'] == 'text':
                     request = {
-                        "createItem": {
-                            "item": {
-                                "title": question['title'],
-                                "description": question['description'],
-                                "questionItem": {
-                                    "question": {
-                                        "required": question['required'],
-                                        "textQuestion": {
-                                            "paragraph": question.get('paragraph', False)
+                        "requests": [{
+                            "createItem": {
+                                "item": {
+                                    "title": question['title'],
+                                    "description": question['description'],
+                                    "questionItem": {
+                                        "question": {
+                                            "required": question['required'],
+                                            "textQuestion": {
+                                                "paragraph": question.get('paragraph', False)
+                                            }
                                         }
                                     }
-                                }
-                            },
-                            "location": {"index": i + j}
-                        }
+                                },
+                                "location": {"index": i}
+                            }
+                        }]
                     }
                 elif question['type'] == 'date':
                     request = {
-                        "createItem": {
-                            "item": {
-                                "title": question['title'],
-                                "description": question['description'],
-                                "questionItem": {
-                                    "question": {
-                                        "required": question['required'],
-                                        "dateQuestion": {}
+                        "requests": [{
+                            "createItem": {
+                                "item": {
+                                    "title": question['title'],
+                                    "description": question['description'],
+                                    "questionItem": {
+                                        "question": {
+                                            "required": question['required'],
+                                            "dateQuestion": {}
+                                        }
                                     }
-                                }
-                            },
-                            "location": {"index": i + j}
-                        }
+                                },
+                                "location": {"index": i}
+                            }
+                        }]
                     }
                 elif question['type'] == 'multiple_choice':
                     request = {
-                        "createItem": {
-                            "item": {
-                                "title": question['title'],
-                                "description": question['description'],
-                                "questionItem": {
-                                    "question": {
-                                        "required": question['required'],
-                                        "choiceQuestion": {
-                                            "type": "RADIO",
-                                            "options": [{"value": opt} for opt in question['options']]
+                        "requests": [{
+                            "createItem": {
+                                "item": {
+                                    "title": question['title'],
+                                    "description": question['description'],
+                                    "questionItem": {
+                                        "question": {
+                                            "required": question['required'],
+                                            "choiceQuestion": {
+                                                "type": "RADIO",
+                                                "options": [{"value": opt} for opt in question['options']]
+                                            }
                                         }
                                     }
-                                }
-                            },
-                            "location": {"index": i + j}
-                        }
+                                },
+                                "location": {"index": i}
+                            }
+                        }]
                     }
                 
-                batch_requests.append(request)
-            
-            try:
-                service.forms().batchUpdate(formId=form_id, body={"requests": batch_requests}).execute()
-                print(f"✅ Added questions {i+1}-{min(i+batch_size, len(questions))}")
+                service.forms().batchUpdate(formId=form_id, body=request).execute()
+                print(f"  ✅ Added: {question['title']}")
+                
+                # Small delay between requests
+                time.sleep(0.5)
+                
             except Exception as e:
-                print(f"❌ Error adding questions {i+1}-{min(i+batch_size, len(questions))}: {e}")
+                print(f"  ❌ Error adding {question['title']}: {e}")
+                continue
         
-        # Add essay questions
-        print("📝 Adding essay questions...")
+        # Step 4: Add essay questions
+        print("📝 Step 4: Adding essay questions...")
         
         essay_questions = [
             {
@@ -257,41 +244,56 @@ def create_form_with_oauth():
             }
         ]
         
-        essay_requests = []
         for i, essay in enumerate(essay_questions):
-            request = {
-                "createItem": {
-                    "item": {
-                        "title": essay['title'],
-                        "description": essay['description'],
-                        "questionItem": {
-                            "question": {
-                                "required": essay['required'],
-                                "textQuestion": {
-                                    "paragraph": True
+            try:
+                print(f"  Adding essay {i+1}: {essay['title']}")
+                
+                request = {
+                    "requests": [{
+                        "createItem": {
+                            "item": {
+                                "title": essay['title'],
+                                "description": essay['description'],
+                                "questionItem": {
+                                    "question": {
+                                        "required": essay['required'],
+                                        "textQuestion": {
+                                            "paragraph": True
+                                        }
+                                    }
                                 }
-                            }
+                            },
+                            "location": {"index": len(questions) + i}
                         }
-                    },
-                    "location": {"index": len(questions) + i}
+                    }]
                 }
-            }
-            essay_requests.append(request)
+                
+                service.forms().batchUpdate(formId=form_id, body=request).execute()
+                print(f"  ✅ Added: {essay['title']}")
+                
+                time.sleep(0.5)
+                
+            except Exception as e:
+                print(f"  ❌ Error adding {essay['title']}: {e}")
+                continue
         
-        try:
-            service.forms().batchUpdate(formId=form_id, body={"requests": essay_requests}).execute()
-            print("✅ Added essay questions")
-        except Exception as e:
-            print(f"❌ Error adding essay questions: {e}")
+        # Get the final form details
+        final_form = service.forms().get(formId=form_id).execute()
         
         return {
             'formId': form_id,
             'responderUri': form['responderUri'],
-            'form': service.forms().get(formId=form_id).execute()
+            'form': final_form
         }
         
     except HttpError as error:
         print(f"❌ Error creating form: {error}")
+        if error.resp.status == 403:
+            print("💡 This might be a permissions issue. Check that the service account has the correct permissions.")
+        elif error.resp.status == 400:
+            print("💡 This might be a request format issue. Check the API documentation.")
+        elif error.resp.status == 500:
+            print("💡 This is a server error. The Google Forms API might be experiencing issues.")
         return None
     except Exception as error:
         print(f"❌ Unexpected error: {error}")
@@ -299,23 +301,16 @@ def create_form_with_oauth():
 
 def main():
     """Main function"""
-    print("🚀 Creating MS AI Application Google Form with OAuth...")
-    print("=" * 60)
+    print("🚀 Creating MS AI Application Google Form (Step by Step)...")
+    print("=" * 70)
     
-    # Check if OAuth credentials exist
-    if not os.path.exists('credentials.json'):
-        print("❌ OAuth credentials file not found: credentials.json")
-        print("\n📋 To set up OAuth credentials:")
-        print("1. Go to https://console.developers.google.com/")
-        print("2. Create a new project or select existing one")
-        print("3. Enable Google Forms API and Google Drive API")
-        print("4. Create credentials (OAuth 2.0 Client ID)")
-        print("5. Download the JSON file and save as 'credentials.json'")
-        print("6. Run this script again")
+    # Check if service account key exists
+    if not os.path.exists(SERVICE_ACCOUNT_FILE):
+        print(f"❌ Service account key file not found: {SERVICE_ACCOUNT_FILE}")
         return
     
     # Create the form
-    result = create_form_with_oauth()
+    result = create_google_form_step_by_step()
     
     if result:
         print("\n🎉 Form creation completed!")
@@ -329,7 +324,7 @@ def main():
                 'formId': result['formId'],
                 'formUrl': result['responderUri'],
                 'createdAt': 'Just now',
-                'status': 'Google Form created successfully with OAuth'
+                'status': 'Google Form created successfully'
             }, f, indent=2)
         print(f"\n💾 Form details saved to form_details.json")
         
@@ -339,10 +334,15 @@ def main():
         print(f"3. Customize the form appearance and settings")
         print(f"4. Set up the linked Google Sheet for responses")
         print(f"5. Update your website to link to this form")
+        print(f"6. Test the complete application flow")
         
     else:
         print("\n❌ Form creation failed. Please check the error messages above.")
+        print("\n🔧 Troubleshooting:")
+        print("1. Check that the Google Forms API is enabled in your Google Cloud project")
+        print("2. Verify that the service account has the correct permissions")
+        print("3. Check the service account key file is valid")
+        print("4. Try creating a form manually in Google Forms to test API access")
 
 if __name__ == "__main__":
-    from google.auth.transport.requests import Request
     main()

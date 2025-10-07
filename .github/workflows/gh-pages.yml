@@ -35,6 +35,7 @@ jobs:
         cp white-paper.html _site/
         cp course-catalog.html _site/
         cp faculty.html _site/
+        cp chat-agent.html _site/
         
         # Create a simple index.html redirect for the application form
         cat > _site/application.html << 'EOF'

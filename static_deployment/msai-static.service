@@ -1,0 +1,14 @@
+[Unit]
+Description=MS AI Static Site Server
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/opt/msai
+ExecStart=/usr/bin/python3 /opt/msai/server.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

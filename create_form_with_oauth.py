@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 Create Google Form using OAuth authentication
+This should work even if service account has issues
 """
 
 import json
@@ -29,11 +30,12 @@ def authenticate_oauth():
         # Refresh or get new credentials
         if not creds or not creds.valid:
             if creds and creds.expired and creds.refresh_token:
+                from google.auth.transport.requests import Request
                 creds.refresh(Request())
             else:
                 if not os.path.exists('credentials.json'):
                     print("❌ OAuth credentials file not found: credentials.json")
-                    print("Please download OAuth credentials from Google Cloud Console")
+                    print("Run: python create_oauth_credentials.py")
                     return None
                 
                 flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
@@ -94,10 +96,11 @@ def create_form_with_oauth():
         except Exception as e:
             print(f"⚠️  Could not update description: {e}")
         
-        # Add basic questions
-        print("📝 Adding basic questions...")
+        # Add questions in batches
+        print("📝 Adding questions...")
         
-        questions = [
+        # Batch 1: Personal Information
+        personal_questions = [
             {
                 "title": "Full Name",
                 "description": "Enter your full legal name as it appears on official documents.",
@@ -107,7 +110,7 @@ def create_form_with_oauth():
             {
                 "title": "Email Address",
                 "description": "We will use this email to communicate with you about your application.",
-                "type": "text", 
+                "type": "text",
                 "required": True
             },
             {
@@ -128,14 +131,84 @@ def create_form_with_oauth():
                 "type": "multiple_choice",
                 "required": True,
                 "options": ["Male", "Female", "Non-binary", "Prefer not to say"]
-            },
-            {
-                "title": "Mailing Address",
-                "description": "Please provide your complete mailing address including street, city, state, ZIP code, and country.",
-                "type": "text",
-                "required": True,
-                "paragraph": True
-            },
+            }
+        ]
+        
+        # Add personal questions
+        for i, question in enumerate(personal_questions):
+            try:
+                print(f"  Adding: {question['title']}")
+                
+                if question['type'] == 'text':
+                    request = {
+                        "requests": [{
+                            "createItem": {
+                                "item": {
+                                    "title": question['title'],
+                                    "description": question['description'],
+                                    "questionItem": {
+                                        "question": {
+                                            "required": question['required'],
+                                            "textQuestion": {
+                                                "paragraph": False
+                                            }
+                                        }
+                                    }
+                                },
+                                "location": {"index": i}
+                            }
+                        }]
+                    }
+                elif question['type'] == 'date':
+                    request = {
+                        "requests": [{
+                            "createItem": {
+                                "item": {
+                                    "title": question['title'],
+                                    "description": question['description'],
+                                    "questionItem": {
+                                        "question": {
+                                            "required": question['required'],
+                                            "dateQuestion": {}
+                                        }
+                                    }
+                                },
+                                "location": {"index": i}
+                            }
+                        }]
+                    }
+                elif question['type'] == 'multiple_choice':
+                    request = {
+                        "requests": [{
+                            "createItem": {
+                                "item": {
+                                    "title": question['title'],
+                                    "description": question['description'],
+                                    "questionItem": {
+                                        "question": {
+                                            "required": question['required'],
+                                            "choiceQuestion": {
+                                                "type": "RADIO",
+                                                "options": [{"value": opt} for opt in question['options']]
+                                            }
+                                        }
+                                    }
+                                },
+                                "location": {"index": i}
+                            }
+                        }]
+                    }
+                
+                service.forms().batchUpdate(formId=form_id, body=request).execute()
+                print(f"  ✅ Added: {question['title']}")
+                
+            except Exception as e:
+                print(f"  ❌ Error adding {question['title']}: {e}")
+        
+        # Add academic questions
+        print("📝 Adding academic questions...")
+        
+        academic_questions = [
             {
                 "title": "Undergraduate Degree",
                 "description": "Enter your undergraduate degree (e.g., Bachelor of Science in Computer Science).",
@@ -162,15 +235,12 @@ def create_form_with_oauth():
             }
         ]
         
-        # Add questions in batches
-        batch_size = 5
-        for i in range(0, len(questions), batch_size):
-            batch_questions = questions[i:i + batch_size]
-            batch_requests = []
-            
-            for j, question in enumerate(batch_questions):
-                if question['type'] == 'text':
-                    request = {
+        for i, question in enumerate(academic_questions):
+            try:
+                print(f"  Adding: {question['title']}")
+                
+                request = {
+                    "requests": [{
                         "createItem": {
                             "item": {
                                 "title": question['title'],
@@ -179,57 +249,21 @@ def create_form_with_oauth():
                                     "question": {
                                         "required": question['required'],
                                         "textQuestion": {
-                                            "paragraph": question.get('paragraph', False)
+                                            "paragraph": False
                                         }
                                     }
                                 }
                             },
-                            "location": {"index": i + j}
+                            "location": {"index": len(personal_questions) + i}
                         }
-                    }
-                elif question['type'] == 'date':
-                    request = {
-                        "createItem": {
-                            "item": {
-                                "title": question['title'],
-                                "description": question['description'],
-                                "questionItem": {
-                                    "question": {
-                                        "required": question['required'],
-                                        "dateQuestion": {}
-                                    }
-                                }
-                            },
-                            "location": {"index": i + j}
-                        }
-                    }
-                elif question['type'] == 'multiple_choice':
-                    request = {
-                        "createItem": {
-                            "item": {
-                                "title": question['title'],
-                                "description": question['description'],
-                                "questionItem": {
-                                    "question": {
-                                        "required": question['required'],
-                                        "choiceQuestion": {
-                                            "type": "RADIO",
-                                            "options": [{"value": opt} for opt in question['options']]
-                                        }
-                                    }
-                                }
-                            },
-                            "location": {"index": i + j}
-                        }
-                    }
+                    }]
+                }
                 
-                batch_requests.append(request)
-            
-            try:
-                service.forms().batchUpdate(formId=form_id, body={"requests": batch_requests}).execute()
-                print(f"✅ Added questions {i+1}-{min(i+batch_size, len(questions))}")
+                service.forms().batchUpdate(formId=form_id, body=request).execute()
+                print(f"  ✅ Added: {question['title']}")
+                
             except Exception as e:
-                print(f"❌ Error adding questions {i+1}-{min(i+batch_size, len(questions))}: {e}")
+                print(f"  ❌ Error adding {question['title']}: {e}")
         
         # Add essay questions
         print("📝 Adding essay questions...")
@@ -257,32 +291,35 @@ def create_form_with_oauth():
             }
         ]
         
-        essay_requests = []
         for i, essay in enumerate(essay_questions):
-            request = {
-                "createItem": {
-                    "item": {
-                        "title": essay['title'],
-                        "description": essay['description'],
-                        "questionItem": {
-                            "question": {
-                                "required": essay['required'],
-                                "textQuestion": {
-                                    "paragraph": True
+            try:
+                print(f"  Adding: {essay['title']}")
+                
+                request = {
+                    "requests": [{
+                        "createItem": {
+                            "item": {
+                                "title": essay['title'],
+                                "description": essay['description'],
+                                "questionItem": {
+                                    "question": {
+                                        "required": essay['required'],
+                                        "textQuestion": {
+                                            "paragraph": True
+                                        }
+                                    }
                                 }
-                            }
+                            },
+                            "location": {"index": len(personal_questions) + len(academic_questions) + i}
                         }
-                    },
-                    "location": {"index": len(questions) + i}
+                    }]
                 }
-            }
-            essay_requests.append(request)
-        
-        try:
-            service.forms().batchUpdate(formId=form_id, body={"requests": essay_requests}).execute()
-            print("✅ Added essay questions")
-        except Exception as e:
-            print(f"❌ Error adding essay questions: {e}")
+                
+                service.forms().batchUpdate(formId=form_id, body=request).execute()
+                print(f"  ✅ Added: {essay['title']}")
+                
+            except Exception as e:
+                print(f"  ❌ Error adding {essay['title']}: {e}")
         
         return {
             'formId': form_id,
@@ -306,12 +343,9 @@ def main():
     if not os.path.exists('credentials.json'):
         print("❌ OAuth credentials file not found: credentials.json")
         print("\n📋 To set up OAuth credentials:")
-        print("1. Go to https://console.developers.google.com/")
-        print("2. Create a new project or select existing one")
-        print("3. Enable Google Forms API and Google Drive API")
-        print("4. Create credentials (OAuth 2.0 Client ID)")
-        print("5. Download the JSON file and save as 'credentials.json'")
-        print("6. Run this script again")
+        print("1. Run: python create_oauth_credentials.py")
+        print("2. Follow the instructions to create OAuth credentials")
+        print("3. Run this script again")
         return
     
     # Create the form
@@ -344,5 +378,4 @@ def main():
         print("\n❌ Form creation failed. Please check the error messages above.")
 
 if __name__ == "__main__":
-    from google.auth.transport.requests import Request
     main()

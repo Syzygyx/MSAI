@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Assistant - MS AI Program | AURNOVA University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-cyan: #00d4ff;
+            --secondary-cyan: #00a8cc;
+            --accent-cyan: #00ffcc;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: rgba(0, 212, 255, 0.03);
+            --border-cyan: rgba(0, 212, 255, 0.2);
+            --shadow-glow: 0 4px 20px rgba(0, 212, 255, 0.1);
+            --text-glow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(5, 5, 5, 0.98) 0%, rgba(12, 12, 12, 0.98) 100%);
+            border-bottom: 2px solid var(--primary-cyan);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 212, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);
+            animation: header-line-1 3s linear infinite;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            animation: header-line-2 4s linear infinite;
+            animation-delay: 1s;
+        }
+
+        @keyframes header-line-1 {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        @keyframes header-line-2 {
+            0% { transform: translateX(100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(-100%); opacity: 0; }
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 60px;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: none;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-cyan);
+            text-shadow: var(--text-glow);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 204, 0.1) 100%);
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+            justify-content: flex-end;
+            flex: 1;
+            margin-left: 60px;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 10px 16px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            background: rgba(0, 212, 255, 0.03);
+            text-shadow: none;
+            display: inline-block;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .nav-links a:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--border-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-cyan);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 204, 0.1) 100%);
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-cyan);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--accent-cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--dark-bg);
+            font-weight: bold;
+        }
+
+        .chat-info h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--primary-cyan);
+            margin-bottom: 5px;
+        }
+
+        .chat-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .chat-status {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            background: var(--dark-bg);
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--primary-cyan));
+            color: var(--dark-bg);
+        }
+
+        .message.assistant .message-avatar {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--secondary-cyan));
+            color: var(--dark-bg);
+        }
+
+        .message-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border-cyan);
+            border-radius: 12px;
+            padding: 15px 20px;
+            max-width: 70%;
+            position: relative;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, rgba(0, 255, 204, 0.1), rgba(0, 212, 255, 0.1));
+            border-color: var(--accent-cyan);
+        }
+
+        .message-text {
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .message-sources {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-cyan);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .source-tag {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--border-cyan);
+            border-radius: 4px;
+            padding: 2px 6px;
+            margin: 2px;
+            font-size: 0.7rem;
+        }
+
+        .message-time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-cyan);
+        }
+
+        .chat-input-form {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: var(--dark-bg);
+            border: 1px solid var(--border-cyan);
+            border-radius: 25px;
+            padding: 12px 20px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .send-button {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--accent-cyan));
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-bg);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+        }
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quick-actions {
+            padding: 20px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-cyan);
+        }
+
+        .quick-actions h3 {
+            color: var(--primary-cyan);
+            font-size: 1rem;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .quick-button {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--border-cyan);
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-button:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: var(--primary-cyan);
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            color: #ff6b6b;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--darker-bg);
+            border-top: 1px solid var(--border-cyan);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .footer a {
+            color: var(--primary-cyan);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px 20px;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 6px;
+                margin-left: 0;
+                flex: none;
+            }
+
+            .nav-links a {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+
+            .chat-container {
+                margin: 20px;
+            }
+
+            .chat-messages {
+                height: 400px;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="dynamic-line-1"></div>
+        <div class="dynamic-line-2"></div>
+        <nav class="nav">
+            <a href="index.html" class="logo">MS AI</a>
+            <ul class="nav-links">
+                <li><a href="index.html#program">Program</a></li>
+                <li><a href="index.html#admissions">Admissions</a></li>
+                <li><a href="course-catalog.html">Courses</a></li>
+                <li><a href="faculty.html">Faculty</a></li>
+                <li><a href="index.html#research">Research</a></li>
+                <li><a href="index.html#careers">Careers</a></li>
+                <li><a href="white-paper.html">White Paper</a></li>
+                <li><a href="msai_application_form.html">Apply Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Chat Interface -->
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-avatar">AI</div>
+                <div class="chat-info">
+                    <h2>AurAI Assistant</h2>
+                    <p>Your personal AI guide powered by RAG and OpenRouter</p>
+                </div>
+                <div class="chat-status">
+                    <div class="status-dot"></div>
+                    <span>Online</span>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant">
+                    <div class="message-avatar">AI</div>
+                    <div class="message-content">
+                        <div class="message-text">
+                            Hello! I'm AurAI, your personal AI assistant for the MS AI Program at AURNOVA University. I'm powered by advanced RAG (Retrieval-Augmented Generation) technology that allows me to access and understand all the content from our website, including the comprehensive white paper.
+                            <br><br>
+                            I can help you with:
+                            <br><br>
+                            • Program information and requirements<br>
+                            • Course details and curriculum<br>
+                            • Application process and deadlines<br>
+                            • Faculty and research opportunities<br>
+                            • Career outcomes and job prospects<br>
+                            • Technical questions about AI concepts<br>
+                            • White paper content and technical details<br><br>
+                            Ask me anything about the MS AI Program!
+                        </div>
+                        <div class="message-time">Just now</div>
+                    </div>
+                </div>
+
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="message-avatar">AI</div>
+                    <div class="message-content">
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h3>Quick Questions</h3>
+                <div class="quick-buttons">
+                    <button class="quick-button" onclick="askQuestion('What is the MS AI program about?')">Program Overview</button>
+                    <button class="quick-button" onclick="askQuestion('What are the admission requirements?')">Admission Requirements</button>
+                    <button class="quick-button" onclick="askQuestion('How much does the program cost?')">Program Cost</button>
+                    <button class="quick-button" onclick="askQuestion('Do I need a computer science background?')">CS Background Required?</button>
+                    <button class="quick-button" onclick="askQuestion('What is the co-evolutionary learning model?')">Co-Evolutionary Learning</button>
+                    <button class="quick-button" onclick="askQuestion('Tell me about the AI tutoring system')">AI Tutoring System</button>
+                    <button class="quick-button" onclick="askQuestion('What are the career outcomes?')">Career Outcomes</button>
+                    <button class="quick-button" onclick="askQuestion('Tell me about the white paper')">White Paper Details</button>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <form class="chat-input-form" id="chatForm">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything about the MS AI Program..." autocomplete="off">
+                    <button type="submit" class="send-button" id="sendButton">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 AURNOVA University. All rights reserved.</p>
+            <p><a href="index.html">Return to Home</a> | <a href="msai_application_form.html">Apply Now</a> | <a href="white-paper.html">White Paper</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Chat functionality with RAG integration
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatForm = document.getElementById('chatForm');
+        const sendButton = document.getElementById('sendButton');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        function addMessage(text, isUser = false, sources = []) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'assistant'}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = isUser ? 'U' : 'AI';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            
+            const messageText = document.createElement('div');
+            messageText.className = 'message-text';
+            messageText.innerHTML = text.replace(/\n/g, '<br>');
+            
+            // Add sources if provided
+            if (sources && sources.length > 0) {
+                const sourcesDiv = document.createElement('div');
+                sourcesDiv.className = 'message-sources';
+                sourcesDiv.innerHTML = 'Sources: ' + sources.map(source => 
+                    `<span class="source-tag">${source}</span>`
+                ).join(' ');
+                content.appendChild(sourcesDiv);
+            }
+            
+            const messageTime = document.createElement('div');
+            messageTime.className = 'message-time';
+            messageTime.textContent = 'Just now';
+            
+            content.appendChild(messageText);
+            content.appendChild(messageTime);
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(content);
+            
+            chatMessages.insertBefore(messageDiv, typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            typingIndicator.style.display = 'flex';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            chatMessages.appendChild(errorDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        async function askQuestion(question) {
+            // Add user message
+            addMessage(question, true);
+            
+            // Show typing indicator
+            showTyping();
+            
+            // Disable input
+            sendButton.disabled = true;
+            chatInput.disabled = true;
+            
+            try {
+                // Call RAG API endpoint
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ question: question })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                // Hide typing indicator
+                hideTyping();
+                
+                // Add AI response
+                addMessage(result.answer, false, result.sources);
+                
+            } catch (error) {
+                console.error('Error calling RAG API:', error);
+                
+                // Hide typing indicator
+                hideTyping();
+                
+                // Show error message
+                showError('Sorry, I encountered an error. Please try again or contact our support team.');
+            } finally {
+                // Re-enable input
+                sendButton.disabled = false;
+                chatInput.disabled = false;
+                chatInput.focus();
+            }
+        }
+
+        // Event listeners
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const question = chatInput.value.trim();
+            if (question) {
+                askQuestion(question);
+                chatInput.value = '';
+            }
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                chatForm.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Focus input on load
+        chatInput.focus();
+    </script>
+</body>
+</html>
