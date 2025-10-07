@@ -24,8 +24,10 @@
             --text-secondary: #cccccc;
             --text-accent: #00ffff;
             --border-glow: #00ffff;
-            --shadow-glow: 0 0 20px #00ffff;
-            --shadow-glow-strong: 0 0 40px #00ffff;
+            --shadow-glow: 0 0 10px #00ffff;
+            --shadow-glow-strong: 0 0 20px #00ffff;
+            --text-glow: 0 0 5px #00ffff;
+            --text-glow-strong: 0 0 8px #00ffff;
         }
 
         body {
@@ -128,14 +130,14 @@
             font-size: 3rem;
             font-weight: 900;
             color: var(--primary-cyan);
-            text-shadow: var(--shadow-glow-strong);
+            text-shadow: var(--text-glow-strong);
             margin-bottom: 10px;
             animation: glow-pulse 2s ease-in-out infinite alternate;
         }
 
         @keyframes glow-pulse {
-            from { text-shadow: 0 0 20px var(--primary-cyan), 0 0 30px var(--primary-cyan), 0 0 40px var(--primary-cyan); }
-            to { text-shadow: 0 0 30px var(--primary-cyan), 0 0 40px var(--primary-cyan), 0 0 50px var(--primary-cyan); }
+            from { text-shadow: 0 0 8px var(--primary-cyan), 0 0 12px var(--primary-cyan); }
+            to { text-shadow: 0 0 12px var(--primary-cyan), 0 0 16px var(--primary-cyan); }
         }
 
         .header h2 {
@@ -209,7 +211,7 @@
             font-size: 1.8rem;
             color: var(--primary-cyan);
             margin-bottom: 25px;
-            text-shadow: var(--shadow-glow);
+            text-shadow: var(--text-glow);
             position: relative;
         }
 
