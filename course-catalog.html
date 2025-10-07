@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Catalog - MS AI Program | AURNOVA University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-cyan: #00d4ff;
+            --secondary-cyan: #00a8cc;
+            --accent-cyan: #00ffcc;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: rgba(0, 212, 255, 0.03);
+            --border-cyan: rgba(0, 212, 255, 0.2);
+            --shadow-glow: 0 4px 20px rgba(0, 212, 255, 0.1);
+            --text-glow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(5, 5, 5, 0.98) 0%, rgba(12, 12, 12, 0.98) 100%);
+            border-bottom: 2px solid var(--primary-cyan);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 212, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0;
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-cyan);
+            text-shadow: var(--text-glow);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 204, 0.1) 100%);
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 12px 18px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            background: rgba(0, 212, 255, 0.03);
+            text-shadow: none;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--border-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(10, 10, 10, 0.9) 100%);
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-cyan);
+            margin-bottom: 20px;
+            text-shadow: var(--text-glow);
+            animation: glow-pulse 3s ease-in-out infinite alternate;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        @keyframes glow-pulse {
+            0% { text-shadow: 0 0 10px rgba(0, 212, 255, 0.3); }
+            100% { text-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
+        }
+
+        /* Course Catalog */
+        .catalog {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-cyan);
+            text-align: center;
+            margin-bottom: 60px;
+            text-shadow: var(--text-glow);
+        }
+
+        .course-category {
+            margin-bottom: 80px;
+        }
+
+        .category-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-cyan);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-cyan);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+            border-color: var(--primary-cyan);
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .course-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-cyan);
+            margin-bottom: 5px;
+        }
+
+        .course-code {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: rgba(0, 212, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .course-credits {
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .course-description {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .course-objectives {
+            margin-bottom: 20px;
+        }
+
+        .course-objectives h4 {
+            color: var(--primary-cyan);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .course-objectives ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .course-objectives li {
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .course-objectives li::before {
+            content: '▶';
+            color: var(--accent-cyan);
+            position: absolute;
+            left: 0;
+        }
+
+        .course-topics {
+            margin-bottom: 20px;
+        }
+
+        .course-topics h4 {
+            color: var(--primary-cyan);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .topic-tag {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--border-cyan);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .course-assessment {
+            background: rgba(0, 255, 204, 0.05);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .course-assessment h4 {
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .assessment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(0, 255, 204, 0.1);
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .assessment-name {
+            color: var(--text-secondary);
+        }
+
+        .assessment-weight {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .course-prerequisites {
+            background: rgba(255, 165, 0, 0.05);
+            border: 1px solid rgba(255, 165, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .course-prerequisites h4 {
+            color: #ffa500;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .prerequisites-list {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .course-resources {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid var(--border-cyan);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .course-resources h4 {
+            color: var(--primary-cyan);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .resources-list {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .resources-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .resources-list li {
+            margin-bottom: 5px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .resources-list li::before {
+            content: '📚';
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--darker-bg);
+            border-top: 1px solid var(--border-cyan);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .footer a {
+            color: var(--primary-cyan);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">MS AI</a>
+                <ul class="nav-links">
+                    <li><a href="index.html#program">Program</a></li>
+                    <li><a href="index.html#admissions">Admissions</a></li>
+                    <li><a href="course-catalog.html">Courses</a></li>
+                    <li><a href="index.html#faculty">Faculty</a></li>
+                    <li><a href="index.html#research">Research</a></li>
+                    <li><a href="index.html#careers">Careers</a></li>
+                    <li><a href="white-paper.html">White Paper</a></li>
+                    <li><a href="msai_application_form.html">Apply Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>COURSE CATALOG</h1>
+            <p>Comprehensive curriculum designed for working professionals from any academic background</p>
+        </div>
+    </section>
+
+    <!-- Course Catalog -->
+    <section class="catalog">
+        <div class="container">
+            <h2 class="section-title">MASTER OF SCIENCE IN ARTIFICIAL INTELLIGENCE</h2>
+            
+            <!-- Core Courses -->
+            <div class="course-category">
+                <h3 class="category-title">CORE COURSES (15 Credits)</h3>
+                <div class="courses-grid">
+                    
+                    <!-- AI Fundamentals -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <h4 class="course-title">Introduction to Artificial Intelligence</h4>
+                                <div class="course-code">MSAI-501</div>
+                            </div>
+                            <div class="course-credits">3 Credits</div>
+                        </div>
+                        <p class="course-description">
+                            Comprehensive introduction to AI concepts, history, and applications. Students explore search algorithms, knowledge representation, AI planning, and intelligent agent design through hands-on projects and case studies.
+                        </p>
+                        <div class="course-objectives">
+                            <h4>Learning Objectives</h4>
+                            <ul>
+                                <li>Understand fundamental AI concepts and terminology</li>
+                                <li>Implement basic search algorithms (BFS, DFS, A*)</li>
+                                <li>Design knowledge representation systems</li>
+                                <li>Create simple intelligent agents</li>
+                                <li>Analyze AI applications in various domains</li>
+                            </ul>
+                        </div>
+                        <div class="course-topics">
+                            <h4>Key Topics</h4>
+                            <div class="topics-grid">
+                                <div class="topic-tag">Search Algorithms</div>
+                                <div class="topic-tag">Knowledge Representation</div>
+                                <div class="topic-tag">Expert Systems</div>
+                                <div class="topic-tag">Intelligent Agents</div>
+                                <div class="topic-tag">AI Planning</div>
+                                <div class="topic-tag">Problem Solving</div>
+                            </div>
+                        </div>
+                        <div class="course-assessment">
+                            <h4>Assessment</h4>
+                            <div class="assessment-grid">
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Programming Projects</span>
+                                    <span class="assessment-weight">40%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Midterm Exam</span>
+                                    <span class="assessment-weight">25%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Final Exam</span>
+                                    <span class="assessment-weight">25%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Case Studies</span>
+                                    <span class="assessment-weight">10%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-prerequisites">
+                            <h4>Prerequisites</h4>
+                            <p class="prerequisites-list">None - Designed for students from any academic background</p>
+                        </div>
+                        <div class="course-resources">
+                            <h4>Resources</h4>
+                            <div class="resources-list">
+                                <ul>
+                                    <li>Russell & Norvig: "Artificial Intelligence: A Modern Approach"</li>
+                                    <li>Python programming environment</li>
+                                    <li>AI simulation tools and frameworks</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Machine Learning -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <h4 class="course-title">Machine Learning & Data Mining</h4>
+                                <div class="course-code">MSAI-502</div>
+                            </div>
+                            <div class="course-credits">3 Credits</div>
+                        </div>
+                        <p class="course-description">
+                            Comprehensive study of machine learning algorithms, statistical learning theory, and data mining techniques. Students learn to build, train, and evaluate ML models for real-world applications.
+                        </p>
+                        <div class="course-objectives">
+                            <h4>Learning Objectives</h4>
+                            <ul>
+                                <li>Master supervised and unsupervised learning algorithms</li>
+                                <li>Understand statistical learning theory</li>
+                                <li>Implement ML models using Python and scikit-learn</li>
+                                <li>Evaluate model performance and avoid overfitting</li>
+                                <li>Apply ML to domain-specific problems</li>
+                            </ul>
+                        </div>
+                        <div class="course-topics">
+                            <h4>Key Topics</h4>
+                            <div class="topics-grid">
+                                <div class="topic-tag">Linear Regression</div>
+                                <div class="topic-tag">Classification</div>
+                                <div class="topic-tag">Clustering</div>
+                                <div class="topic-tag">Neural Networks</div>
+                                <div class="topic-tag">Cross-Validation</div>
+                                <div class="topic-tag">Feature Engineering</div>
+                            </div>
+                        </div>
+                        <div class="course-assessment">
+                            <h4>Assessment</h4>
+                            <div class="assessment-grid">
+                                <div class="assessment-item">
+                                    <span class="assessment-name">ML Projects</span>
+                                    <span class="assessment-weight">50%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Quizzes</span>
+                                    <span class="assessment-weight">20%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Final Project</span>
+                                    <span class="assessment-weight">30%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-prerequisites">
+                            <h4>Prerequisites</h4>
+                            <p class="prerequisites-list">MSAI-501 or equivalent programming experience</p>
+                        </div>
+                        <div class="course-resources">
+                            <h4>Resources</h4>
+                            <div class="resources-list">
+                                <ul>
+                                    <li>Hastie, Tibshirani & Friedman: "The Elements of Statistical Learning"</li>
+                                    <li>Python, scikit-learn, pandas, numpy</li>
+                                    <li>Jupyter Notebook environment</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Deep Learning -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <h4 class="course-title">Deep Learning & Neural Networks</h4>
+                                <div class="course-code">MSAI-503</div>
+                            </div>
+                            <div class="course-credits">3 Credits</div>
+                        </div>
+                        <p class="course-description">
+                            Advanced study of deep learning architectures, including convolutional neural networks, recurrent neural networks, and transformer models. Students build and deploy deep learning solutions for complex problems.
+                        </p>
+                        <div class="course-objectives">
+                            <h4>Learning Objectives</h4>
+                            <ul>
+                                <li>Understand neural network architectures and training</li>
+                                <li>Implement CNNs for computer vision tasks</li>
+                                <li>Build RNNs and LSTMs for sequence modeling</li>
+                                <li>Work with transformer models and attention mechanisms</li>
+                                <li>Deploy deep learning models in production</li>
+                            </ul>
+                        </div>
+                        <div class="course-topics">
+                            <h4>Key Topics</h4>
+                            <div class="topics-grid">
+                                <div class="topic-tag">Neural Networks</div>
+                                <div class="topic-tag">CNNs</div>
+                                <div class="topic-tag">RNNs & LSTMs</div>
+                                <div class="topic-tag">Transformers</div>
+                                <div class="topic-tag">Transfer Learning</div>
+                                <div class="topic-tag">Model Optimization</div>
+                            </div>
+                        </div>
+                        <div class="course-assessment">
+                            <h4>Assessment</h4>
+                            <div class="assessment-grid">
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Deep Learning Labs</span>
+                                    <span class="assessment-weight">45%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Research Paper</span>
+                                    <span class="assessment-weight">25%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Final Project</span>
+                                    <span class="assessment-weight">30%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-prerequisites">
+                            <h4>Prerequisites</h4>
+                            <p class="prerequisites-list">MSAI-502 (Machine Learning)</p>
+                        </div>
+                        <div class="course-resources">
+                            <h4>Resources</h4>
+                            <div class="resources-list">
+                                <ul>
+                                    <li>Goodfellow, Bengio & Courville: "Deep Learning"</li>
+                                    <li>TensorFlow, PyTorch frameworks</li>
+                                    <li>GPU computing resources</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Knowledge Representation -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <h4 class="course-title">Knowledge Graphs & Reasoning</h4>
+                                <div class="course-code">MSAI-504</div>
+                            </div>
+                            <div class="course-credits">3 Credits</div>
+                        </div>
+                        <p class="course-description">
+                            Study of knowledge representation formalisms, semantic networks, ontologies, and logical inference systems. Students learn to build and query knowledge graphs for intelligent applications.
+                        </p>
+                        <div class="course-objectives">
+                            <h4>Learning Objectives</h4>
+                            <ul>
+                                <li>Understand knowledge representation formalisms</li>
+                                <li>Build and query knowledge graphs</li>
+                                <li>Design ontologies for domain modeling</li>
+                                <li>Implement logical inference systems</li>
+                                <li>Apply knowledge graphs to real-world problems</li>
+                            </ul>
+                        </div>
+                        <div class="course-topics">
+                            <h4>Key Topics</h4>
+                            <div class="topics-grid">
+                                <div class="topic-tag">Knowledge Graphs</div>
+                                <div class="topic-tag">Ontologies</div>
+                                <div class="topic-tag">Semantic Web</div>
+                                <div class="topic-tag">Logical Inference</div>
+                                <div class="topic-tag">RDF/OWL</div>
+                                <div class="topic-tag">SPARQL</div>
+                            </div>
+                        </div>
+                        <div class="course-assessment">
+                            <h4>Assessment</h4>
+                            <div class="assessment-grid">
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Knowledge Graph Project</span>
+                                    <span class="assessment-weight">40%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Ontology Design</span>
+                                    <span class="assessment-weight">30%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Final Exam</span>
+                                    <span class="assessment-weight">30%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-prerequisites">
+                            <h4>Prerequisites</h4>
+                            <p class="prerequisites-list">MSAI-501 (AI Fundamentals)</p>
+                        </div>
+                        <div class="course-resources">
+                            <h4>Resources</h4>
+                            <div class="resources-list">
+                                <ul>
+                                    <li>Antoniou & van Harmelen: "A Semantic Web Primer"</li>
+                                    <li>Neo4j, Apache Jena</li>
+                                    <li>Protégé ontology editor</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Ethics -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <h4 class="course-title">Responsible Artificial Intelligence</h4>
+                                <div class="course-code">MSAI-505</div>
+                            </div>
+                            <div class="course-credits">3 Credits</div>
+                        </div>
+                        <p class="course-description">
+                            Comprehensive study of AI ethics, bias, fairness, accountability, and societal impact. Students learn to develop AI systems that are ethical, transparent, and beneficial to society.
+                        </p>
+                        <div class="course-objectives">
+                            <h4>Learning Objectives</h4>
+                            <ul>
+                                <li>Understand ethical frameworks for AI development</li>
+                                <li>Identify and mitigate bias in AI systems</li>
+                                <li>Design fair and transparent AI algorithms</li>
+                                <li>Analyze societal impact of AI technologies</li>
+                                <li>Develop responsible AI governance policies</li>
+                            </ul>
+                        </div>
+                        <div class="course-topics">
+                            <h4>Key Topics</h4>
+                            <div class="topics-grid">
+                                <div class="topic-tag">AI Ethics</div>
+                                <div class="topic-tag">Bias & Fairness</div>
+                                <div class="topic-tag">Transparency</div>
+                                <div class="topic-tag">Accountability</div>
+                                <div class="topic-tag">Privacy</div>
+                                <div class="topic-tag">AI Policy</div>
+                            </div>
+                        </div>
+                        <div class="course-assessment">
+                            <h4>Assessment</h4>
+                            <div class="assessment-grid">
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Ethics Case Studies</span>
+                                    <span class="assessment-weight">35%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Bias Analysis Project</span>
+                                    <span class="assessment-weight">35%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Policy Paper</span>
+                                    <span class="assessment-weight">30%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-prerequisites">
+                            <h4>Prerequisites</h4>
+                            <p class="prerequisites-list">MSAI-501 (AI Fundamentals)</p>
+                        </div>
+                        <div class="course-resources">
+                            <h4>Resources</h4>
+                            <div class="resources-list">
+                                <ul>
+                                    <li>Jobin, Ienca & Vayena: "The global landscape of AI ethics guidelines"</li>
+                                    <li>Fairness tools and frameworks</li>
+                                    <li>AI ethics case study database</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Elective Courses -->
+            <div class="course-category">
+                <h3 class="category-title">ELECTIVE COURSES (9 Credits - Choose 3)</h3>
+                <div class="courses-grid">
+                    
+                    <!-- Natural Language Processing -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <h4 class="course-title">Natural Language Processing</h4>
+                                <div class="course-code">MSAI-601</div>
+                            </div>
+                            <div class="course-credits">3 Credits</div>
+                        </div>
+                        <p class="course-description">
+                            Advanced study of computational linguistics, text processing, and language understanding. Students build NLP systems for text analysis, machine translation, and conversational AI.
+                        </p>
+                        <div class="course-objectives">
+                            <h4>Learning Objectives</h4>
+                            <ul>
+                                <li>Process and analyze text data at scale</li>
+                                <li>Implement transformer models for NLP</li>
+                                <li>Build conversational AI systems</li>
+                                <li>Develop machine translation systems</li>
+                                <li>Apply NLP to domain-specific problems</li>
+                            </ul>
+                        </div>
+                        <div class="course-topics">
+                            <h4>Key Topics</h4>
+                            <div class="topics-grid">
+                                <div class="topic-tag">Text Processing</div>
+                                <div class="topic-tag">Transformers</div>
+                                <div class="topic-tag">Sentiment Analysis</div>
+                                <div class="topic-tag">Machine Translation</div>
+                                <div class="topic-tag">Chatbots</div>
+                                <div class="topic-tag">Named Entity Recognition</div>
+                            </div>
+                        </div>
+                        <div class="course-assessment">
+                            <h4>Assessment</h4>
+                            <div class="assessment-grid">
+                                <div class="assessment-item">
+                                    <span class="assessment-name">NLP Projects</span>
+                                    <span class="assessment-weight">50%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Research Paper</span>
+                                    <span class="assessment-weight">30%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Final Presentation</span>
+                                    <span class="assessment-weight">20%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-prerequisites">
+                            <h4>Prerequisites</h4>
+                            <p class="prerequisites-list">MSAI-503 (Deep Learning)</p>
+                        </div>
+                        <div class="course-resources">
+                            <h4>Resources</h4>
+                            <div class="resources-list">
+                                <ul>
+                                    <li>Jurafsky & Martin: "Speech and Language Processing"</li>
+                                    <li>Hugging Face Transformers</li>
+                                    <li>NLTK, spaCy libraries</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Computer Vision -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <h4 class="course-title">Computer Vision & Image Processing</h4>
+                                <div class="course-code">MSAI-602</div>
+                            </div>
+                            <div class="course-credits">3 Credits</div>
+                        </div>
+                        <p class="course-description">
+                            Comprehensive study of computer vision algorithms, image processing techniques, and visual recognition systems. Students develop applications for image analysis, object detection, and visual understanding.
+                        </p>
+                        <div class="course-objectives">
+                            <h4>Learning Objectives</h4>
+                            <ul>
+                                <li>Implement computer vision algorithms</li>
+                                <li>Build object detection and recognition systems</li>
+                                <li>Develop image segmentation techniques</li>
+                                <li>Create visual search and retrieval systems</li>
+                                <li>Apply computer vision to real-world problems</li>
+                            </ul>
+                        </div>
+                        <div class="course-topics">
+                            <h4>Key Topics</h4>
+                            <div class="topics-grid">
+                                <div class="topic-tag">Image Processing</div>
+                                <div class="topic-tag">Object Detection</div>
+                                <div class="topic-tag">Image Segmentation</div>
+                                <div class="topic-tag">Feature Extraction</div>
+                                <div class="topic-tag">Visual Recognition</div>
+                                <div class="topic-tag">Video Analysis</div>
+                            </div>
+                        </div>
+                        <div class="course-assessment">
+                            <h4>Assessment</h4>
+                            <div class="assessment-grid">
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Vision Projects</span>
+                                    <span class="assessment-weight">50%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Algorithm Implementation</span>
+                                    <span class="assessment-weight">30%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Final Demo</span>
+                                    <span class="assessment-weight">20%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-prerequisites">
+                            <h4>Prerequisites</h4>
+                            <p class="prerequisites-list">MSAI-503 (Deep Learning)</p>
+                        </div>
+                        <div class="course-resources">
+                            <h4>Resources</h4>
+                            <div class="resources-list">
+                                <ul>
+                                    <li>Szeliski: "Computer Vision: Algorithms and Applications"</li>
+                                    <li>OpenCV, PIL libraries</li>
+                                    <li>GPU computing resources</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Robotics -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <h4 class="course-title">AI in Robotics & Autonomous Systems</h4>
+                                <div class="course-code">MSAI-603</div>
+                            </div>
+                            <div class="course-credits">3 Credits</div>
+                        </div>
+                        <p class="course-description">
+                            Study of AI applications in robotics, autonomous systems, and intelligent control. Students learn to program robots, develop autonomous navigation systems, and implement reinforcement learning for robotic control.
+                        </p>
+                        <div class="course-objectives">
+                            <h4>Learning Objectives</h4>
+                            <ul>
+                                <li>Program autonomous robots and drones</li>
+                                <li>Implement path planning algorithms</li>
+                                <li>Develop reinforcement learning for control</li>
+                                <li>Build sensor fusion systems</li>
+                                <li>Design human-robot interaction interfaces</li>
+                            </ul>
+                        </div>
+                        <div class="course-topics">
+                            <h4>Key Topics</h4>
+                            <div class="topics-grid">
+                                <div class="topic-tag">Robot Programming</div>
+                                <div class="topic-tag">Path Planning</div>
+                                <div class="topic-tag">Reinforcement Learning</div>
+                                <div class="topic-tag">Sensor Fusion</div>
+                                <div class="topic-tag">Autonomous Navigation</div>
+                                <div class="topic-tag">Human-Robot Interaction</div>
+                            </div>
+                        </div>
+                        <div class="course-assessment">
+                            <h4>Assessment</h4>
+                            <div class="assessment-grid">
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Robot Projects</span>
+                                    <span class="assessment-weight">60%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Simulation Labs</span>
+                                    <span class="assessment-weight">25%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Final Demo</span>
+                                    <span class="assessment-weight">15%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-prerequisites">
+                            <h4>Prerequisites</h4>
+                            <p class="prerequisites-list">MSAI-503 (Deep Learning)</p>
+                        </div>
+                        <div class="course-resources">
+                            <h4>Resources</h4>
+                            <div class="resources-list">
+                                <ul>
+                                    <li>Siciliano & Khatib: "Springer Handbook of Robotics"</li>
+                                    <li>ROS (Robot Operating System)</li>
+                                    <li>Gazebo simulation environment</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Science -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <h4 class="course-title">Big Data Analytics with AI</h4>
+                                <div class="course-code">MSAI-604</div>
+                            </div>
+                            <div class="course-credits">3 Credits</div>
+                        </div>
+                        <p class="course-description">
+                            Advanced study of big data processing, distributed computing, and scalable machine learning. Students learn to handle large datasets and build AI systems that can process data at scale.
+                        </p>
+                        <div class="course-objectives">
+                            <h4>Learning Objectives</h4>
+                            <ul>
+                                <li>Process and analyze big data using distributed systems</li>
+                                <li>Implement scalable machine learning algorithms</li>
+                                <li>Build data pipelines and ETL processes</li>
+                                <li>Design real-time analytics systems</li>
+                                <li>Optimize AI systems for performance and scale</li>
+                            </ul>
+                        </div>
+                        <div class="course-topics">
+                            <h4>Key Topics</h4>
+                            <div class="topics-grid">
+                                <div class="topic-tag">Distributed Computing</div>
+                                <div class="topic-tag">Data Pipelines</div>
+                                <div class="topic-tag">Scalable ML</div>
+                                <div class="topic-tag">Stream Processing</div>
+                                <div class="topic-tag">Cloud Computing</div>
+                                <div class="topic-tag">Performance Optimization</div>
+                            </div>
+                        </div>
+                        <div class="course-assessment">
+                            <h4>Assessment</h4>
+                            <div class="assessment-grid">
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Big Data Projects</span>
+                                    <span class="assessment-weight">50%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Performance Analysis</span>
+                                    <span class="assessment-weight">30%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Final Report</span>
+                                    <span class="assessment-weight">20%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-prerequisites">
+                            <h4>Prerequisites</h4>
+                            <p class="prerequisites-list">MSAI-502 (Machine Learning)</p>
+                        </div>
+                        <div class="course-resources">
+                            <h4>Resources</h4>
+                            <div class="resources-list">
+                                <ul>
+                                    <li>Kleppmann: "Designing Data-Intensive Applications"</li>
+                                    <li>Apache Spark, Hadoop</li>
+                                    <li>Cloud platforms (AWS, GCP, Azure)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Healthcare AI -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <h4 class="course-title">AI in Healthcare & Medicine</h4>
+                                <div class="course-code">MSAI-605</div>
+                            </div>
+                            <div class="course-credits">3 Credits</div>
+                        </div>
+                        <p class="course-description">
+                            Specialized study of AI applications in healthcare, medical imaging, drug discovery, and clinical decision support. Students develop AI solutions for medical diagnosis, treatment planning, and patient care.
+                        </p>
+                        <div class="course-objectives">
+                            <h4>Learning Objectives</h4>
+                            <ul>
+                                <li>Apply AI to medical imaging and diagnosis</li>
+                                <li>Develop clinical decision support systems</li>
+                                <li>Build predictive models for patient outcomes</li>
+                                <li>Understand healthcare data privacy and regulations</li>
+                                <li>Design AI systems for drug discovery</li>
+                            </ul>
+                        </div>
+                        <div class="course-topics">
+                            <h4>Key Topics</h4>
+                            <div class="topics-grid">
+                                <div class="topic-tag">Medical Imaging</div>
+                                <div class="topic-tag">Clinical Decision Support</div>
+                                <div class="topic-tag">Drug Discovery</div>
+                                <div class="topic-tag">Electronic Health Records</div>
+                                <div class="topic-tag">Healthcare Privacy</div>
+                                <div class="topic-tag">Regulatory Compliance</div>
+                            </div>
+                        </div>
+                        <div class="course-assessment">
+                            <h4>Assessment</h4>
+                            <div class="assessment-grid">
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Medical AI Projects</span>
+                                    <span class="assessment-weight">50%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Case Studies</span>
+                                    <span class="assessment-weight">30%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Ethics Analysis</span>
+                                    <span class="assessment-weight">20%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-prerequisites">
+                            <h4>Prerequisites</h4>
+                            <p class="prerequisites-list">MSAI-503 (Deep Learning)</p>
+                        </div>
+                        <div class="course-resources">
+                            <h4>Resources</h4>
+                            <div class="resources-list">
+                                <ul>
+                                    <li>Topol: "Deep Medicine: How Artificial Intelligence Can Make Healthcare Human Again"</li>
+                                    <li>Medical imaging datasets</li>
+                                    <li>Healthcare AI frameworks</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Financial AI -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <h4 class="course-title">Financial AI & Algorithmic Trading</h4>
+                                <div class="course-code">MSAI-606</div>
+                            </div>
+                            <div class="course-credits">3 Credits</div>
+                        </div>
+                        <p class="course-description">
+                            Study of AI applications in finance, algorithmic trading, risk management, and financial modeling. Students develop AI systems for market analysis, trading strategies, and financial decision support.
+                        </p>
+                        <div class="course-objectives">
+                            <h4>Learning Objectives</h4>
+                            <ul>
+                                <li>Apply AI to financial market analysis</li>
+                                <li>Develop algorithmic trading strategies</li>
+                                <li>Build risk assessment and management systems</li>
+                                <li>Create fraud detection algorithms</li>
+                                <li>Design robo-advisory systems</li>
+                            </ul>
+                        </div>
+                        <div class="course-topics">
+                            <h4>Key Topics</h4>
+                            <div class="topics-grid">
+                                <div class="topic-tag">Algorithmic Trading</div>
+                                <div class="topic-tag">Risk Management</div>
+                                <div class="topic-tag">Fraud Detection</div>
+                                <div class="topic-tag">Portfolio Optimization</div>
+                                <div class="topic-tag">Market Prediction</div>
+                                <div class="topic-tag">Regulatory Compliance</div>
+                            </div>
+                        </div>
+                        <div class="course-assessment">
+                            <h4>Assessment</h4>
+                            <div class="assessment-grid">
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Trading Algorithms</span>
+                                    <span class="assessment-weight">50%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Risk Analysis</span>
+                                    <span class="assessment-weight">30%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Final Presentation</span>
+                                    <span class="assessment-weight">20%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-prerequisites">
+                            <h4>Prerequisites</h4>
+                            <p class="prerequisites-list">MSAI-502 (Machine Learning)</p>
+                        </div>
+                        <div class="course-resources">
+                            <h4>Resources</h4>
+                            <div class="resources-list">
+                                <ul>
+                                    <li>Lopez de Prado: "Advances in Financial Machine Learning"</li>
+                                    <li>Financial data APIs</li>
+                                    <li>Trading simulation platforms</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Thesis Capstone -->
+            <div class="course-category">
+                <h3 class="category-title">THESIS CAPSTONE (6 Credits)</h3>
+                <div class="courses-grid">
+                    
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <h4 class="course-title">Master's Thesis in Artificial Intelligence</h4>
+                                <div class="course-code">MSAI-701</div>
+                            </div>
+                            <div class="course-credits">6 Credits</div>
+                        </div>
+                        <p class="course-description">
+                            Independent research project spanning two semesters. Students conduct original research in AI, develop novel solutions to real-world problems, and contribute new knowledge to the field through a comprehensive thesis.
+                        </p>
+                        <div class="course-objectives">
+                            <h4>Learning Objectives</h4>
+                            <ul>
+                                <li>Conduct independent research in AI</li>
+                                <li>Develop novel AI solutions or applications</li>
+                                <li>Apply research methodology and scientific rigor</li>
+                                <li>Communicate findings through written thesis</li>
+                                <li>Present research through oral defense</li>
+                            </ul>
+                        </div>
+                        <div class="course-topics">
+                            <h4>Research Areas</h4>
+                            <div class="topics-grid">
+                                <div class="topic-tag">Machine Learning</div>
+                                <div class="topic-tag">Deep Learning</div>
+                                <div class="topic-tag">Natural Language Processing</div>
+                                <div class="topic-tag">Computer Vision</div>
+                                <div class="topic-tag">Robotics</div>
+                                <div class="topic-tag">AI Ethics</div>
+                                <div class="topic-tag">Applied AI</div>
+                                <div class="topic-tag">AI Systems</div>
+                            </div>
+                        </div>
+                        <div class="course-assessment">
+                            <h4>Assessment</h4>
+                            <div class="assessment-grid">
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Thesis Document</span>
+                                    <span class="assessment-weight">60%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Oral Defense</span>
+                                    <span class="assessment-weight">25%</span>
+                                </div>
+                                <div class="assessment-item">
+                                    <span class="assessment-name">Research Progress</span>
+                                    <span class="assessment-weight">15%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-prerequisites">
+                            <h4>Prerequisites</h4>
+                            <p class="prerequisites-list">Completion of all core courses and at least 6 credits of electives</p>
+                        </div>
+                        <div class="course-resources">
+                            <h4>Resources</h4>
+                            <div class="resources-list">
+                                <ul>
+                                    <li>Faculty advisor and research committee</li>
+                                    <li>Research computing resources</li>
+                                    <li>Academic writing and research tools</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 AURNOVA University. All rights reserved.</p>
+            <p><a href="index.html">Return to Home</a> | <a href="msai_application_form.html">Apply Now</a> | <a href="white-paper.html">White Paper</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
