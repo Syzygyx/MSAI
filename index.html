@@ -597,6 +597,57 @@
         }
 
         /* Responsive Design */
+        /* Floating Chat Icon */
+        .floating-chat-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--accent-cyan));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-chat-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.5);
+        }
+
+        .floating-chat-icon i {
+            font-size: 1.5rem;
+            color: var(--dark-bg);
+        }
+
+        .chat-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent-cyan);
+            color: var(--dark-bg);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
         @media (max-width: 1024px) {
             .nav {
                 flex-direction: column;
@@ -1048,6 +1099,12 @@
         </div>
     </footer>
 
+    <!-- Floating Chat Icon -->
+    <div class="floating-chat-icon" id="floatingChatIcon">
+        <i class="fas fa-comments"></i>
+        <span class="chat-badge">AI</span>
+    </div>
+
     <script>
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1061,6 +1118,11 @@
                     });
                 }
             });
+        });
+
+        // Floating chat icon functionality
+        document.getElementById('floatingChatIcon').addEventListener('click', function() {
+            window.location.href = 'chat-agent.html';
         });
 
         // Add loading animation
