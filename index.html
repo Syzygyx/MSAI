@@ -14,20 +14,20 @@
         }
 
         :root {
-            --primary-cyan: #00ffff;
-            --secondary-cyan: #00cccc;
-            --accent-cyan: #00ffcc;
-            --dark-bg: #0a0a0a;
-            --darker-bg: #050505;
-            --grid-color: #001122;
+            --primary-cyan: #00d4ff;
+            --secondary-cyan: #0099cc;
+            --accent-cyan: #00b8e6;
+            --dark-bg: #0f0f0f;
+            --darker-bg: #080808;
+            --grid-color: #001a2e;
             --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --text-accent: #00ffff;
-            --border-glow: #00ffff;
-            --shadow-glow: 0 0 10px #00ffff;
-            --shadow-glow-strong: 0 0 20px #00ffff;
-            --text-glow: 0 0 5px #00ffff;
-            --text-glow-strong: 0 0 8px #00ffff;
+            --text-secondary: #b8c5d1;
+            --text-accent: #00d4ff;
+            --border-glow: #00d4ff;
+            --shadow-glow: 0 0 8px rgba(0, 212, 255, 0.3);
+            --shadow-glow-strong: 0 0 15px rgba(0, 212, 255, 0.4);
+            --text-glow: 0 0 4px rgba(0, 212, 255, 0.6);
+            --text-glow-strong: 0 0 6px rgba(0, 212, 255, 0.8);
         }
 
         body {
@@ -49,9 +49,9 @@
             background: 
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
                 linear-gradient(var(--grid-color) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: grid-move 20s linear infinite;
-            opacity: 0.2;
+            background-size: 80px 80px;
+            animation: grid-move 30s linear infinite;
+            opacity: 0.1;
             z-index: -2;
         }
 
@@ -73,15 +73,15 @@
 
         .tracer {
             position: absolute;
-            background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
             height: 1px;
-            animation: tracer-move 3s linear infinite;
+            animation: tracer-move 4s linear infinite;
         }
 
-        .tracer:nth-child(1) { top: 20%; width: 100%; animation-delay: 0s; }
-        .tracer:nth-child(2) { top: 40%; width: 80%; animation-delay: 1s; }
-        .tracer:nth-child(3) { top: 60%; width: 60%; animation-delay: 2s; }
-        .tracer:nth-child(4) { top: 80%; width: 40%; animation-delay: 0.5s; }
+        .tracer:nth-child(1) { top: 25%; width: 100%; animation-delay: 0s; }
+        .tracer:nth-child(2) { top: 50%; width: 70%; animation-delay: 2s; }
+        .tracer:nth-child(3) { top: 75%; width: 50%; animation-delay: 4s; }
+        .tracer:nth-child(4) { top: 90%; width: 30%; animation-delay: 1s; }
 
         @keyframes tracer-move {
             0% { transform: translateX(-100%); opacity: 0; }
@@ -100,12 +100,12 @@
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, rgba(5, 5, 5, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
-            border-bottom: 2px solid var(--primary-cyan);
-            box-shadow: var(--shadow-glow);
+            background: linear-gradient(135deg, rgba(8, 8, 8, 0.98) 0%, rgba(15, 15, 15, 0.98) 100%);
+            border-bottom: 1px solid var(--primary-cyan);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
         }
 
         .header::before {
@@ -136,22 +136,23 @@
         .logo {
             font-family: 'Orbitron', monospace;
             font-size: 2rem;
-            font-weight: 900;
+            font-weight: 700;
             color: var(--primary-cyan);
-            text-shadow: 0 0 8px var(--primary-cyan);
+            text-shadow: var(--text-glow);
             text-decoration: none;
             transition: all 0.3s ease;
-            background: rgba(0, 255, 255, 0.1);
-            padding: 8px 16px;
-            border-radius: 5px;
-            border: 1px solid var(--primary-cyan);
+            background: rgba(0, 212, 255, 0.08);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
         }
 
         .logo:hover {
-            text-shadow: 0 0 12px var(--primary-cyan);
-            transform: scale(1.05);
-            background: rgba(0, 255, 255, 0.15);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            text-shadow: var(--text-glow-strong);
+            transform: translateY(-1px);
+            background: rgba(0, 212, 255, 0.12);
+            box-shadow: var(--shadow-glow);
+            border-color: var(--primary-cyan);
         }
 
         .nav-links {
@@ -163,15 +164,14 @@
         .nav-links a {
             color: var(--text-primary);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 12px 20px;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 12px 18px;
             border: 1px solid transparent;
-            border-radius: 5px;
+            border-radius: 6px;
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
-            background: rgba(0, 255, 255, 0.05);
+            background: rgba(0, 212, 255, 0.03);
             text-shadow: none;
         }
 
@@ -182,8 +182,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.6s ease;
         }
 
         .nav-links a:hover::before {
@@ -192,14 +192,14 @@
 
         .nav-links a:hover {
             color: var(--primary-cyan);
-            border-color: var(--primary-cyan);
-            background: rgba(0, 255, 255, 0.1);
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-            text-shadow: 0 0 5px var(--primary-cyan);
+            border-color: rgba(0, 212, 255, 0.4);
+            background: rgba(0, 212, 255, 0.08);
+            box-shadow: var(--shadow-glow);
+            text-shadow: var(--text-glow);
         }
 
         .nav-links a:active {
-            background: rgba(0, 255, 255, 0.15);
+            background: rgba(0, 212, 255, 0.12);
         }
 
         /* Hero Section */
@@ -234,17 +234,17 @@
 
         .hero h1 {
             font-family: 'Orbitron', monospace;
-            font-size: 4rem;
-            font-weight: 900;
+            font-size: 3.5rem;
+            font-weight: 700;
             color: var(--primary-cyan);
             text-shadow: var(--text-glow-strong);
             margin-bottom: 20px;
-            animation: glow-pulse 2s ease-in-out infinite alternate;
+            animation: glow-pulse 3s ease-in-out infinite alternate;
         }
 
         @keyframes glow-pulse {
-            from { text-shadow: 0 0 8px var(--primary-cyan), 0 0 12px var(--primary-cyan); }
-            to { text-shadow: 0 0 12px var(--primary-cyan), 0 0 16px var(--primary-cyan); }
+            from { text-shadow: 0 0 6px rgba(0, 212, 255, 0.8), 0 0 10px rgba(0, 212, 255, 0.6); }
+            to { text-shadow: 0 0 8px rgba(0, 212, 255, 0.9), 0 0 12px rgba(0, 212, 255, 0.7); }
         }
 
         .hero h2 {
@@ -372,14 +372,15 @@
 
         /* Cards */
         .card {
-            background: linear-gradient(135deg, rgba(0, 255, 255, 0.05) 0%, rgba(0, 204, 204, 0.05) 100%);
-            border: 1px solid var(--primary-cyan);
-            border-radius: 10px;
-            padding: 30px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.03) 0%, rgba(0, 153, 204, 0.03) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            padding: 35px;
             margin-bottom: 30px;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .card::before {
@@ -389,8 +390,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.05), transparent);
+            transition: left 0.8s ease;
         }
 
         .card:hover::before {
@@ -398,9 +399,10 @@
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-glow);
-            border-color: var(--accent-cyan);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow-strong);
+            border-color: var(--primary-cyan);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(0, 153, 204, 0.05) 100%);
         }
 
         /* Grid Layouts */
@@ -417,16 +419,18 @@
         /* Statistics */
         .stat {
             text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(0, 204, 204, 0.1) 100%);
-            border: 1px solid var(--primary-cyan);
-            border-radius: 10px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.06) 0%, rgba(0, 153, 204, 0.06) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
         }
 
         .stat:hover {
-            transform: scale(1.05);
+            transform: translateY(-2px);
             box-shadow: var(--shadow-glow);
+            border-color: var(--primary-cyan);
         }
 
         .stat-number {
