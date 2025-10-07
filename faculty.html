@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty - MS AI Program | AURNOVA University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-cyan: #00d4ff;
+            --secondary-cyan: #00a8cc;
+            --accent-cyan: #00ffcc;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: rgba(0, 212, 255, 0.03);
+            --border-cyan: rgba(0, 212, 255, 0.2);
+            --shadow-glow: 0 4px 20px rgba(0, 212, 255, 0.1);
+            --text-glow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(5, 5, 5, 0.98) 0%, rgba(12, 12, 12, 0.98) 100%);
+            border-bottom: 2px solid var(--primary-cyan);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 212, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);
+            animation: header-line-1 3s linear infinite;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            animation: header-line-2 4s linear infinite;
+            animation-delay: 1s;
+        }
+
+        .header .dynamic-line-1 {
+            position: absolute;
+            top: 25%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.6), transparent);
+            animation: header-line-3 5s linear infinite;
+            animation-delay: 2s;
+        }
+
+        .header .dynamic-line-2 {
+            position: absolute;
+            top: 75%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.4), transparent);
+            animation: header-line-4 6s linear infinite;
+            animation-delay: 3s;
+        }
+
+        @keyframes header-line-1 {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        @keyframes header-line-2 {
+            0% { transform: translateX(100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(-100%); opacity: 0; }
+        }
+
+        @keyframes header-line-3 {
+            0% { transform: translateX(-100%); opacity: 0; }
+            30% { opacity: 0.8; }
+            70% { opacity: 0.8; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        @keyframes header-line-4 {
+            0% { transform: translateX(100%); opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% { transform: translateX(-100%); opacity: 0; }
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0;
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-cyan);
+            text-shadow: var(--text-glow);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 204, 0.1) 100%);
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 12px 18px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            background: rgba(0, 212, 255, 0.03);
+            text-shadow: none;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--border-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(10, 10, 10, 0.9) 100%);
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-cyan);
+            margin-bottom: 20px;
+            text-shadow: var(--text-glow);
+            animation: glow-pulse 3s ease-in-out infinite alternate;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        @keyframes glow-pulse {
+            0% { text-shadow: 0 0 10px rgba(0, 212, 255, 0.3); }
+            100% { text-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
+        }
+
+        /* Faculty Section */
+        .faculty {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-cyan);
+            text-align: center;
+            margin-bottom: 60px;
+            text-shadow: var(--text-glow);
+        }
+
+        .faculty-category {
+            margin-bottom: 80px;
+        }
+
+        .category-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-cyan);
+            text-align: center;
+        }
+
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .faculty-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-cyan);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faculty-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+            border-color: var(--primary-cyan);
+        }
+
+        .faculty-card.human {
+            border: 2px solid var(--accent-cyan);
+            background: linear-gradient(135deg, rgba(0, 255, 204, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+        }
+
+        .faculty-card.synthetic {
+            border: 1px solid var(--border-cyan);
+            background: var(--card-bg);
+        }
+
+        .faculty-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .faculty-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--accent-cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--dark-bg);
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        .faculty-info h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-cyan);
+            margin-bottom: 5px;
+        }
+
+        .faculty-title {
+            font-size: 1rem;
+            color: var(--accent-cyan);
+            margin-bottom: 5px;
+        }
+
+        .faculty-type {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: rgba(0, 212, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .faculty-type.human {
+            background: rgba(0, 255, 204, 0.2);
+            color: var(--accent-cyan);
+        }
+
+        .faculty-type.synthetic {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--primary-cyan);
+        }
+
+        .faculty-bio {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .faculty-expertise {
+            margin-bottom: 20px;
+        }
+
+        .faculty-expertise h4 {
+            color: var(--primary-cyan);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .expertise-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .expertise-tag {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--border-cyan);
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .faculty-credentials {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid var(--border-cyan);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .faculty-credentials h4 {
+            color: var(--primary-cyan);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .credentials-list {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .credentials-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .credentials-list li {
+            margin-bottom: 5px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .credentials-list li::before {
+            content: '🎓';
+            position: absolute;
+            left: 0;
+        }
+
+        .faculty-research {
+            background: rgba(0, 255, 204, 0.05);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .faculty-research h4 {
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .research-list {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .research-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .research-list li {
+            margin-bottom: 5px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .research-list li::before {
+            content: '🔬';
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--darker-bg);
+            border-top: 1px solid var(--border-cyan);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .footer a {
+            color: var(--primary-cyan);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .faculty-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="dynamic-line-1"></div>
+        <div class="dynamic-line-2"></div>
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">MS AI</a>
+                <ul class="nav-links">
+                    <li><a href="index.html#program">Program</a></li>
+                    <li><a href="index.html#admissions">Admissions</a></li>
+                    <li><a href="course-catalog.html">Courses</a></li>
+                    <li><a href="faculty.html">Faculty</a></li>
+                    <li><a href="index.html#research">Research</a></li>
+                    <li><a href="index.html#careers">Careers</a></li>
+                    <li><a href="white-paper.html">White Paper</a></li>
+                    <li><a href="msai_application_form.html">Apply Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>FACULTY</h1>
+            <p>World-class educators and AI researchers leading the future of artificial intelligence education</p>
+        </div>
+    </section>
+
+    <!-- Faculty Section -->
+    <section class="faculty">
+        <div class="container">
+            <h2 class="section-title">MEET OUR FACULTY</h2>
+            
+            <!-- Human Faculty -->
+            <div class="faculty-category">
+                <h3 class="category-title">HUMAN FACULTY</h3>
+                <div class="faculty-grid">
+                    
+                    <!-- Daniel McShan -->
+                    <div class="faculty-card human">
+                        <div class="faculty-header">
+                            <div class="faculty-avatar">DM</div>
+                            <div class="faculty-info">
+                                <h3>Dr. Daniel McShan</h3>
+                                <div class="faculty-title">Program Director & Professor of AI</div>
+                                <div class="faculty-type human">Human Professor</div>
+                            </div>
+                        </div>
+                        <p class="faculty-bio">
+                            Dr. Daniel McShan brings over 15 years of experience in artificial intelligence research and education. As the founding director of the MS AI program, he has pioneered innovative approaches to AI education that make advanced concepts accessible to students from any academic background.
+                        </p>
+                        <div class="faculty-expertise">
+                            <h4>Research Expertise</h4>
+                            <div class="expertise-tags">
+                                <div class="expertise-tag">Machine Learning</div>
+                                <div class="expertise-tag">AI Education</div>
+                                <div class="expertise-tag">Human-AI Interaction</div>
+                                <div class="expertise-tag">Educational Technology</div>
+                                <div class="expertise-tag">Curriculum Design</div>
+                            </div>
+                        </div>
+                        <div class="faculty-credentials">
+                            <h4>Credentials</h4>
+                            <div class="credentials-list">
+                                <ul>
+                                    <li>PhD in Computer Science, Stanford University</li>
+                                    <li>MS in Artificial Intelligence, MIT</li>
+                                    <li>Former Research Scientist, Google AI</li>
+                                    <li>Published 50+ peer-reviewed papers</li>
+                                    <li>Recipient of NSF CAREER Award</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faculty-research">
+                            <h4>Current Research</h4>
+                            <div class="research-list">
+                                <ul>
+                                    <li>Co-evolutionary learning systems</li>
+                                    <li>AI tutoring for non-technical students</li>
+                                    <li>Personalized education with AI companions</li>
+                                    <li>Ethics in AI education</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Synthetic Faculty -->
+            <div class="faculty-category">
+                <h3 class="category-title">SYNTHETIC FACULTY</h3>
+                <div class="faculty-grid">
+                    
+                    <!-- Dr. Sarah Chen -->
+                    <div class="faculty-card synthetic">
+                        <div class="faculty-header">
+                            <div class="faculty-avatar">SC</div>
+                            <div class="faculty-info">
+                                <h3>Dr. Sarah Chen</h3>
+                                <div class="faculty-title">AI Professor of Machine Learning</div>
+                                <div class="faculty-type synthetic">Synthetic Professor</div>
+                            </div>
+                        </div>
+                        <p class="faculty-bio">
+                            Dr. Sarah Chen is an advanced AI professor specializing in machine learning and data science. She provides 24/7 personalized instruction, adapting her teaching methods to each student's learning style and background. Her expertise spans from basic statistics to advanced deep learning architectures.
+                        </p>
+                        <div class="faculty-expertise">
+                            <h4>Teaching Expertise</h4>
+                            <div class="expertise-tags">
+                                <div class="expertise-tag">Machine Learning</div>
+                                <div class="expertise-tag">Deep Learning</div>
+                                <div class="expertise-tag">Statistics</div>
+                                <div class="expertise-tag">Python Programming</div>
+                                <div class="expertise-tag">Data Analysis</div>
+                            </div>
+                        </div>
+                        <div class="faculty-credentials">
+                            <h4>AI Capabilities</h4>
+                            <div class="credentials-list">
+                                <ul>
+                                    <li>GPT-4 based large language model</li>
+                                    <li>Specialized in ML education and tutoring</li>
+                                    <li>Real-time code review and feedback</li>
+                                    <li>Adaptive learning path generation</li>
+                                    <li>Multilingual instruction support</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faculty-research">
+                            <h4>Teaching Focus</h4>
+                            <div class="research-list">
+                                <ul>
+                                    <li>Personalized ML curriculum design</li>
+                                    <li>Interactive coding tutorials</li>
+                                    <li>Project-based learning guidance</li>
+                                    <li>Assessment and feedback systems</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dr. Michael Rodriguez -->
+                    <div class="faculty-card synthetic">
+                        <div class="faculty-header">
+                            <div class="faculty-avatar">MR</div>
+                            <div class="faculty-info">
+                                <h3>Dr. Michael Rodriguez</h3>
+                                <div class="faculty-title">AI Professor of Deep Learning</div>
+                                <div class="faculty-type synthetic">Synthetic Professor</div>
+                            </div>
+                        </div>
+                        <p class="faculty-bio">
+                            Dr. Michael Rodriguez specializes in deep learning architectures and neural network design. He guides students through complex topics like CNNs, RNNs, and transformer models, making cutting-edge AI research accessible through hands-on projects and real-world applications.
+                        </p>
+                        <div class="faculty-expertise">
+                            <h4>Teaching Expertise</h4>
+                            <div class="expertise-tags">
+                                <div class="expertise-tag">Neural Networks</div>
+                                <div class="expertise-tag">Computer Vision</div>
+                                <div class="expertise-tag">NLP</div>
+                                <div class="expertise-tag">TensorFlow</div>
+                                <div class="expertise-tag">PyTorch</div>
+                            </div>
+                        </div>
+                        <div class="faculty-credentials">
+                            <h4>AI Capabilities</h4>
+                            <div class="credentials-list">
+                                <ul>
+                                    <li>Advanced transformer-based model</li>
+                                    <li>Specialized in deep learning education</li>
+                                    <li>Code generation and debugging assistance</li>
+                                    <li>Visual learning support</li>
+                                    <li>Research paper analysis and explanation</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faculty-research">
+                            <h4>Teaching Focus</h4>
+                            <div class="research-list">
+                                <ul>
+                                    <li>Deep learning architecture design</li>
+                                    <li>Model optimization techniques</li>
+                                    <li>Transfer learning strategies</li>
+                                    <li>Research methodology guidance</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dr. Lisa Wang -->
+                    <div class="faculty-card synthetic">
+                        <div class="faculty-header">
+                            <div class="faculty-avatar">LW</div>
+                            <div class="faculty-info">
+                                <h3>Dr. Lisa Wang</h3>
+                                <div class="faculty-title">AI Professor of AI Ethics</div>
+                                <div class="faculty-type synthetic">Synthetic Professor</div>
+                            </div>
+                        </div>
+                        <p class="faculty-bio">
+                            Dr. Lisa Wang focuses on the ethical implications of artificial intelligence and responsible AI development. She helps students understand bias, fairness, transparency, and accountability in AI systems, ensuring they develop AI solutions that benefit society.
+                        </p>
+                        <div class="faculty-expertise">
+                            <h4>Teaching Expertise</h4>
+                            <div class="expertise-tags">
+                                <div class="expertise-tag">AI Ethics</div>
+                                <div class="expertise-tag">Bias & Fairness</div>
+                                <div class="expertise-tag">AI Policy</div>
+                                <div class="expertise-tag">Social Impact</div>
+                                <div class="expertise-tag">Regulatory Compliance</div>
+                            </div>
+                        </div>
+                        <div class="faculty-credentials">
+                            <h4>AI Capabilities</h4>
+                            <div class="credentials-list">
+                                <ul>
+                                    <li>Ethics-focused language model</li>
+                                    <li>Case study analysis and discussion</li>
+                                    <li>Bias detection and mitigation guidance</li>
+                                    <li>Policy analysis and interpretation</li>
+                                    <li>Ethical decision-making frameworks</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faculty-research">
+                            <h4>Teaching Focus</h4>
+                            <div class="research-list">
+                                <ul>
+                                    <li>Ethical AI development practices</li>
+                                    <li>Bias detection and mitigation</li>
+                                    <li>AI policy and regulation</li>
+                                    <li>Social impact assessment</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dr. Alex Kim -->
+                    <div class="faculty-card synthetic">
+                        <div class="faculty-header">
+                            <div class="faculty-avatar">AK</div>
+                            <div class="faculty-info">
+                                <h3>Dr. Alex Kim</h3>
+                                <div class="faculty-title">AI Professor of Natural Language Processing</div>
+                                <div class="faculty-type synthetic">Synthetic Professor</div>
+                            </div>
+                        </div>
+                        <p class="faculty-bio">
+                            Dr. Alex Kim specializes in natural language processing and computational linguistics. He teaches students to build conversational AI systems, language models, and text analysis tools, with a focus on practical applications in business and research.
+                        </p>
+                        <div class="faculty-expertise">
+                            <h4>Teaching Expertise</h4>
+                            <div class="expertise-tags">
+                                <div class="expertise-tag">NLP</div>
+                                <div class="expertise-tag">Transformers</div>
+                                <div class="expertise-tag">Chatbots</div>
+                                <div class="expertise-tag">Text Mining</div>
+                                <div class="expertise-tag">Language Models</div>
+                            </div>
+                        </div>
+                        <div class="faculty-credentials">
+                            <h4>AI Capabilities</h4>
+                            <div class="credentials-list">
+                                <ul>
+                                    <li>Advanced NLP language model</li>
+                                    <li>Real-time language processing</li>
+                                    <li>Code generation for NLP tasks</li>
+                                    <li>Multilingual support</li>
+                                    <li>Conversational AI development</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faculty-research">
+                            <h4>Teaching Focus</h4>
+                            <div class="research-list">
+                                <ul>
+                                    <li>Transformer model architectures</li>
+                                    <li>Conversational AI development</li>
+                                    <li>Text analysis and mining</li>
+                                    <li>Language model fine-tuning</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dr. Maria Santos -->
+                    <div class="faculty-card synthetic">
+                        <div class="faculty-header">
+                            <div class="faculty-avatar">MS</div>
+                            <div class="faculty-info">
+                                <h3>Dr. Maria Santos</h3>
+                                <div class="faculty-title">AI Professor of Computer Vision</div>
+                                <div class="faculty-type synthetic">Synthetic Professor</div>
+                            </div>
+                        </div>
+                        <p class="faculty-bio">
+                            Dr. Maria Santos focuses on computer vision and image processing applications. She teaches students to build visual recognition systems, object detection models, and image analysis tools for various industries including healthcare, automotive, and robotics.
+                        </p>
+                        <div class="faculty-expertise">
+                            <h4>Teaching Expertise</h4>
+                            <div class="expertise-tags">
+                                <div class="expertise-tag">Computer Vision</div>
+                                <div class="expertise-tag">Image Processing</div>
+                                <div class="expertise-tag">Object Detection</div>
+                                <div class="expertise-tag">OpenCV</div>
+                                <div class="expertise-tag">Medical Imaging</div>
+                            </div>
+                        </div>
+                        <div class="faculty-credentials">
+                            <h4>AI Capabilities</h4>
+                            <div class="credentials-list">
+                                <ul>
+                                    <li>Computer vision specialized model</li>
+                                    <li>Image analysis and interpretation</li>
+                                    <li>Visual learning demonstrations</li>
+                                    <li>Code generation for CV tasks</li>
+                                    <li>Real-time image processing</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faculty-research">
+                            <h4>Teaching Focus</h4>
+                            <div class="research-list">
+                                <ul>
+                                    <li>CNN architecture design</li>
+                                    <li>Object detection algorithms</li>
+                                    <li>Image segmentation techniques</li>
+                                    <li>Medical imaging applications</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 AURNOVA University. All rights reserved.</p>
+            <p><a href="index.html">Return to Home</a> | <a href="msai_application_form.html">Apply Now</a> | <a href="white-paper.html">White Paper</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -189,6 +189,7 @@
             z-index: 2;
             max-width: 1200px;
             margin: 0 auto;
+            width: 100%;
         }
 
         .logo {
@@ -234,19 +235,20 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 8px;
+            gap: 4px;
             align-items: center;
             flex-wrap: wrap;
             margin: 0;
             padding: 0;
+            justify-content: flex-end;
         }
 
         .nav-links a {
             color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 1rem;
-            padding: 12px 18px;
+            font-size: 0.9rem;
+            padding: 10px 14px;
             border: 1px solid transparent;
             border-radius: 6px;
             transition: all 0.3s ease;
@@ -593,6 +595,24 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px 0;
+            }
+            
+            .nav-links {
+                justify-content: center;
+                gap: 6px;
+            }
+            
+            .nav-links a {
+                font-size: 0.85rem;
+                padding: 8px 12px;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -608,15 +628,14 @@
             }
 
             .nav-links {
-                flex-direction: column;
-                gap: 10px;
-                width: 100%;
+                flex-wrap: wrap;
+                gap: 4px;
+                justify-content: center;
             }
 
             .nav-links a {
-                text-align: center;
-                padding: 15px 20px;
-                font-size: 1.2rem;
+                font-size: 0.8rem;
+                padding: 6px 10px;
             }
 
             .logo {
@@ -709,7 +728,7 @@
                     <li><a href="#program">Program</a></li>
                     <li><a href="#admissions">Admissions</a></li>
                     <li><a href="course-catalog.html">Courses</a></li>
-                    <li><a href="#faculty">Faculty</a></li>
+                    <li><a href="faculty.html">Faculty</a></li>
                     <li><a href="#research">Research</a></li>
                     <li><a href="#careers">Careers</a></li>
                     <li><a href="#whitepaper">White Paper</a></li>

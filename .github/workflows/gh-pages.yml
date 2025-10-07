@@ -34,6 +34,7 @@ jobs:
         cp msai_application_form.html _site/
         cp white-paper.html _site/
         cp course-catalog.html _site/
+        cp faculty.html _site/
         
         # Create a simple index.html redirect for the application form
         cat > _site/application.html << 'EOF'
