@@ -1,0 +1,78 @@
+# GitHub Pages Configuration for MS AI Program Site
+
+# Site settings
+title: "MS AI Program - AURNOVA University"
+description: "Master of Science in Artificial Intelligence Program"
+url: "https://dcmcshan.github.io"
+baseurl: "/MSAI"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - .gitignore
+  - .github/
+  - *.py
+  - *.pyc
+  - __pycache__/
+  - *.json
+  - *.md
+  - *.sh
+  - *.tar.gz
+  - *.pem
+  - *.key
+  - manual_deployment/
+  - static_deployment/
+  - deployment_package/
+  - aws_deploy_env/
+  - test_*/
+  - *_test.py
+  - test_*.py
+  - *_test_*.py
+
+# Include files
+include:
+  - _pages
+  - _data
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO
+author: "AURNOVA University"
+twitter:
+  username: "aurnova_uni"
+  card: "summary_large_image"
+
+# Social links
+social:
+  name: "AURNOVA University"
+  links:
+    - "https://github.com/dcmcshan"
+    - "mailto:info@aurnova.edu"

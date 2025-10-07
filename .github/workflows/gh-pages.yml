@@ -1,0 +1,97 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: Build site
+      run: |
+        # Create the site directory
+        mkdir -p _site
+        
+        # Copy our HTML files
+        cp index.html _site/
+        cp msai_application_form.html _site/
+        
+        # Create a simple index.html redirect for the application form
+        cat > _site/application.html << 'EOF'
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="refresh" content="0; url=msai_application_form.html">
+            <title>MS AI Application Form - Redirecting...</title>
+        </head>
+        <body>
+            <p>Redirecting to application form...</p>
+            <script>window.location.href = 'msai_application_form.html';</script>
+        </body>
+        </html>
+        EOF
+        
+        # Create a simple apply.html redirect
+        cp _site/application.html _site/apply.html
+        
+        # Create a simple form.html redirect  
+        cp _site/application.html _site/form.html
+        
+        # Create a 404 page
+        cat > _site/404.html << 'EOF'
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Page Not Found - MS AI Program</title>
+            <style>
+                body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+                h1 { color: #333; }
+                a { color: #007bff; text-decoration: none; }
+                a:hover { text-decoration: underline; }
+            </style>
+        </head>
+        <body>
+            <h1>404 - Page Not Found</h1>
+            <p>The page you're looking for doesn't exist.</p>
+            <p><a href="/">Return to Home</a> | <a href="/application">Application Form</a></p>
+        </body>
+        </html>
+        EOF
+        
+        echo "✅ Site built successfully"
+        ls -la _site/
+        
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
